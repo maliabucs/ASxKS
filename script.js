@@ -58,7 +58,7 @@ function createJobsheets() {
             </span>
 
             <h3>
-                PRACTICAL WORK ${number}
+                 ${number}
             </h3>
 
             <p>
