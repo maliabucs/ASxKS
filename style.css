@@ -883,69 +883,59 @@ footer {
 }
 
 /* =========================================================
-   ANIMASI ELEGAN (DARK EDITORIAL THEME) - FIXED VERSION
+   ANIMASI ELEGAN EDITORIAL (TANPA MENGUBAH HTML)
    ========================================================= */
 
-/* Keyframe untuk kemunculan perlahan dari bawah ke atas */
+/* 1. Definisikan Kesan Animasi Fade & Slide Up */
 @keyframes editorialFadeUp {
-  0% {
+  from {
     opacity: 0;
-    transform: translateY(25px);
+    transform: translateY(20px);
   }
-  100% {
+  to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-/* Base class untuk animasi */
-.editorial-animate {
-  animation: editorialFadeUp 1.1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  opacity: 0; /* Sembunyi elemen sebelum animasi bermula */
-  will-change: transform, opacity;
+/* 2. Berikan Animasi pada Elemen Hero Secara Berperingkat (Staggered) */
+.hero-content > p:first-child {
+  animation: editorialFadeUp 1s ease forwards 0.2s;
+  opacity: 0;
 }
 
-/* Selang masa (Stagger Delays) */
-.delay-1 { animation-delay: 0.15s; }
-.delay-2 { animation-delay: 0.35s; }
-.delay-3 { animation-delay: 0.55s; }
-.delay-4 { animation-delay: 0.75s; }
-.delay-5 { animation-delay: 0.95s; }
+.hero-content h1 {
+  animation: editorialFadeUp 1s ease forwards 0.4s;
+  opacity: 0;
+}
 
-/* Kesan Hover Elegan pada Pautan Navigasi (Header) */
+.hero-content > p:nth-of-type(2) {
+  animation: editorialFadeUp 1s ease forwards 0.6s;
+  opacity: 0;
+}
+
+.hero-button {
+  animation: editorialFadeUp 1s ease forwards 0.8s;
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Menganimasikan blok nombor 24 tanpa merosakkan saiz atau susun atur asal */
+.hero > div:last-child {
+  animation: editorialFadeUp 1s ease forwards 1s;
+  opacity: 0;
+}
+
+/* 3. Kesan Interaktif (Hover) yang Halus */
 .navbar nav a {
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  display: inline-block;
+  transition: opacity 0.3s ease;
 }
 
 .navbar nav a:hover {
-  opacity: 0.6;
-  transform: translateY(-2px);
-}
-
-/* Kesan Hover pada Butang "EXPLORE JOBSHEETS" */
-.hero-button {
-  transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+  opacity: 0.5;
 }
 
 .hero-button:hover {
-  transform: translateY(-3px);
-}
-
-.hero-button span {
-  transition: transform 0.3s ease;
-  display: inline-block;
-}
-
-.hero-button:hover span {
-  transform: translateX(5px); /* Panah bergerak ke kanan sedikit apabila di-hover */
-}
-
-/* Kesan Hover pada Cards (Technology & Student Cards) */
-.technology-card, .student-card {
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease;
-}
-
-.technology-card:hover, .student-card:hover {
-  transform: translateY(-5px);
+  opacity: 0.85;
+  transform: translateY(-2px);
 }
