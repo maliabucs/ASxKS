@@ -1,17 +1,41 @@
+/* =====================================================
+   WEBSITE PROGRESS SETTINGS
+===================================================== */
+
+
+/*
+    TOTAL NUMBER OF JOBSHEETS
+
+    Both students have a maximum of 24.
+*/
+
 const totalJobsheets = 24;
 
 
-/* =========================
-   PROGRESS DATA
-   ========================= */
+/*
+    CURRENT PROGRESS
+
+    CHANGE THESE NUMBERS LATER.
+
+    Example:
+
+    Amalia completed 8:
+    const amaliaCompleted = 8;
+
+    Khairul completed 6:
+    const khairulCompleted = 6;
+
+*/
 
 const amaliaCompleted = 0;
+
 const khairulCompleted = 0;
 
 
-/* =========================
+
+/* =====================================================
    CALCULATE PERCENTAGE
-========================= */
+===================================================== */
 
 const amaliaPercentage =
     (amaliaCompleted / totalJobsheets) * 100;
@@ -20,9 +44,10 @@ const khairulPercentage =
     (khairulCompleted / totalJobsheets) * 100;
 
 
-/* =========================
+
+/* =====================================================
    GET HTML ELEMENTS
-========================= */
+===================================================== */
 
 const amaliaCount =
     document.getElementById("amaliaCount");
@@ -30,11 +55,13 @@ const amaliaCount =
 const khairulCount =
     document.getElementById("khairulCount");
 
+
 const amaliaPercentageText =
     document.getElementById("amaliaPercentage");
 
 const khairulPercentageText =
     document.getElementById("khairulPercentage");
+
 
 const amaliaProgress =
     document.getElementById("amaliaProgress");
@@ -43,9 +70,10 @@ const khairulProgress =
     document.getElementById("khairulProgress");
 
 
-/* =========================
+
+/* =====================================================
    NUMBER ANIMATION
-========================= */
+===================================================== */
 
 function animateNumber(element, target) {
 
@@ -66,12 +94,14 @@ function animateNumber(element, target) {
             element.textContent = current;
 
         }, 80);
+
 }
 
 
-/* =========================
+
+/* =====================================================
    START NUMBER ANIMATION
-========================= */
+===================================================== */
 
 animateNumber(
     amaliaCount,
@@ -84,25 +114,31 @@ animateNumber(
 );
 
 
-/* =========================
-   UPDATE PERCENTAGE
-========================= */
+
+/* =====================================================
+   UPDATE PERCENTAGE TEXT
+===================================================== */
 
 amaliaPercentageText.textContent =
-    Math.round(amaliaPercentage) + "% COMPLETE";
+    Math.round(amaliaPercentage) +
+    "% COMPLETE";
+
 
 khairulPercentageText.textContent =
-    Math.round(khairulPercentage) + "% COMPLETE";
+    Math.round(khairulPercentage) +
+    "% COMPLETE";
 
 
-/* =========================
-   PROGRESS BAR ANIMATION
-========================= */
+
+/* =====================================================
+   UPDATE PROGRESS BARS
+===================================================== */
 
 setTimeout(() => {
 
     amaliaProgress.style.width =
         amaliaPercentage + "%";
+
 
     khairulProgress.style.width =
         khairulPercentage + "%";
@@ -111,13 +147,26 @@ setTimeout(() => {
 
 
 
-/* =========================
-   JOBSHEET NAVIGATION
-========================= */
+/* =====================================================
+   JOBSHEET LINK
+===================================================== */
 
 function openJobsheet(event, number) {
 
     event.preventDefault();
+
+
+    /*
+        The HTML jobsheets will later be placed
+        inside the "jobsheets" folder.
+
+        Example:
+
+        jobsheets/jobsheet01.html
+        jobsheets/jobsheet02.html
+        jobsheets/jobsheet03.html
+
+    */
 
 
     const formattedNumber =
@@ -129,4 +178,5 @@ function openJobsheet(event, number) {
 
 
     window.location.href = path;
+
 }
