@@ -261,3 +261,28 @@ document.addEventListener(
 
     }
 );
+
+// =========================================================
+// ANIMASI COUNTER UNTUK NOMBOR STATISTIK
+// =========================================================
+document.addEventListener("DOMContentLoaded", () => {
+  // Gantikan '.number-stat' dengan class/ID elemen nombor 24 anda
+  const statElement = document.querySelector(".number-stat"); 
+
+  if (statElement) {
+    let startVal = 0;
+    const endVal = parseInt(statElement.textContent) || 24;
+    const duration = 2000; // 2 saat
+    const stepTime = Math.abs(Math.floor(duration / endVal));
+
+    statElement.textContent = "0";
+
+    const timer = setInterval(() => {
+      startVal += 1;
+      statElement.textContent = startVal;
+      if (startVal === endVal) {
+        clearInterval(timer);
+      }
+    }, stepTime);
+  }
+});
