@@ -883,50 +883,47 @@ footer {
 }
 
 /* =========================================================
-   ANIMASI ELEGAN EDITORIAL (TANPA MENGUBAH HTML)
+   ANIMASI PURE FADE-IN (SELAMAT & TANPA GANGGU SAIZ/LAYOUT)
    ========================================================= */
 
-/* 1. Definisikan Kesan Animasi Fade & Slide Up */
-@keyframes editorialFadeUp {
+/* 1. Definisikan Animasi Fade In */
+@keyframes pureFadeIn {
   from {
     opacity: 0;
-    transform: translateY(20px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
   }
 }
 
-/* 2. Berikan Animasi pada Elemen Hero Secara Berperingkat (Staggered) */
+/* 2. Animasi Berperingkat untuk Bahagian Hero */
 .hero-content > p:first-child {
-  animation: editorialFadeUp 1s ease forwards 0.2s;
+  animation: pureFadeIn 1s ease forwards 0.2s;
   opacity: 0;
 }
 
 .hero-content h1 {
-  animation: editorialFadeUp 1s ease forwards 0.4s;
+  animation: pureFadeIn 1s ease forwards 0.4s;
   opacity: 0;
 }
 
 .hero-content > p:nth-of-type(2) {
-  animation: editorialFadeUp 1s ease forwards 0.6s;
+  animation: pureFadeIn 1s ease forwards 0.6s;
   opacity: 0;
 }
 
 .hero-button {
-  animation: editorialFadeUp 1s ease forwards 0.8s;
+  animation: pureFadeIn 1s ease forwards 0.8s;
   opacity: 0;
-  transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
-/* Menganimasikan blok nombor 24 tanpa merosakkan saiz atau susun atur asal */
+/* Menganiayai kejelasan nombor 24 secara fade-in sahaja tanpa sentuh saiz/posisi */
 .hero > div:last-child {
-  animation: editorialFadeUp 1s ease forwards 1s;
+  animation: pureFadeIn 1s ease forwards 1s;
   opacity: 0;
 }
 
-/* 3. Kesan Interaktif (Hover) yang Halus */
+/* 3. Kesan Hover Halus */
 .navbar nav a {
   transition: opacity 0.3s ease;
 }
@@ -935,7 +932,10 @@ footer {
   opacity: 0.5;
 }
 
+.hero-button {
+  transition: opacity 0.3s ease;
+}
+
 .hero-button:hover {
-  opacity: 0.85;
-  transform: translateY(-2px);
+  opacity: 0.8;
 }
