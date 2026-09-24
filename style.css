@@ -2,1158 +2,240 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
-
-html {
-    scroll-behavior: smooth;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
-    background: #07080a;
-    color: #f1f1ed;
-    font-family: "Manrope", sans-serif;
-    overflow-x: hidden;
-}
-
-a {
-    color: inherit;
-    text-decoration: none;
-}
-
-img {
-    max-width: 100%;
-}
-
-
-/* =========================
-   NAVIGATION
-========================= */
-
-.navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 78px;
-    padding: 0 5vw;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    z-index: 100;
-
-    background: rgba(7, 8, 10, 0.72);
-
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-
-.logo {
-    display: flex;
-    align-items: center;
-}
-
-
-.logo img {
-    width: 42px;
-    height: 42px;
-
-    object-fit: contain;
-    display: block;
-
-    border-radius: 8px;
-}
-
-
-.nav-links {
-    display: flex;
-    align-items: center;
-    gap: 38px;
-}
-
-
-.nav-links a {
-    font-family: "DM Mono", monospace;
-
-    font-size: 10px;
-    letter-spacing: 0.16em;
-
-    color: #9b9b97;
-
-    transition: 0.3s ease;
-}
-
-
-.nav-links a:hover {
-    color: #ffffff;
-}
-
-
-
-/* =========================
-   HERO
-========================= */
-
-.hero {
-    position: relative;
-
+    background-color: #0d1117;
+    color: #c9d1d9;
     min-height: 100vh;
-
-    overflow: hidden;
-
-    border-bottom: 1px solid #242424;
+    overflow-x: hidden;
+    position: relative;
 }
-
-
-.hero-bg-anim {
-    position: absolute;
-
-    inset: 0;
-
-    overflow: hidden;
-
-    pointer-events: none;
-
-    z-index: 1;
-
-    background-color: #07080a;
-}
-
-
-.glow-orb {
-    position: absolute;
-
-    border-radius: 50%;
-
-    filter: blur(80px);
-
-    opacity: 0.22;
-
-    pointer-events: none;
-}
-
-
-.orb-1 {
-    width: 420px;
-    height: 420px;
-
-    top: -100px;
-    right: -80px;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(0, 220, 255, 0.8),
-            transparent 70%
-        );
-
-    animation: moveOrb1 12s ease-in-out infinite;
-}
-
-
-.orb-2 {
-    width: 480px;
-    height: 480px;
-
-    right: -150px;
-    bottom: -180px;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(255, 190, 60, 0.65),
-            transparent 70%
-        );
-
-    animation: moveOrb2 16s ease-in-out infinite;
-}
-
-
-.orb-3 {
-    width: 400px;
-    height: 400px;
-
-    left: -160px;
-    bottom: -130px;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(70, 100, 255, 0.65),
-            transparent 70%
-        );
-
-    animation: moveOrb3 14s ease-in-out infinite;
-}
-
-
-@keyframes moveOrb1 {
-
-    0%,
-    100% {
-        transform: translate(0, 0) scale(1);
-    }
-
-    50% {
-        transform: translate(-80px, 60px) scale(1.15);
-    }
-
-}
-
-
-@keyframes moveOrb2 {
-
-    0%,
-    100% {
-        transform: translate(0, 0) scale(1);
-    }
-
-    50% {
-        transform: translate(-80px, -70px) scale(1.1);
-    }
-
-}
-
-
-@keyframes moveOrb3 {
-
-    0%,
-    100% {
-        transform: translate(0, 0) scale(1);
-    }
-
-    50% {
-        transform: translate(80px, -50px) scale(1.12);
-    }
-
-}
-
-
-
-/* =========================
-   GRID BACKGROUND
-========================= */
 
 .bg-grid-mesh {
-    position: absolute;
-
+    position: fixed;
     inset: 0;
-
     background-image:
-        linear-gradient(
-            rgba(255, 255, 255, 0.045) 1px,
-            transparent 1px
-        ),
-        linear-gradient(
-            90deg,
-            rgba(255, 255, 255, 0.045) 1px,
-            transparent 1px
-        );
-
+        linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
     background-size: 80px 80px;
-
-    mask-image:
-        radial-gradient(
-            ellipse at center,
-            black 20%,
-            transparent 80%
-        );
-
-    -webkit-mask-image:
-        radial-gradient(
-            ellipse at center,
-            black 20%,
-            transparent 80%
-        );
-
-    animation: gridPulse 8s ease-in-out infinite;
+    mask-image: radial-gradient(ellipse at center, black 20%, transparent 80%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 20%, transparent 80%);
+    z-index: -1;
 }
 
-
-@keyframes gridPulse {
-
-    0%,
-    100% {
-        opacity: 0.45;
-    }
-
-    50% {
-        opacity: 0.75;
-    }
-
+.navbar {
+    background-color: rgba(22, 27, 34, 0.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid #30363d;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 0.8rem 2rem;
 }
 
-
-
-/* =========================
-   CODE STREAM
-========================= */
-
-.code-stream {
-    position: absolute;
-
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
     display: flex;
-
-    flex-direction: column;
-
-    gap: 10px;
-
-    font-family: "DM Mono", monospace;
-
-    font-size: 9px;
-
-    line-height: 1.6;
-
-    color: rgba(255, 255, 255, 0.25);
-
-    white-space: nowrap;
-
-    animation: floatSlow 14s ease-in-out infinite;
-}
-
-
-.stream-1 {
-    top: 25%;
-    left: 7%;
-
-    transform: rotate(-5deg);
-}
-
-
-.stream-2 {
-    right: 8%;
-    top: 45%;
-
-    transform: rotate(4deg);
-
-    animation-delay: -5s;
-}
-
-
-.stream-3 {
-    left: 30%;
-    bottom: 10%;
-
-    transform: rotate(-2deg);
-
-    animation-delay: -8s;
-}
-
-
-@keyframes floatSlow {
-
-    0%,
-    100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-25px);
-    }
-
-}
-
-
-
-/* =========================
-   HERO CONTENT
-========================= */
-
-.hero-content {
-    position: relative;
-
-    z-index: 2;
-
-    min-height: 100vh;
-
-    padding: 120px 5vw 50px;
-
-    display: flex;
-
-    flex-direction: column;
-
     justify-content: space-between;
-}
-
-
-.hero-top,
-.hero-bottom {
-    display: flex;
-
-    justify-content: space-between;
-
     align-items: center;
-
-    font-family: "DM Mono", monospace;
-
-    font-size: 9px;
-
-    letter-spacing: 0.16em;
-
-    color: #858581;
 }
 
-
-.hero-title {
-    max-width: 1100px;
-}
-
-
-.hero-title h1 {
-    font-size: clamp(4rem, 10vw, 10rem);
-
-    line-height: 0.86;
-
-    letter-spacing: -0.075em;
-
-    font-weight: 700;
-}
-
-
-.hero-title h1 span {
-    color: transparent;
-
-    -webkit-text-stroke:
-        1px rgba(255, 255, 255, 0.75);
-}
-
-
-
-/* =========================
-   SECTION
-========================= */
-
-.section {
-    padding: 150px 5vw;
-
-    border-bottom: 1px solid #242424;
-}
-
-
-.section-label {
-    font-family: "DM Mono", monospace;
-
-    font-size: 9px;
-
-    letter-spacing: 0.18em;
-
-    color: #70706c;
-
-    margin-bottom: 80px;
-}
-
-
-
-/* =========================
-   INTRODUCTION
-========================= */
-
-.intro-content {
-    display: grid;
-
-    grid-template-columns: 1.4fr 0.6fr;
-
-    gap: 80px;
-
-    align-items: end;
-}
-
-
-.intro-content h2,
-.technology-header h2,
-.archive-header h2,
-.jobsheets-header h2,
-.about-header h2 {
-
-    font-size: clamp(3rem, 6vw, 7rem);
-
-    line-height: 0.9;
-
-    letter-spacing: -0.065em;
-
-    font-weight: 600;
-}
-
-
-.intro-content h2 span,
-.technology-header h2 span,
-.archive-header h2 span,
-.jobsheets-header h2 span,
-.about-header h2 span {
-
-    color: #777773;
-}
-
-
-.intro-content p {
-    max-width: 420px;
-
-    color: #888884;
-
-    font-size: 14px;
-
-    line-height: 1.8;
-}
-
-
-
-/* =========================
-   TECHNOLOGY
-========================= */
-
-.technology-header {
-    display: grid;
-
-    grid-template-columns: 1.4fr 0.6fr;
-
-    gap: 80px;
-
-    margin-bottom: 80px;
-}
-
-
-.technology-header p {
-    align-self: end;
-
-    max-width: 400px;
-
-    color: #888884;
-
-    font-size: 14px;
-
-    line-height: 1.8;
-}
-
-
-.tech-grid {
-    display: grid;
-
-    grid-template-columns: repeat(4, 1fr);
-
-    border-top: 1px solid #2b2b2b;
-
-    border-left: 1px solid #2b2b2b;
-}
-
-
-.tech-card {
-    min-height: 280px;
-
-    padding: 30px;
-
-    border-right: 1px solid #2b2b2b;
-
-    border-bottom: 1px solid #2b2b2b;
-
+.nav-brand {
     display: flex;
-
-    flex-direction: column;
-
-    justify-content: space-between;
-
-    transition: 0.4s ease;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: #58a6ff;
+    font-weight: bold;
+    font-size: 1.2rem;
 }
 
-
-.tech-card:hover {
-    background: rgba(255, 255, 255, 0.035);
-
-    transform: translateY(-5px);
+.nav-logo {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
 }
 
-
-.tech-number {
-    font-family: "DM Mono", monospace;
-
-    font-size: 10px;
-
-    color: #62625e;
-}
-
-
-.tech-card h3 {
-    font-size: 25px;
-
-    letter-spacing: -0.04em;
-}
-
-
-.tech-card p {
-    color: #777773;
-
-    font-size: 12px;
-
-    line-height: 1.6;
-
-    max-width: 220px;
-}
-
-
-
-/* =========================
-   ARCHIVE
-========================= */
-
-.archive-header {
-    display: grid;
-
-    grid-template-columns: 1.4fr 0.6fr;
-
-    gap: 80px;
-
-    margin-bottom: 90px;
-}
-
-
-.archive-header p {
-    align-self: end;
-
-    color: #888884;
-
-    font-size: 14px;
-
-    line-height: 1.8;
-
-    max-width: 400px;
-}
-
-
-.progress-grid {
-    display: grid;
-
-    grid-template-columns: repeat(2, 1fr);
-
+.nav-menu {
+    display: flex;
+    list-style: none;
     gap: 20px;
 }
 
-
-.progress-card {
-    padding: 35px;
-
-    border: 1px solid #2b2b2b;
-
-    background: rgba(255, 255, 255, 0.015);
-
-    transition: 0.4s ease;
+.nav-menu a {
+    color: #8b949e;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    font-size: 0.95rem;
 }
 
-
-.progress-card:hover {
-    background: rgba(255, 255, 255, 0.035);
-
-    border-color: #444;
+.nav-menu a:hover {
+    color: #58a6ff;
 }
 
+.hero-section {
+    padding: 80px 20px;
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto;
+}
 
-.progress-top {
+.hero-title {
+    font-size: 2.8rem;
+    color: #f0f6fc;
+    margin-bottom: 15px;
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    color: #8b949e;
+    margin-bottom: 25px;
+}
+
+.code-stream {
+    background-color: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 12px 20px;
+    display: inline-block;
+    color: #7ee787;
+    font-family: monospace;
+}
+
+.section-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 20px;
+}
+
+.section-title {
+    font-size: 1.8rem;
+    color: #f0f6fc;
+    margin-bottom: 30px;
     display: flex;
-
-    align-items: flex-start;
-
-    justify-content: space-between;
-
-    margin-bottom: 70px;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 2px solid #21262d;
+    padding-bottom: 10px;
 }
 
-
-.progress-label {
-    display: block;
-
-    font-family: "DM Mono", monospace;
-
-    font-size: 8px;
-
-    letter-spacing: 0.15em;
-
-    color: #666662;
-
-    margin-bottom: 10px;
-}
-
-
-.progress-top h3 {
-    font-size: 24px;
-
-    letter-spacing: -0.04em;
-}
-
-
-.progress-number {
-    display: flex;
-
-    align-items: baseline;
-
-    gap: 4px;
-}
-
-
-.progress-number span {
-    font-size: 55px;
-
-    line-height: 1;
-
-    font-weight: 500;
-
-    letter-spacing: -0.07em;
-}
-
-
-.progress-number small {
-    font-family: "DM Mono", monospace;
-
-    color: #666662;
-
-    font-size: 11px;
-}
-
-
-.progress-bar {
-    width: 100%;
-
-    height: 2px;
-
-    background: #292929;
-
-    overflow: hidden;
-
-    margin-bottom: 18px;
-}
-
-
-.progress-fill {
-    width: 0%;
-
-    height: 100%;
-
-    background: #f1f1ed;
-
-    transition:
-        width 1.4s cubic-bezier(
-            0.22,
-            1,
-            0.36,
-            1
-        );
-}
-
-
-.progress-bottom {
-    display: flex;
-
-    justify-content: space-between;
-
-    font-family: "DM Mono", monospace;
-
-    font-size: 8px;
-
-    letter-spacing: 0.12em;
-
-    color: #666662;
-}
-
-
-
-/* =========================
-   JOBSHEETS
-========================= */
-
-.jobsheets-header {
+.member-grid {
     display: grid;
-
-    grid-template-columns: 1.4fr 0.6fr;
-
-    gap: 80px;
-
-    margin-bottom: 90px;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 25px;
 }
 
-
-.jobsheets-header p {
-    align-self: end;
-
-    max-width: 400px;
-
-    color: #888884;
-
-    font-size: 14px;
-
-    line-height: 1.8;
+.member-card {
+    background-color: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.3s ease, border-color 0.3s ease;
 }
 
+.member-card:hover {
+    transform: translateY(-5px);
+    border-color: #58a6ff;
+}
+
+.member-img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+    border: 3px solid #30363d;
+}
+
+.member-card h3 {
+    color: #f0f6fc;
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+}
+
+.member-card p {
+    color: #8b949e;
+    font-size: 0.9rem;
+}
 
 .jobsheet-grid {
     display: grid;
-
-    grid-template-columns: repeat(2, 1fr);
-
-    border-top: 1px solid #2b2b2b;
-
-    border-left: 1px solid #2b2b2b;
-}
-
-
-.jobsheet-card {
-    min-height: 190px;
-
-    padding: 28px;
-
-    border-right: 1px solid #2b2b2b;
-
-    border-bottom: 1px solid #2b2b2b;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    transition: 0.4s ease;
-}
-
-
-.jobsheet-card:hover {
-    background: rgba(255, 255, 255, 0.035);
-
-    padding-left: 38px;
-}
-
-
-.jobsheet-number {
-    align-self: flex-start;
-
-    font-family: "DM Mono", monospace;
-
-    font-size: 10px;
-
-    color: #666662;
-}
-
-
-.jobsheet-info {
-    flex: 1;
-
-    margin-left: 60px;
-}
-
-
-.jobsheet-info span {
-    font-family: "DM Mono", monospace;
-
-    font-size: 8px;
-
-    letter-spacing: 0.15em;
-
-    color: #666662;
-}
-
-
-.jobsheet-info h3 {
-    margin-top: 10px;
-
-    font-size: 23px;
-
-    letter-spacing: -0.04em;
-}
-
-
-.arrow {
-    font-size: 22px;
-
-    color: #777773;
-
-    transition: 0.3s ease;
-}
-
-
-.jobsheet-card:hover .arrow {
-    transform: translate(5px, -5px);
-
-    color: #ffffff;
-}
-
-
-
-/* =========================
-   ABOUT US
-========================= */
-
-.about-header {
-    margin-bottom: 90px;
-}
-
-
-.members-grid {
-    display: grid;
-
-    grid-template-columns: repeat(2, 1fr);
-
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     gap: 20px;
 }
 
-
-.member-card {
-    border: 1px solid #2b2b2b;
-
-    background: #0b0c0e;
-
-    overflow: hidden;
+.jobsheet-card {
+    background-color: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 10px;
+    padding: 20px;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.3s ease;
 }
 
-
-.member-image {
-    height: 480px;
-
-    position: relative;
-
-    overflow: hidden;
-
-    background: #151515;
+.jobsheet-card:hover {
+    transform: translateY(-4px);
+    border-color: #58a6ff;
+    box-shadow: 0 8px 24px rgba(88, 166, 255, 0.1);
 }
 
-
-.member-image img {
-    width: 100%;
-
-    height: 100%;
-
-    object-fit: cover;
-
-    object-position: center;
-
-    display: block;
-
-    filter: grayscale(100%);
-
-    transition: 0.5s ease;
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
 }
 
-
-.member-card:hover .member-image img {
-    transform: scale(1.03);
-
-    filter: grayscale(0%);
+.jobsheet-number {
+    background-color: #21262d;
+    color: #58a6ff;
+    font-weight: bold;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.9rem;
 }
 
-
-.member-details {
-    padding: 35px;
+.card-icon {
+    font-size: 1.4rem;
+    color: #8b949e;
 }
 
-
-.member-details > span {
-    font-family: "DM Mono", monospace;
-
-    font-size: 8px;
-
-    letter-spacing: 0.15em;
-
-    color: #666662;
+.card-title {
+    color: #f0f6fc;
+    font-size: 1.2rem;
+    margin-bottom: 8px;
 }
 
-
-.member-details h3 {
-    margin-top: 25px;
-
-    font-size: clamp(2.4rem, 4vw, 4rem);
-
-    line-height: 0.9;
-
-    letter-spacing: -0.06em;
+.card-desc {
+    color: #8b949e;
+    font-size: 0.88rem;
+    line-height: 1.4;
 }
-
-
-.member-details p {
-    margin-top: 30px;
-
-    max-width: 370px;
-
-    color: #777773;
-
-    font-size: 12px;
-
-    line-height: 1.8;
-}
-
-
-
-/* =========================
-   FOOTER
-========================= */
 
 .footer {
-    padding: 35px 5vw;
-
-    display: flex;
-
-    justify-content: space-between;
-
-    align-items: center;
-
-    font-family: "DM Mono", monospace;
-
-    font-size: 8px;
-
-    letter-spacing: 0.14em;
-
-    color: #5f5f5b;
+    text-align: center;
+    padding: 30px 20px;
+    border-top: 1px solid #21262d;
+    color: #8b949e;
+    font-size: 0.9rem;
+    margin-top: 40px;
 }
 
-
-
-/* =========================
-   TABLET
-========================= */
-
-@media (max-width: 900px) {
-
-    .intro-content,
-    .technology-header,
-    .archive-header,
-    .jobsheets-header {
-
-        grid-template-columns: 1fr;
-
-        gap: 40px;
-    }
-
-
-    .tech-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-
-    .progress-grid {
-        grid-template-columns: 1fr;
-    }
-
-
-    .members-grid {
-        grid-template-columns: 1fr;
-    }
-
-
-    .member-image {
-        height: 420px;
-    }
-
-}
-
-
-
-/* =========================
-   MOBILE
-========================= */
-
-@media (max-width: 600px) {
-
-    .navbar {
-        height: 68px;
-
-        padding: 0 6vw;
-    }
-
-
-    .logo img {
-        width: 36px;
-
-        height: 36px;
-    }
-
-
-    .nav-links {
-        gap: 16px;
-    }
-
-
-    .nav-links a {
-        font-size: 8px;
-
-        letter-spacing: 0.1em;
-    }
-
-
-    .hero-content {
-        padding: 100px 6vw 35px;
-    }
-
-
-    .hero-top,
-    .hero-bottom {
-        font-size: 7px;
-
-        letter-spacing: 0.1em;
-    }
-
-
-    .hero-title h1 {
-        font-size: clamp(
-            3.5rem,
-            17vw,
-            6rem
-        );
-    }
-
-
-    .section {
-        padding: 100px 6vw;
-    }
-
-
-    .section-label {
-        margin-bottom: 50px;
-    }
-
-
-    .tech-grid {
-        grid-template-columns: 1fr;
-    }
-
-
-    .jobsheet-grid {
-        grid-template-columns: 1fr;
-    }
-
-
-    .jobsheet-info {
-        margin-left: 25px;
-    }
-
-
-    .progress-card {
-        padding: 25px;
-    }
-
-
-    .progress-top {
-        margin-bottom: 50px;
-    }
-
-
-    .progress-number span {
-        font-size: 42px;
-    }
-
-
-    .member-image {
-        height: 360px;
-    }
-
-
-    .footer {
+@media (max-width: 768px) {
+    .nav-container {
         flex-direction: column;
-
-        align-items: flex-start;
-
         gap: 12px;
     }
 
-
-    .code-stream {
-        display: none;
+    .hero-title {
+        font-size: 2rem;
     }
-
 }
