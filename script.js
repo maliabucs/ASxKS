@@ -88,15 +88,11 @@ animateNumber(
    UPDATE PERCENTAGE
 ========================= */
 
-if (amaliaPercentageText) {
-    amaliaPercentageText.textContent =
-        Math.round(amaliaPercentage) + "% COMPLETE";
-}
+amaliaPercentageText.textContent =
+    Math.round(amaliaPercentage) + "% COMPLETE";
 
-if (khairulPercentageText) {
-    khairulPercentageText.textContent =
-        Math.round(khairulPercentage) + "% COMPLETE";
-}
+khairulPercentageText.textContent =
+    Math.round(khairulPercentage) + "% COMPLETE";
 
 
 /* =========================
@@ -105,15 +101,11 @@ if (khairulPercentageText) {
 
 setTimeout(() => {
 
-    if (amaliaProgress) {
-        amaliaProgress.style.width =
-            amaliaPercentage + "%";
-    }
+    amaliaProgress.style.width =
+        amaliaPercentage + "%";
 
-    if (khairulProgress) {
-        khairulProgress.style.width =
-            khairulPercentage + "%";
-    }
+    khairulProgress.style.width =
+        khairulPercentage + "%";
 
 }, 400);
 
@@ -127,9 +119,14 @@ function openJobsheet(event, number) {
 
     event.preventDefault();
 
-    // Diubah supaya padan terus dengan 'jobsheet1.html' hingga 'jobsheet24.html'
+
+    const formattedNumber =
+        String(number).padStart(2, "0");
+
+
     const path =
-        `jobsheets/jobsheet${number}.html`;
+        `jobsheets/jobsheet${formattedNumber}.html`;
+
 
     window.location.href = path;
 }
