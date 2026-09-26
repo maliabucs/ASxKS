@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LAB 12: jQuery AJAX</title>
+<style>
+:root{--bg:#0b1020;--panel:#121a2e;--panel2:#18233d;--line:#293653;--text:#eef4ff;--muted:#9eacc8;--accent:#6ea8fe;--accent2:#8b5cf6;--success:#35d07f;--danger:#ff6b7a}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:Inter,Segoe UI,Arial,sans-serif;background:radial-gradient(circle at top right,#1d2b52 0,#0b1020 45%);color:var(--text)}
+button,input,select,textarea{font:inherit}button{cursor:pointer}
+.topbar{min-height:72px;display:flex;align-items:center;justify-content:space-between;padding:10px 24px;border-bottom:1px solid var(--line);background:rgba(9,14,29,.96);position:sticky;top:0;z-index:20;backdrop-filter:blur(12px)}
+.brand{display:flex;align-items:center;gap:12px;font-weight:800}.logo{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,var(--accent2),var(--accent));display:grid;place-items:center;font-size:19px;box-shadow:0 8px 25px #0005}.brand small{display:block;color:var(--muted);font-weight:500;margin-top:2px}
+.student{display:flex;gap:10px;align-items:center;color:var(--muted);font-size:14px}.student input,.setselect{background:#0e1629;border:1px solid var(--line);border-radius:9px;color:var(--text);padding:9px 11px;outline:none}.setselect{min-width:310px;cursor:pointer}
+.app{display:grid;grid-template-columns:300px minmax(650px,1.5fr) minmax(480px,1.15fr);gap:14px;padding:14px;max-width:2600px;margin:auto;align-items:start}
+.question-panel{grid-column:1;grid-row:1}
+.editor-panel{grid-column:2;grid-row:1}
+.output-panel{grid-column:3;grid-row:1}
+.html-panel{grid-column:1 / -1;grid-row:2;width:100%}
+.editor-panel{min-width:0}
+.panel{background:rgba(18,26,46,.93);border:1px solid var(--line);border-radius:15px;overflow:hidden;min-width:0}.panel-head{padding:15px 17px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}.panel-head h2{font-size:15px;margin:0}.badge{font-size:11px;padding:5px 8px;border-radius:999px;background:#263552;color:#c9d7f4}
+.instructions{padding:17px;max-height:calc(100vh - 100px);overflow:auto}.instructions h1{font-size:23px;margin:0 0 8px}.instructions h3{font-size:13px;color:#cbd8f2;margin:20px 0 8px;text-transform:uppercase;letter-spacing:.08em}.instructions p,.instructions li{font-size:13px;line-height:1.6;color:#b9c5dc}.instructions ul{padding-left:21px}.req{display:flex;justify-content:space-between;gap:8px;padding:9px 10px;background:#0d1528;border:1px solid #202d49;border-radius:9px;margin:6px 0;font-size:12px;color:#b9c5dc}.req b{color:#fff;font-weight:600}.setbar{padding:10px 14px;border-bottom:1px solid var(--line);background:#10182b;display:flex;gap:8px;align-items:center;flex-wrap:wrap}.setbar label{font-size:11px;color:var(--muted)}
+.taskbox{background:#0d1528;border:1px solid #293653;border-radius:10px;padding:12px;margin-top:10px}.taskbox li{margin:5px 0}.taskbox code{color:#bfe0ff;word-break:break-all}
+.submission{margin-top:15px;padding:14px;background:#0d1528;border:1px solid #293653;border-radius:12px}.submission h3{margin-top:0}.submission p{margin:7px 0;font-size:12px}.submission strong{color:#fff}.lecturer{margin-top:12px;padding-top:12px;border-top:1px solid #293653}
+.editor-wrap,.output-wrap,.html-wrap{height:calc(100vh - 158px);min-height:560px;display:flex;flex-direction:column}.editor{flex:1;display:flex;overflow:hidden;background:#080d19}.gutter{width:47px;overflow:hidden;background:#0b1222;color:#53627e;text-align:right;padding:14px 10px 14px 0;font:13px/1.7 Consolas,monospace;user-select:none}
+textarea#code{flex:1;resize:none;border:0;outline:0;background:#080d19;color:#d9e7ff;padding:14px 16px;font:13px/1.7 Consolas,Monaco,monospace;white-space:pre;overflow:auto;tab-size:2}
+.toolbar{padding:12px;display:flex;gap:8px;flex-wrap:wrap;border-top:1px solid var(--line);background:#10182b}.btn{border:1px solid #344563;background:#1b2944;color:#eaf2ff;border-radius:9px;padding:9px 13px;font-weight:700;font-size:12px}.btn:hover{filter:brightness(1.15)}.primary{background:linear-gradient(135deg,#5b7cfa,#7958e8);border:0}.success{background:#164b34;border-color:#267b54}.telegram{background:#168acd;border-color:#31a8ef}.print{background:#4c3f15;border-color:#8b7528}.danger{background:#4b1e2a;border-color:#743041}
+.preview{flex:1;background:white;overflow:auto}.html-reference{flex:1;overflow:auto;background:#080d19;padding:12px}.html-reference pre{margin:0;white-space:pre-wrap;word-break:break-word;color:#d9e7ff;background:#0b1222;border:1px solid #293653;border-radius:10px;padding:14px;font:12px/1.6 Consolas,Monaco,monospace}.preview iframe{width:100%;height:100%;min-height:480px;border:0;display:block}.status{padding:11px 14px;border-top:1px solid var(--line);background:#10182b;font-size:12px;color:var(--muted)}.checks{padding:10px 14px;border-top:1px solid var(--line);max-height:180px;overflow:auto}.checkrow{display:flex;align-items:center;gap:8px;font-size:11px;padding:4px 0;color:#b8c5dd}.checkrow .dot{width:8px;height:8px;border-radius:50%;background:#65738d}.checkrow.pass .dot{background:var(--success)}.checkrow.fail .dot{background:var(--danger)}
+.modal{position:fixed;inset:0;background:#020611d9;display:none;align-items:center;justify-content:center;z-index:50;padding:20px}.modal.show{display:flex}.modal-card{width:min(1100px,96vw);height:min(820px,92vh);background:#111a2e;border:1px solid var(--line);border-radius:16px;display:flex;flex-direction:column;overflow:hidden}.modal-card iframe{flex:1;border:0;background:#fff}.modal-head{padding:13px 16px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line)}
+.warning{position:fixed;inset:0;background:#050912;color:white;display:none;z-index:999;align-items:center;justify-content:center;text-align:center;padding:30px}.warning.show{display:flex}.warning-box{max-width:600px;background:#111a2e;border:1px solid #344563;padding:30px;border-radius:18px}
+.protected{user-select:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none}
+@media(max-width:1550px) and (min-width:1001px){.app{grid-template-columns:280px minmax(560px,1.35fr) minmax(420px,1fr)}.question-panel{grid-column:1;grid-row:1}.editor-panel{grid-column:2;grid-row:1}.output-panel{grid-column:3;grid-row:1}.html-panel{grid-column:1 / -1;grid-row:2}.html-wrap,.editor-wrap,.output-wrap{height:620px}}
+@media(max-width:1000px){.app{grid-template-columns:1fr}.html-wrap,.editor-wrap,.output-wrap{height:650px}.student input{width:140px}.topbar{padding:10px 12px;flex-wrap:wrap;gap:10px}.setselect{min-width:220px}}
+@media print{body *{visibility:hidden}#printArea,#printArea *{visibility:visible}#printArea{position:absolute;left:0;top:0;width:100%;background:white;color:#111;padding:25px}}
+
+.reference-note{padding:10px 12px;background:#10182b;border:1px solid #293653;border-radius:10px;margin-bottom:10px;color:#b9c5dc;font-size:12px;line-height:1.5}
+.reference-label{display:block;color:#9fc2ff;font-weight:800;font-size:11px;letter-spacing:.06em;margin:12px 0 6px;text-transform:uppercase}
+.reference-label:first-child{margin-top:0}
+
+/* ===== STUDENT REFERENCE EXTENSION: HTML + CSS + JAVASCRIPT ===== */
+.reference-grid{
+  flex:1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;
+  min-height:0;overflow:hidden;background:#080d19;padding:10px;
+}
+.reference-column{
+  min-width:0;display:flex;flex-direction:column;overflow:hidden;
+  background:#0b1222;border:1px solid #293653;border-radius:10px;
+}
+.reference-column h3{
+  margin:0;padding:10px 11px;background:#10182b;border-bottom:1px solid #293653;
+  color:#9fc2ff;font-size:11px;letter-spacing:.06em;text-transform:uppercase;
+}
+.reference-column pre{
+  flex:1;margin:0;padding:12px;overflow:auto;white-space:pre-wrap;word-break:break-word;
+  color:#d9e7ff;font:11px/1.6 Consolas,Monaco,monospace;
+}
+.reference-column .ref-copy{
+  margin:8px;border-radius:7px;padding:7px 9px;background:#1b2944;color:#eaf2ff;
+  border:1px solid #344563;font-size:11px;font-weight:700;cursor:pointer;
+}
+.reference-column .ref-copy:hover{filter:brightness(1.15)}
+@media(max-width:1550px) and (min-width:1001px){
+  .app{grid-template-columns:300px minmax(560px,1.2fr) minmax(420px,1fr)}
+  .question-panel{grid-column:1;grid-row:1}
+  .editor-panel{grid-column:2;grid-row:1}
+  .output-panel{grid-column:3;grid-row:1}
+  .html-panel{grid-column:1 / -1;grid-row:2}
+  .reference-grid{height:620px}
+}
+@media(max-width:1000px){
+  .app{grid-template-columns:1fr}
+  .html-panel,.editor-panel,.output-panel{grid-column:1;grid-row:auto}
+  .reference-grid{grid-template-columns:1fr;height:auto;overflow:auto}
+  .reference-column{height:430px}
+}
+
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <div class="logo">&lt;/&gt;</div>
+    <div>LAB 12: jQuery AJAX<small>PRACTICAL WEB APPLICATION DEVELOPMENT</small></div>
+  </div>
+  <div class="student">Student Name <input id="studentName" placeholder="Enter your name" autocomplete="off"></div>
+</header>
+
+<main class="app">
+
+<section class="panel protected" id="questionPanel">
+  <div class="panel-head"><h2>Task Instructions</h2><span class="badge" id="taskBadge">SET 1</span></div>
+  <div class="setbar">
+    <label>QUESTION / SET</label>
+    <select id="setSelect" class="setselect"></select>
+  </div>
+  <div class="instructions">
+    <h1 id="title"></h1>
+    <p><b>Task:</b> The HTML and CSS file is provided. You just need to add the JavaScript part only.</p>
+
+    <h3>Task Requirements</h3>
+    <div class="taskbox"><ul id="taskList"></ul></div>
+
+    <h3>Assessment Checklist</h3>
+    <div id="requirements"></div>
+
+    <div class="submission">
+      <h3>Submission Information</h3>
+      <p>Student: <strong id="submissionStudent">Not entered</strong></p>
+      <p>Question Set: <strong id="submissionSet">Set 1</strong></p>
+      <p>Task: <strong id="submissionTask"></strong></p>
+      <p>Validation: <strong id="submissionValidation">Not checked</strong></p>
+      <p>Lecturer Telegram: <strong>+60189577991</strong></p>
+      <div class="lecturer">
+        <h3>LECTURER DETAILS</h3>
+        <p><strong>MOHD SHUKRI BIN MUHAMAD HUSIN</strong></p>
+        <p>Diploma in Computer Technology (Big Data)<br>TVETMARA Lumut</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="panel html-panel protected">
+  <div class="panel-head">
+    <h2>HTML + CSS + JavaScript Reference</h2>
+    <div style="display:flex;align-items:center;gap:8px">
+      <span class="badge">Provided – Do Not Edit</span>
+      <button class="btn" id="copyHtmlBtn" type="button">📋 COPY HTML CODE</button>
+    </div>
+  </div>
+  <div class="html-wrap">
+    <div class="html-reference"><pre id="htmlReference"></pre></div>
+    <div class="status" id="htmlStatus">HTML, CSS and JavaScript reference from the selected PDF question.</div>
+  </div>
+</section>
+
+<section class="panel editor-panel">
+  <div class="panel-head"><h2>JavaScript Code Editor</h2><span class="badge">Student Workspace</span></div>
+  <div class="editor-wrap">
+    <div class="editor">
+      <div class="gutter" id="gutter">1</div>
+      <textarea id="code" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off" aria-label="JavaScript code editor" placeholder="Write your JavaScript code here..."></textarea>
+    </div>
+    <div class="toolbar">
+      <button class="btn primary" id="viewBtn">▶ VIEW OUTPUT</button>
+      <button class="btn success" id="checkBtn">✓ CHECK CODE</button>
+      <button class="btn" id="templateBtn">＋ INSERT STARTER</button>
+      <button class="btn" id="fullscreenBtn">⛶ FULL SCREEN</button>
+      <button class="btn print" id="printBtn">🖨 PRINT OUTPUT</button>
+      <button class="btn telegram" id="telegramBtn">📤 SUBMIT VIA TELEGRAM</button>
+      <button class="btn danger" id="clearBtn">CLEAR</button>
+    </div>
+    <div class="status" id="editorStatus">Ready.</div>
+  </div>
+</section>
+
+<section class="panel output-panel">
+  <div class="panel-head"><h2>Rendered Output</h2><span class="badge">Live Preview</span></div>
+  <div class="output-wrap">
+    <div class="preview"><iframe id="preview" sandbox="allow-scripts allow-forms"></iframe></div>
+    <div class="checks" id="checks"><div class="checkrow"><span class="dot"></span>Click <b>CHECK CODE</b> to validate the selected question set.</div></div>
+  </div>
+</section>
+</main>
+
+<div class="modal" id="modal">
+  <div class="modal-card">
+    <div class="modal-head"><b>Full Screen Output</b><button class="btn" id="closeModal">CLOSE</button></div>
+    <iframe id="fullPreview" sandbox="allow-scripts allow-forms"></iframe>
+  </div>
+</div>
+
+<div class="warning" id="warning">
+  <div class="warning-box">
+    <h2>Assessment Protection</h2>
+    <p>Please return to the assessment page.</p>
+    <p>The question set is protected against normal copying, text selection and right-click actions.</p>
+    <button class="btn primary" onclick="closeWarning()">RETURN TO LAB</button>
+  </div>
+</div>
+
+<div id="printArea"></div>
+
+
+<script>
+const DATA = [{"number":1,"title":"Load External Text","task":"Change the button so that it loads demo_test.txt into #div1 using jQuery AJAX.","steps":["Open your project folder and make sure jquery.js is available. Use the supplied jquery.js file (jQuery 3.5.1).","Create or open the HTML file for this exercise.","Add the jQuery library inside the <head> section.","Use $(document).ready(function(){ ... }) so the code runs after the page is ready.","Add a button click event using jQuery.","Use $.ajax() and set the URL to demo_test.txt.","Inside the success function, place the returned result into #div1 using $(\"#div1\").html(result).","Save all files and run the page through your local web server when required.","Click the button and verify that the external content appears inside the page."],"htmlCode":"<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<title>jQuery AJAX Exercise</title>\n<link rel=\"stylesheet\" href=\"style.css\">\n<script src=\"jquery.js\"><\/script>\n<script>\n$(document).ready(function(){\n  $(\"button\").click(function(){\n    $.ajax({\n      url: \"demo_test.txt\",\n      success: function(result){\n        $(\"#div1\").html(result);\n      }\n    });\n  });\n});\n<\/script>\n</head>\n<body>\n<div id=\"div1\"><h2>jQuery AJAX Exercise</h2></div>\n<button>Get External Content</button>\n</body>\n</html>","cssCode":"body {\n  font-family: Arial, sans-serif;\n  margin: 30px;\n  background: #f4f4f4;\n}\n#div1 {\n  background: white;\n  border: 1px solid #ccc;\n  padding: 20px;\n  margin-bottom: 15px;\n}\nbutton {\n  padding: 10px 16px;\n  cursor: pointer;\n}","jsCode":"<script src=\"jquery.js\"><\/script>\n<script>\n$(document).ready(function(){\n  $(\"button\").click(function(){\n    $.ajax({\n      url: \"demo_test.txt\",\n      success: function(result){\n        $(\"#div1\").html(result);\n      }\n    });\n  });\n});\n<\/script>","external":"demo_test.txt\nWelcome to jQuery AJAX!","verification":"Click the button and confirm that the content from demo_test.txt appears inside #div1 without reloading the whole page."},{"number":2,"title":"Load a Welcome Message","task":"Create welcome.txt and load its contents into #div1 when the button is clicked.","steps":["Open your project folder and make sure jquery.js is available. Use the supplied jquery.js file (jQuery 3.5.1).","Create or open the HTML file for this exercise.","Add the jQuery library inside the <head> section.","Use $(document).ready(function(){ ... }) so the code runs after the page is ready.","Add a button click event using jQuery.","Use $.ajax() and set the URL to welcome.txt.","Inside the success function, place the returned result into #div1 using $(\"#div1\").html(result).","Save all files and run the page through your local web server when required.","Click the button and verify that the external content appears inside the page."],"htmlCode":"<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<title>jQuery AJAX Exercise</title>\n<link rel=\"stylesheet\" href=\"style.css\">\n<script src=\"jquery.js\"><\/script>\n<script>\n$(document).ready(function(){\n  $(\"button\").click(function(){\n    $.ajax({\n      url: \"welcome.txt\",\n      success: function(result){\n        $(\"#div1\").html(result);\n      }\n    });\n  });\n});\n<\/script>\n</head>\n<body>\n<div id=\"div1\"><h2>jQuery AJAX Exercise</h2></div>\n<button>Get External Content</button>\n</body>\n</html>","cssCode":"body {\n  font-family: Arial, sans-serif;\n  margin: 30px;\n  background: #f4f4f4;\n}\n#div1 {\n  background: white;\n  border: 1px solid #ccc;\n  padding: 20px;\n  margin-bottom: 15px;\n}\nbutton {\n  padding: 10px 16px;\n  cursor: pointer;\n}","jsCode":"<script src=\"jquery.js\"><\/script>\n<script>\n$(document).ready(function(){\n  $(\"button\").click(function(){\n    $.ajax({\n      url: \"welcome.txt\",\n      success: function(result){\n        $(\"#div1\").html(result);\n      }\n    });\n  });\n});\n<\/script>","external":"welcome.txt\nWelcome, students! This message was loaded using AJAX.","verification":"Click the button and confirm that the content from welcome.txt appears inside #div1 without reloading the whole page."},{"number":3,"title":"Load Course Information","task":"Create course.txt and display its contents in #div1 using AJAX.","steps":["Open your project folder and make sure jquery.js is available. Use the supplied jquery.js file (jQuery 3.5.1).","Create or open the HTML file for this exercise.","Add the jQuery library inside the <head> section.","Use $(document).ready(function(){ ... }) so the code runs after the page is ready.","Add a button click event using jQuery.","Use $.ajax() and set the URL to course.txt.","Inside the success function, place the returned result into #div1 using $(\"#div1\").html(result).","Save all files and run the page through your local web server when required.","Click the button and verify that the external content appears inside the page."],"htmlCode":"<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<title>jQuery AJAX Exercise</title>\n<link rel=\"stylesheet\" href=\"style.css\">\n<script src=\"jquery.js\"><\/script>\n<script>\n$(document).ready(function(){\n  $(\"button\").click(function(){\n    $.ajax({\n      url: \"course.txt\",\n      success: function(result){\n        $(\"#div1\").html(result);\n      }\n    });\n  });\n});\n<\/script>\n</head>\n<body>\n<div id=\"div1\"><h2>jQuery AJAX Exercise</h2></div>\n<button>Get External Content</button>\n</body>\n</html>","cssCode":"body {\n  font-family: Arial, sans-serif;\n  margin: 30px;\n  background: #f4f4f4;\n}\n#div1 {\n  background: white;\n  border: 1px solid #ccc;\n  padding: 20px;\n  margin-bottom: 15px;\n}\nbutton {\n  padding: 10px 16px;\n  cursor: pointer;\n}","jsCode":"<script src=\"jquery.js\"><\/script>\n<script>\n$(document).ready(function(){\n  $(\"button\").click(function(){\n    $.ajax({\n      url: \"course.txt\",\n      success: function(result){\n        $(\"#div1\").html(result);\n      }\n    });\n  });\n});\n<\/script>","external":"course.txt\nCourse: Web Application Development\nTopic: jQuery AJAX","verification":"Click the button and confirm that the content from course.txt appears inside #div1 without reloading the whole page."},{"number":4,"title":"Load Lecturer Information","task":"Create lecturer.txt and display the lecturer information in #div1.","steps":["Open your project folder and make sure jquery.js is available. Use the supplied jquery.js file (jQuery 3.5.1).","Create or open the HTML file for this exercise.","Add the jQuery library inside the <head> section.","Use $(document).ready(function(){ ... }) so the code runs after the page is ready.","Add a button click event using jQuery.","Use $.ajax() and set the URL to lecturer.txt.","Inside the success function, place the returned result into #div1 using $(\"#div1\").html(result).","Save all files and run the page through your local web server when required.","Click the button and verify that the external content appears inside the page."],"htmlCode":"<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<title>jQuery AJAX Exercise</title>\n<link rel=\"stylesheet\" href=\"style.css\">\n<script src=\"jquery.js\"><\/script>\n<script>\n$(document).ready(function(){\n  $(\"button\").click(function(){\n    $.ajax({\n      url: \"lecturer.txt\",\n      success: function(result){\n        $(\"#div1\").html(result);\n      }\n    });\n  });\n});\n<\/script>\n</head>\n<body>\n<div id=\"div1\"><h2>jQuery AJAX Exercise</h2></div>\n<button>Get External Content</button>\n</body>\n</html>","cssCode":"body {\n  font-family: Arial, sans-serif;\n  margin: 30px;\n  background: #f4f4f4;\n}\n#div1 {\n  background: white;\n  border: 1px solid #ccc;\n  padding: 20px;\n  margin-bottom: 15px;\n}\nbutton {\n  padding: 10px 16px;\n  cursor: pointer;\n}","jsCode":"<script src=\"jquery.js\"><\/script>\n<script>\n$(document).ready(function(){\n  $(\"button\").click(function(){\n    $.ajax({\n      url: \"lecturer.txt\",\n      success: function(result){\n        $(\"#div1\").html(result);\n      }\n    });\n  });\n});\n<\/script>","external":"lecturer.txt\nLecturer: Web Development\nLab: jQuery AJAX","verification":"Click the button and confirm that the content from lecturer.txt appears inside #div1 without reloading the whole page."},{"number":5,"title":"Load News","task":"Create news.txt and replace the heading in #div1 with the AJAX response.","steps":["Open your project folder and make sure jquery.js is available. Use the supplied jquery.js file (jQuery 3.5.1).","Create or open the HTML file for this exercise.","Add the jQuery library inside the <head> section.","Use $(document).ready(function(){ ... }) so the code runs after the page is ready.","Add a button click event using jQuery.","Use $.ajax() and set the URL to news.txt.","Inside the success function, place the returned result into #div1 using $(\"#div1\").html(result).","Save all files and run the page through your local web server when required.","Click the button and verify that the external content appears inside the page."],"htmlCode":"<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<title>jQuery AJAX Exercise</title>\n<link rel=\"stylesheet\" href=\"style.css\">\n<script src=\"jquery.js\"><\/script>\n<script>\n$(document).ready(function(){\n  $(\"button\").click(function(){\n    $.ajax({\n      url: \"news.txt\",\n      success: function(result){\n        $(\"#div1\").html(result);\n      }\n    });\n  });\n});\n<\/script>\n</head>\n<body>\n<div id=\"div1\"><h2>jQuery AJAX Exercise</h2></div>\n<button>Get External Content</button>\n</body>\n</html>","cssCode":"body {\n  font-family: Arial, sans-serif;\n  margin: 30px;\n  background: #f4f4f4;\n}\n#div1 {\n  background: white;\n  border: 1px solid #ccc;\n  padding: 20px;\n  margin-bottom: 15px;\n}\nbutton {\n  padding: 10px 16px;\n  cursor: pointer;\n}","jsCode":"<script src=\"jquery.js\"><\/script>\n<script>\n$(document).ready(function(){\n  $(\"button\").click(function(){\n    $.ajax({\n      url: \"news.txt\",\n      success: function(result){\n        $(\"#div1\").html(result);\n      }\n    });\n  });\n});\n<\/script>","external":"news.txt\nLatest News: The AJAX practical session starts today.","verification":"Click the button and confirm that the content from news.txt appears inside #div1 without reloading the whole page."},{"number":6,"title":"Load an HTML Fragment","task":"Create message.html containing an HTML heading and paragraph. Load the HTML fragment into #div1.","steps":["Open your project folder and make sure jquery.js is available. Use the supplied jquery.js file (jQuery 3.5.1).","Create or open the HTML file for this exercise.","Add the jQuery library inside the <head> section.","Use $(document).ready(function(){ ... }) so the code runs after the page is ready.","Add a button click event using jQuery.","Use $.ajax() and set the URL to message.html.","Inside the success function, place the returned result into #div1 using $(\"#div1\").html(result).","Save all files and run the page through your local web server when required.","Click the button and verify that the external content appears inside the page."],"htmlCode":"<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<title>jQuery AJAX Exercise</title>\n<link rel=\"stylesheet\" href=\"style.css\">\n<script src=\"jquery.js\"><\/script>\n<script>\n$(document).ready(function(){\n  $(\"button\").click(function(){\n    $.ajax({\n      url: \"message.html\",\n      success: function(result){\n        $(\"#div1\").html(result);\n      }\n    });\n  });\n});\n<\/script>\n</head>\n<body>\n<div id=\"div1\"><h2>jQuery AJAX Exercise</h2></div>\n<button>Get External Content</button>\n</body>\n</html>","cssCode":"body {\n  font-family: Arial, sans-serif;\n  margin: 30px;\n  background: #f4f4f4;\n}\n#div1 {\n  background: white;\n  border: 1px solid #ccc;\n  padding: 20px;\n  margin-bottom: 15px;\n}\nbutton {\n  padding: 10px 16px;\n  cursor: pointer;\n}","jsCode":"<script src=\"jquery.js\"><\/script>\n<script>\n$(document).ready(function(){\n  $(\"button\").click(function(){\n    $.ajax({\n      url: \"message.html\",\n      success: function(result){\n        $(\"#div1\").html(result);\n      }\n    });\n  });\n});\n<\/script>","external":"message.html\n<h2>AJAX Message</h2><p>This content came from an external HTML file.</p>","verification":"Click the button and confirm that the content from message.html appears inside #div1 without reloading the whole page."},{"number":7,"title":"Load a Student Notice","task":"Create notice.txt and display the notice after the button is clicked.","steps":["Open your project folder and make sure jquery.js is available. Use the supplied jquery.js file (jQuery 3.5.1).","Create or open the HTML file for this exercise.","Add the jQuery library inside the <head> section.","Use $(document).ready(function(){ ... }) so the code runs after the page is ready.","Add a button click event using jQuery.","Use $.ajax() and set the URL to notice.txt.","Inside the success function, place the returned result into #div1 using $(\"#div1\").html(result).","Save all files and run the page through your local web server when required.","Click the button and verify that the external content appears inside the page."],"htmlCode":"<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<title>jQuery AJAX Exercise</title>\n<link rel=\"stylesheet\" href=\"style.css\">\n<script src=\"jquery.js\"><\/script>\n<script>\n$(document).ready(function(){\n  $(\"button\").click(function(){\n    $.ajax({\n      url: \"notice.txt\",\n      success: function(result){\n        $(\"#div1\").html(result);\n      }\n    });\n  });\n});\n<\/script>\n</head>\n<body>\n<div id=\"div1\"><h2>jQuery AJAX Exercise</h2></div>\n<button>Get External Content</button>\n</body>\n</html>","cssCode":"body {\n  font-family: Arial, sans-serif;\n  margin: 30px;\n  background: #f4f4f4;\n}\n#div1 {\n  background: white;\n  border: 1px solid #ccc;\n  padding: 20px;\n  margin-bottom: 15px;\n}\nbutton {\n  padding: 10px 16px;\n  cursor: pointer;\n}","jsCode":"<script src=\"jquery.js\"><\/script>\n<script>\n$(document).ready(function(){\n  $(\"button\").click(function(){\n    $.ajax({\n      url: \"notice.txt\",\n      success: function(result){\n        $(\"#div1\").html(result);\n      }\n    });\n  });\n});\n<\/script>","external":"notice.txt\nNotice: Complete all AJAX exercises before submitting your work.","verification":"Click the button and confirm that the content from notice.txt appears inside #div1 without reloading the whole page."},{"number":8,"title":"Load a Product Description","task":"Create product.txt and display a product description in #div1.","steps":["Open your project folder and make sure jquery.js is available. Use the supplied jquery.js file (jQuery 3.5.1).","Create or open the HTML file for this exercise.","Add the jQuery library inside the <head> section.","Use $(document).ready(function(){ ... }) so the code runs after the page is ready.","Add a button click event using jQuery.","Use $.ajax() and set the URL to product.txt.","Inside the success function, place the returned result into #div1 using $(\"#div1\").html(result).","Save all files and run the page through your local web server when required.","Click the button and verify that the external content appears inside the page."],"htmlCode":"<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<title>jQuery AJAX Exercise</title>\n<link rel=\"stylesheet\" href=\"style.css\">\n<script src=\"jquery.js\"><\/script>\n<script>\n$(document).ready(function(){\n  $(\"button\").click(function(){\n    $.ajax({\n      url: \"product.txt\",\n      success: function(result){\n        $(\"#div1\").html(result);\n      }\n    });\n  });\n});\n<\/script>\n</head>\n<body>\n<div id=\"div1\"><h2>jQuery AJAX Exercise</h2></div>\n<button>Get External Content</button>\n</body>\n</html>","cssCode":"body {\n  font-family: Arial, sans-serif;\n  margin: 30px;\n  background: #f4f4f4;\n}\n#div1 {\n  background: white;\n  border: 1px solid #ccc;\n  padding: 20px;\n  margin-bottom: 15px;\n}\nbutton {\n  padding: 10px 16px;\n  cursor: pointer;\n}","jsCode":"<script src=\"jquery.js\"><\/script>\n<script>\n$(document).ready(function(){\n  $(\"button\").click(function(){\n    $.ajax({\n      url: \"product.txt\",\n      success: function(result){\n        $(\"#div1\").html(result);\n      }\n    });\n  });\n});\n<\/script>","external":"product.txt\nProduct: Smart Learning Tablet\nPrice: RM899","verification":"Click the button and confirm that the content from product.txt appears inside #div1 without reloading the whole page."},{"number":9,"title":"Load an Event","task":"Create event.txt and display an event announcement in #div1.","steps":["Open your project folder and make sure jquery.js is available. Use the supplied jquery.js file (jQuery 3.5.1).","Create or open the HTML file for this exercise.","Add the jQuery library inside the <head> section.","Use $(document).ready(function(){ ... }) so the code runs after the page is ready.","Add a button click event using jQuery.","Use $.ajax() and set the URL to event.txt.","Inside the success function, place the returned result into #div1 using $(\"#div1\").html(result).","Save all files and run the page through your local web server when required.","Click the button and verify that the external content appears inside the page."],"htmlCode":"<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<title>jQuery AJAX Exercise</title>\n<link rel=\"stylesheet\" href=\"style.css\">\n<script src=\"jquery.js\"><\/script>\n<script>\n$(document).ready(function(){\n  $(\"button\").click(function(){\n    $.ajax({\n      url: \"event.txt\",\n      success: function(result){\n        $(\"#div1\").html(result);\n      }\n    });\n  });\n});\n<\/script>\n</head>\n<body>\n<div id=\"div1\"><h2>jQuery AJAX Exercise</h2></div>\n<button>Get External Content</button>\n</body>\n</html>","cssCode":"body {\n  font-family: Arial, sans-serif;\n  margin: 30px;\n  background: #f4f4f4;\n}\n#div1 {\n  background: white;\n  border: 1px solid #ccc;\n  padding: 20px;\n  margin-bottom: 15px;\n}\nbutton {\n  padding: 10px 16px;\n  cursor: pointer;\n}","jsCode":"<script src=\"jquery.js\"><\/script>\n<script>\n$(document).ready(function(){\n  $(\"button\").click(function(){\n    $.ajax({\n      url: \"event.txt\",\n      success: function(result){\n        $(\"#div1\").html(result);\n      }\n    });\n  });\n});\n<\/script>","external":"event.txt\nEvent: Web Technology Workshop\nVenue: Computer Lab","verification":"Click the button and confirm that the content from event.txt appears inside #div1 without reloading the whole page."},{"number":10,"title":"Load a Contact Message","task":"Create contact.txt and display contact information in #div1.","steps":["Open your project folder and make sure jquery.js is available. Use the supplied jquery.js file (jQuery 3.5.1).","Create or open the HTML file for this exercise.","Add the jQuery library inside the <head> section.","Use $(document).ready(function(){ ... }) so the code runs after the page is ready.","Add a button click event using jQuery.","Use $.ajax() and set the URL to contact.txt.","Inside the success function, place the returned result into #div1 using $(\"#div1\").html(result).","Save all files and run the page through your local web server when required.","Click the button and verify that the external content appears inside the page."],"htmlCode":"<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<title>jQuery AJAX Exercise</title>\n<link rel=\"stylesheet\" href=\"style.css\">\n<script src=\"jquery.js\"><\/script>\n<script>\n$(document).ready(function(){\n  $(\"button\").click(function(){\n    $.ajax({\n      url: \"contact.txt\",\n      success: function(result){\n        $(\"#div1\").html(result);\n      }\n    });\n  });\n});\n<\/script>\n</head>\n<body>\n<div id=\"div1\"><h2>jQuery AJAX Exercise</h2></div>\n<button>Get External Content</button>\n</body>\n</html>","cssCode":"body {\n  font-family: Arial, sans-serif;\n  margin: 30px;\n  background: #f4f4f4;\n}\n#div1 {\n  background: white;\n  border: 1px solid #ccc;\n  padding: 20px;\n  margin-bottom: 15px;\n}\nbutton {\n  padding: 10px 16px;\n  cursor: pointer;\n}","jsCode":"<script src=\"jquery.js\"><\/script>\n<script>\n$(document).ready(function(){\n  $(\"button\").click(function(){\n    $.ajax({\n      url: \"contact.txt\",\n      success: function(result){\n        $(\"#div1\").html(result);\n      }\n    });\n  });\n});\n<\/script>","external":"contact.txt\nContact: webdev@college.edu.my","verification":"Click the button and confirm that the content from contact.txt appears inside #div1 without reloading the whole page."},{"number":11,"title":"Two AJAX Buttons","task":"Create two buttons. Button 1 loads first.txt and Button 2 loads second.txt into the same #div1.","steps":["Open your project folder and make sure jquery.js is available. Use the supplied jquery.js file (jQuery 3.5.1).","Create or open the HTML file for this exercise.","Add the jQuery library inside the <head> section.","Use $(document).ready(function(){ ... }) so the code runs after the page is ready.","Add a button click event using jQuery.","Use $.ajax() and set the URL to first.txt / second.txt.","Inside the success function, place the returned result into #div1 using $(\"#div1\").html(result).","Save all files and run the page through your local web server when required.","Click the button and verify that the external content appears inside the page."],"htmlCode":"<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<title>jQuery AJAX Exercise</title>\n<link rel=\"stylesheet\" href=\"style.css\">\n<script src=\"jquery.js\"><\/script>\n<script>\n$(document).ready(function(){\n  $(\"#btn1\").click(function(){\n    $.ajax({\n      url: \"first.txt\",\n      success: function(result){\n        $(\"#div1\").html(result);\n      },\n      error: function(){\n        $(\"#div1\").html(\"<p>Unable to load the requested content.</p>\");\n      }\n    });\n  });\n  $(\"#btn2\").click(function(){\n    $.ajax({\n      url: \"second.txt\",\n      success: function(result){\n        $(\"#div1\").html(result);\n      },\n      error: function(){\n        $(\"#div1\").html(\"<p>Unable to load the requested content.</p>\");\n      }\n    });\n  });\n});\n<\/script>\n</head>\n<body>\n<div id=\"div1\"><h2>jQuery AJAX Exercise</h2></div>\n<button id=\"btn1\">Load First</button>\n<button id=\"btn2\">Load Second</button>\n</body>\n</html>","cssCode":"body {\n  font-family: Arial, sans-serif;\n  margin: 30px;\n  background: #f4f4f4;\n}\n#div1 {\n  background: white;\n  border: 1px solid #ccc;\n  padding: 20px;\n  margin-bottom: 15px;\n}\nbutton {\n  padding: 10px 16px;\n  cursor: pointer;\n}","jsCode":"<script src=\"jquery.js\"><\/script>\n<script>\n$(document).ready(function(){\n  $(\"#btn1\").click(function(){\n    $.ajax({\n      url: \"first.txt\",\n      success: function(result){\n        $(\"#div1\").html(result);\n      },\n      error: function(){\n        $(\"#div1\").html(\"<p>Unable to load the requested content.</p>\");\n      }\n    });\n  });\n  $(\"#btn2\").click(function(){\n    $.ajax({\n      url: \"second.txt\",\n      success: function(result){\n        $(\"#div1\").html(result);\n      },\n      error: function(){\n        $(\"#div1\").html(\"<p>Unable to load the requested content.</p>\");\n      }\n    });\n  });\n});\n<\/script>","external":"first.txt\nFirst file content\nsecond.txt\nSecond file content","verification":"Click each button separately. The content from the selected external file should replace the content currently displayed in #div1."},{"number":12,"title":"Change Button Text After Success","task":"Load status.txt and change the button text to 'Loaded Successfully' after a successful request.","steps":["Open your project folder and make sure jquery.js is available. Use the supplied jquery.js file (jQuery 3.5.1).","Create or open the HTML file for this exercise.","Add the jQuery library inside the <head> section.","Use $(document).ready(function(){ ... }) so the code runs after the page is ready.","Add a button click event using jQuery.","Use $.ajax() and set the URL to status.txt.","Inside the success function, place the returned result into #div1 using $(\"#div1\").html(result).","Save all files and run the page through your local web server when required.","Click the button and verify that the external content appears inside the page.","Test the failure case where applicable and confirm that the page gives a clear response."],"htmlCode":"<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<title>jQuery AJAX Exercise</title>\n<link rel=\"stylesheet\" href=\"style.css\">\n<script src=\"jquery.js\"><\/script>\n<script>\n$(document).ready(function(){\n  $(\"button\").click(function(){\n    $.ajax({\n      url: \"status.txt\",\n      success: function(result){\n        $(\"#div1\").html(result);\n        $(\"button\").text(\"Loaded Successfully\");\n      }\n    });\n  });\n});\n<\/script>\n</head>\n<body>\n<div id=\"div1\"><h2>jQuery AJAX Exercise</h2></div>\n<button>Get External Content</button>\n</body>\n</html>","cssCode":"body {\n  font-family: Arial, sans-serif;\n  margin: 30px;\n  background: #f4f4f4;\n}\n#div1 {\n  background: white;\n  border: 1px solid #ccc;\n  padding: 20px;\n  margin-bottom: 15px;\n}\nbutton {\n  padding: 10px 16px;\n  cursor: pointer;\n}","jsCode":"<script src=\"jquery.js\"><\/script>\n<script>\n$(document).ready(function(){\n  $(\"button\").click(function(){\n    $.ajax({\n      url: \"status.txt\",\n      success: function(result){\n        $(\"#div1\").html(result);\n        $(\"button\").text(\"Loaded Successfully\");\n      }\n    });\n  });\n});\n<\/script>","external":"status.txt\nAJAX request completed successfully.","verification":"Click the button and confirm that the content from status.txt appears inside #div1 without reloading the whole page."},{"number":13,"title":"Show Loading Message","task":"Before requesting loading.txt, display 'Loading...' in #div1. Replace it with the AJAX response after success.","steps":["Open your project folder and make sure jquery.js is available. Use the supplied jquery.js file (jQuery 3.5.1).","Create or open the HTML file for this exercise.","Add the jQuery library inside the <head> section.","Use $(document).ready(function(){ ... }) so the code runs after the page is ready.","Add a button click event using jQuery.","Use $.ajax() and set the URL to loading.txt.","Inside the success function, place the returned result into #div1 using $(\"#div1\").html(result).","Save all files and run the page through your local web server when required.","Click the button and verify that the external content appears inside the page.","Test the failure case where applicable and confirm that the page gives a clear response."],"htmlCode":"<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<title>jQuery AJAX Exercise</title>\n<link rel=\"stylesheet\" href=\"style.css\">\n<script src=\"jquery.js\"><\/script>\n<script>\n$(document).ready(function(){\n  $(\"button\").click(function(){\n    $.ajax({\n      url: \"loading.txt\",\n      success: function(result){\n        $(\"#div1\").html(result);\n      }\n    });\n  });\n});\n<\/script>\n</head>\n<body>\n<div id=\"div1\"><h2>jQuery AJAX Exercise</h2></div>\n<button>Get External Content</button>\n</body>\n</html>","cssCode":"body {\n  font-family: Arial, sans-serif;\n  margin: 30px;\n  background: #f4f4f4;\n}\n#div1 {\n  background: white;\n  border: 1px solid #ccc;\n  padding: 20px;\n  margin-bottom: 15px;\n}\nbutton {\n  padding: 10px 16px;\n  cursor: pointer;\n}","jsCode":"<script src=\"jquery.js\"><\/script>\n<script>\n$(document).ready(function(){\n  $(\"button\").click(function(){\n    $.ajax({\n      url: \"loading.txt\",\n      success: function(result){\n        $(\"#div1\").html(result);\n      }\n    });\n  });\n});\n<\/script>","external":"loading.txt\nThe requested content has been loaded.","verification":"Click the button and confirm that the content from loading.txt appears inside #div1 without reloading the whole page."},{"number":14,"title":"Handle AJAX Error","task":"Request missing.txt. If the request fails, display an error message in #div1.","steps":["Open your project folder and make sure jquery.js is available. Use the supplied jquery.js file (jQuery 3.5.1).","Create or open the HTML file for this exercise.","Add the jQuery library inside the <head> section.","Use $(document).ready(function(){ ... }) so the code runs after the page is ready.","Add a button click event using jQuery.","Use $.ajax() and set the URL to missing.txt.","Inside the success function, place the returned result into #div1 using $(\"#div1\").html(result).","Save all files and run the page through your local web server when required.","Click the button and verify that the external content appears inside the page.","Test the failure case where applicable and confirm that the page gives a clear response."],"htmlCode":"<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<title>jQuery AJAX Exercise</title>\n<link rel=\"stylesheet\" href=\"style.css\">\n<script src=\"jquery.js\"><\/script>\n<script>\n$(document).ready(function(){\n  $(\"button\").click(function(){\n    $.ajax({\n      url: \"missing.txt\",\n      success: function(result){\n        $(\"#div1\").html(result);\n      },\n      error: function(){\n        $(\"#div1\").html(\"<p>Unable to load the requested content.</p>\");\n      }\n    });\n  });\n});\n<\/script>\n</head>\n<body>\n<div id=\"div1\"><h2>jQuery AJAX Exercise</h2></div>\n<button>Get External Content</button>\n</body>\n</html>","cssCode":"body {\n  font-family: Arial, sans-serif;\n  margin: 30px;\n  background: #f4f4f4;\n}\n#div1 {\n  background: white;\n  border: 1px solid #ccc;\n  padding: 20px;\n  margin-bottom: 15px;\n}\nbutton {\n  padding: 10px 16px;\n  cursor: pointer;\n}","jsCode":"<script src=\"jquery.js\"><\/script>\n<script>\n$(document).ready(function(){\n  $(\"button\").click(function(){\n    $.ajax({\n      url: \"missing.txt\",\n      success: function(result){\n        $(\"#div1\").html(result);\n      },\n      error: function(){\n        $(\"#div1\").html(\"<p>Unable to load the requested content.</p>\");\n      }\n    });\n  });\n});\n<\/script>","external":"missing.txt\nThis file is intentionally missing.","verification":"Click the button. Because the requested file is intentionally missing, the error handler should display the error message inside #div1."},{"number":15,"title":"Success and Error Handling","task":"Request data.txt. Display the returned content on success and a clear error message on failure.","steps":["Open your project folder and make sure jquery.js is available. Use the supplied jquery.js file (jQuery 3.5.1).","Create or open the HTML file for this exercise.","Add the jQuery library inside the <head> section.","Use $(document).ready(function(){ ... }) so the code runs after the page is ready.","Add a button click event using jQuery.","Use $.ajax() and set the URL to data.txt.","Inside the success function, place the returned result into #div1 using $(\"#div1\").html(result).","Save all files and run the page through your local web server when required.","Click the button and verify that the external content appears inside the page.","Test the failure case where applicable and confirm that the page gives a clear response."],"htmlCode":"<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<title>jQuery AJAX Exercise</title>\n<link rel=\"stylesheet\" href=\"style.css\">\n<script src=\"jquery.js\"><\/script>\n<script>\n$(document).ready(function(){\n  $(\"button\").click(function(){\n    $.ajax({\n      url: \"data.txt\",\n      success: function(result){\n        $(\"#div1\").html(result);\n      },\n      error: function(){\n        $(\"#div1\").html(\"<p>Unable to load the requested content.</p>\");\n      }\n    });\n  });\n});\n<\/script>\n</head>\n<body>\n<div id=\"div1\"><h2>jQuery AJAX Exercise</h2></div>\n<button>Get External Content</button>\n</body>\n</html>","cssCode":"body {\n  font-family: Arial, sans-serif;\n  margin: 30px;\n  background: #f4f4f4;\n}\n#div1 {\n  background: white;\n  border: 1px solid #ccc;\n  padding: 20px;\n  margin-bottom: 15px;\n}\nbutton {\n  padding: 10px 16px;\n  cursor: pointer;\n}","jsCode":"<script src=\"jquery.js\"><\/script>\n<script>\n$(document).ready(function(){\n  $(\"button\").click(function(){\n    $.ajax({\n      url: \"data.txt\",\n      success: function(result){\n        $(\"#div1\").html(result);\n      },\n      error: function(){\n        $(\"#div1\").html(\"<p>Unable to load the requested content.</p>\");\n      }\n    });\n  });\n});\n<\/script>","external":"data.txt\nAJAX data received successfully.","verification":"Click the button and confirm that the content from data.txt appears inside #div1 without reloading the whole page."},{"number":16,"title":"Load HTML List","task":"Create list.html containing an unordered list and load it into #div1.","steps":["Open your project folder and make sure jquery.js is available. Use the supplied jquery.js file (jQuery 3.5.1).","Create or open the HTML file for this exercise.","Add the jQuery library inside the <head> section.","Use $(document).ready(function(){ ... }) so the code runs after the page is ready.","Add a button click event using jQuery.","Use $.ajax() and set the URL to list.html.","Inside the success function, place the returned result into #div1 using $(\"#div1\").html(result).","Save all files and run the page through your local web server when required.","Click the button and verify that the external content appears inside the page.","Test the failure case where applicable and confirm that the page gives a clear response."],"htmlCode":"<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<title>jQuery AJAX Exercise</title>\n<link rel=\"stylesheet\" href=\"style.css\">\n<script src=\"jquery.js\"><\/script>\n<script>\n$(document).ready(function(){\n  $(\"button\").click(function(){\n    $.ajax({\n      url: \"list.html\",\n      success: function(result){\n        $(\"#div1\").html(result);\n      },\n      error: function(){\n        $(\"#div1\").html(\"<p>Unable to load the requested content.</p>\");\n      }\n    });\n  });\n});\n<\/script>\n</head>\n<body>\n<div id=\"div1\"><h2>jQuery AJAX Exercise</h2></div>\n<button>Get External Content</button>\n</body>\n</html>","cssCode":"body {\n  font-family: Arial, sans-serif;\n  margin: 30px;\n  background: #f4f4f4;\n}\n#div1 {\n  background: white;\n  border: 1px solid #ccc;\n  padding: 20px;\n  margin-bottom: 15px;\n}\nbutton {\n  padding: 10px 16px;\n  cursor: pointer;\n}","jsCode":"<script src=\"jquery.js\"><\/script>\n<script>\n$(document).ready(function(){\n  $(\"button\").click(function(){\n    $.ajax({\n      url: \"list.html\",\n      success: function(result){\n        $(\"#div1\").html(result);\n      },\n      error: function(){\n        $(\"#div1\").html(\"<p>Unable to load the requested content.</p>\");\n      }\n    });\n  });\n});\n<\/script>","external":"list.html\n<h3>Learning Topics</h3><ul><li>HTML</li><li>CSS</li><li>JavaScript</li><li>jQuery AJAX</li></ul>","verification":"Click the button and confirm that the content from list.html appears inside #div1 without reloading the whole page."},{"number":17,"title":"Load Student Profile","task":"Create profile.html containing a profile card and load it into #div1.","steps":["Open your project folder and make sure jquery.js is available. Use the supplied jquery.js file (jQuery 3.5.1).","Create or open the HTML file for this exercise.","Add the jQuery library inside the <head> section.","Use $(document).ready(function(){ ... }) so the code runs after the page is ready.","Add a button click event using jQuery.","Use $.ajax() and set the URL to profile.html.","Inside the success function, place the returned result into #div1 using $(\"#div1\").html(result).","Save all files and run the page through your local web server when required.","Click the button and verify that the external content appears inside the page.","Test the failure case where applicable and confirm that the page gives a clear response."],"htmlCode":"<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<title>jQuery AJAX Exercise</title>\n<link rel=\"stylesheet\" href=\"style.css\">\n<script src=\"jquery.js\"><\/script>\n<script>\n$(document).ready(function(){\n  $(\"button\").click(function(){\n    $.ajax({\n      url: \"profile.html\",\n      success: function(result){\n        $(\"#div1\").html(result);\n      },\n      error: function(){\n        $(\"#div1\").html(\"<p>Unable to load the requested content.</p>\");\n      }\n    });\n  });\n});\n<\/script>\n</head>\n<body>\n<div id=\"div1\"><h2>jQuery AJAX Exercise</h2></div>\n<button>Get External Content</button>\n</body>\n</html>","cssCode":"body {\n  font-family: Arial, sans-serif;\n  margin: 30px;\n  background: #f4f4f4;\n}\n#div1 {\n  background: white;\n  border: 1px solid #ccc;\n  padding: 20px;\n  margin-bottom: 15px;\n}\nbutton {\n  padding: 10px 16px;\n  cursor: pointer;\n}","jsCode":"<script src=\"jquery.js\"><\/script>\n<script>\n$(document).ready(function(){\n  $(\"button\").click(function(){\n    $.ajax({\n      url: \"profile.html\",\n      success: function(result){\n        $(\"#div1\").html(result);\n      },\n      error: function(){\n        $(\"#div1\").html(\"<p>Unable to load the requested content.</p>\");\n      }\n    });\n  });\n});\n<\/script>","external":"profile.html\n<div><h3>Student Profile</h3><p>Name: Student A</p><p>Course: Computer Technology</p></div>","verification":"Click the button and confirm that the content from profile.html appears inside #div1 without reloading the whole page."},{"number":18,"title":"Multiple Sections","task":"Create section1.txt and section2.txt. Use separate buttons to load each section into #div1.","steps":["Open your project folder and make sure jquery.js is available. Use the supplied jquery.js file (jQuery 3.5.1).","Create or open the HTML file for this exercise.","Add the jQuery library inside the <head> section.","Use $(document).ready(function(){ ... }) so the code runs after the page is ready.","Add a button click event using jQuery.","Use $.ajax() and set the URL to section1.txt / section2.txt.","Inside the success function, place the returned result into #div1 using $(\"#div1\").html(result).","Save all files and run the page through your local web server when required.","Click the button and verify that the external content appears inside the page.","Test the failure case where applicable and confirm that the page gives a clear response."],"htmlCode":"<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<title>jQuery AJAX Exercise</title>\n<link rel=\"stylesheet\" href=\"style.css\">\n<script src=\"jquery.js\"><\/script>\n<script>\n$(document).ready(function(){\n  $(\"#btn1\").click(function(){\n    $.ajax({\n      url: \"section1.txt\",\n      success: function(result){\n        $(\"#div1\").html(result);\n      },\n      error: function(){\n        $(\"#div1\").html(\"<p>Unable to load the requested content.</p>\");\n      }\n    });\n  });\n  $(\"#btn2\").click(function(){\n    $.ajax({\n      url: \"section2.txt\",\n      success: function(result){\n        $(\"#div1\").html(result);\n      },\n      error: function(){\n        $(\"#div1\").html(\"<p>Unable to load the requested content.</p>\");\n      }\n    });\n  });\n});\n<\/script>\n</head>\n<body>\n<div id=\"div1\"><h2>jQuery AJAX Exercise</h2></div>\n<button id=\"btn1\">Load Section 1</button>\n<button id=\"btn2\">Load Section 2</button>\n</body>\n</html>","cssCode":"body {\n  font-family: Arial, sans-serif;\n  margin: 30px;\n  background: #f4f4f4;\n}\n#div1 {\n  background: white;\n  border: 1px solid #ccc;\n  padding: 20px;\n  margin-bottom: 15px;\n}\nbutton {\n  padding: 10px 16px;\n  cursor: pointer;\n}","jsCode":"<script src=\"jquery.js\"><\/script>\n<script>\n$(document).ready(function(){\n  $(\"#btn1\").click(function(){\n    $.ajax({\n      url: \"section1.txt\",\n      success: function(result){\n        $(\"#div1\").html(result);\n      },\n      error: function(){\n        $(\"#div1\").html(\"<p>Unable to load the requested content.</p>\");\n      }\n    });\n  });\n  $(\"#btn2\").click(function(){\n    $.ajax({\n      url: \"section2.txt\",\n      success: function(result){\n        $(\"#div1\").html(result);\n      },\n      error: function(){\n        $(\"#div1\").html(\"<p>Unable to load the requested content.</p>\");\n      }\n    });\n  });\n});\n<\/script>","external":"section1.txt\nSection 1 content\nsection2.txt\nSection 2 content","verification":"Click each button separately. The content from the selected external file should replace the content currently displayed in #div1."},{"number":19,"title":"AJAX Content Dashboard","task":"Create dashboard.html and load a heading, paragraph, and list into #div1.","steps":["Open your project folder and make sure jquery.js is available. Use the supplied jquery.js file (jQuery 3.5.1).","Create or open the HTML file for this exercise.","Add the jQuery library inside the <head> section.","Use $(document).ready(function(){ ... }) so the code runs after the page is ready.","Add a button click event using jQuery.","Use $.ajax() and set the URL to dashboard.html.","Inside the success function, place the returned result into #div1 using $(\"#div1\").html(result).","Save all files and run the page through your local web server when required.","Click the button and verify that the external content appears inside the page.","Test the failure case where applicable and confirm that the page gives a clear response."],"htmlCode":"<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<title>jQuery AJAX Exercise</title>\n<link rel=\"stylesheet\" href=\"style.css\">\n<script src=\"jquery.js\"><\/script>\n<script>\n$(document).ready(function(){\n  $(\"button\").click(function(){\n    $.ajax({\n      url: \"dashboard.html\",\n      success: function(result){\n        $(\"#div1\").html(result);\n      },\n      error: function(){\n        $(\"#div1\").html(\"<p>Unable to load the requested content.</p>\");\n      }\n    });\n  });\n});\n<\/script>\n</head>\n<body>\n<div id=\"div1\"><h2>jQuery AJAX Exercise</h2></div>\n<button>Get External Content</button>\n</body>\n</html>","cssCode":"body {\n  font-family: Arial, sans-serif;\n  margin: 30px;\n  background: #f4f4f4;\n}\n#div1 {\n  background: white;\n  border: 1px solid #ccc;\n  padding: 20px;\n  margin-bottom: 15px;\n}\nbutton {\n  padding: 10px 16px;\n  cursor: pointer;\n}","jsCode":"<script src=\"jquery.js\"><\/script>\n<script>\n$(document).ready(function(){\n  $(\"button\").click(function(){\n    $.ajax({\n      url: \"dashboard.html\",\n      success: function(result){\n        $(\"#div1\").html(result);\n      },\n      error: function(){\n        $(\"#div1\").html(\"<p>Unable to load the requested content.</p>\");\n      }\n    });\n  });\n});\n<\/script>","external":"dashboard.html\n<h2>Dashboard</h2><p>AJAX content loaded successfully.</p><ul><li>Users</li><li>Reports</li><li>Messages</li></ul>","verification":"Click the button and confirm that the content from dashboard.html appears inside #div1 without reloading the whole page."},{"number":20,"title":"Mini AJAX Application","task":"Build a small AJAX content viewer with three buttons. Each button loads a different external file into #div1. Include loading and error handling.","steps":["Open your project folder and make sure jquery.js is available. Use the supplied jquery.js file (jQuery 3.5.1).","Create or open the HTML file for this exercise.","Add the jQuery library inside the <head> section.","Use $(document).ready(function(){ ... }) so the code runs after the page is ready.","Add a button click event using jQuery.","Use $.ajax() and set the URL to home.html / about.html / help.html.","Inside the success function, place the returned result into #div1 using $(\"#div1\").html(result).","Save all files and run the page through your local web server when required.","Click the button and verify that the external content appears inside the page.","Test the failure case where applicable and confirm that the page gives a clear response."],"htmlCode":"<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<title>jQuery AJAX Exercise</title>\n<link rel=\"stylesheet\" href=\"style.css\">\n<script src=\"jquery.js\"><\/script>\n<script>\n$(document).ready(function(){\n  $(\"#homeBtn\").click(function(){\n    $.ajax({\n      url: \"home.html\",\n      success: function(result){\n        $(\"#div1\").html(result);\n      },\n      error: function(){\n        $(\"#div1\").html(\"<p>Unable to load the requested content.</p>\");\n      }\n    });\n  });\n  $(\"#aboutBtn\").click(function(){\n    $.ajax({\n      url: \"about.html\",\n      success: function(result){\n        $(\"#div1\").html(result);\n      },\n      error: function(){\n        $(\"#div1\").html(\"<p>Unable to load the requested content.</p>\");\n      }\n    });\n  });\n  $(\"#helpBtn\").click(function(){\n    $.ajax({\n      url: \"help.html\",\n      success: function(result){\n        $(\"#div1\").html(result);\n      },\n      error: function(){\n        $(\"#div1\").html(\"<p>Unable to load the requested content.</p>\");\n      }\n    });\n  });\n});\n<\/script>\n</head>\n<body>\n<div id=\"div1\"><h2>jQuery AJAX Exercise</h2></div>\n<button id=\"homeBtn\">Home</button>\n<button id=\"aboutBtn\">About</button>\n<button id=\"helpBtn\">Help</button>\n</body>\n</html>","cssCode":"body {\n  font-family: Arial, sans-serif;\n  margin: 30px;\n  background: #f4f4f4;\n}\n#div1 {\n  background: white;\n  border: 1px solid #ccc;\n  padding: 20px;\n  margin-bottom: 15px;\n}\nbutton {\n  padding: 10px 16px;\n  cursor: pointer;\n}","jsCode":"<script src=\"jquery.js\"><\/script>\n<script>\n$(document).ready(function(){\n  $(\"#homeBtn\").click(function(){\n    $.ajax({\n      url: \"home.html\",\n      success: function(result){\n        $(\"#div1\").html(result);\n      },\n      error: function(){\n        $(\"#div1\").html(\"<p>Unable to load the requested content.</p>\");\n      }\n    });\n  });\n  $(\"#aboutBtn\").click(function(){\n    $.ajax({\n      url: \"about.html\",\n      success: function(result){\n        $(\"#div1\").html(result);\n      },\n      error: function(){\n        $(\"#div1\").html(\"<p>Unable to load the requested content.</p>\");\n      }\n    });\n  });\n  $(\"#helpBtn\").click(function(){\n    $.ajax({\n      url: \"help.html\",\n      success: function(result){\n        $(\"#div1\").html(result);\n      },\n      error: function(){\n        $(\"#div1\").html(\"<p>Unable to load the requested content.</p>\");\n      }\n    });\n  });\n});\n<\/script>","external":"home.html\n\nHome content\nabout.html\nAbout content\nhelp.html\nHelp content","verification":"Click Home, About, and Help. Each button should load its corresponding external HTML file into #div1. Also test a missing file if you want to verify the error handler."}];
+
+const code = document.getElementById("code");
+const preview = document.getElementById("preview");
+const fullPreview = document.getElementById("fullPreview");
+const gutter = document.getElementById("gutter");
+const status = document.getElementById("editorStatus");
+const checks = document.getElementById("checks");
+const requirements = document.getElementById("requirements");
+const modal = document.getElementById("modal");
+const setSelect = document.getElementById("setSelect");
+const studentName = document.getElementById("studentName");
+
+DATA.forEach((s, i) => {
+    const option = document.createElement("option");
+    option.value = i;
+    option.textContent = `Set ${i + 1} – ${s.title}`;
+    setSelect.appendChild(option);
+});
+
+function current() {
+    return DATA[Number(setSelect.value)];
+}
+
+function escapeHTML(value) {
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+function updateGutter() {
+    const count = Math.max(1, code.value.split("\n").length);
+    gutter.innerHTML = Array.from({length: count}, (_, i) => i + 1).join("<br>");
+}
+
+function updateSubmissionInfo() {
+    const s = current();
+    document.getElementById("submissionStudent").textContent =
+        studentName.value.trim() || "Not entered";
+    document.getElementById("submissionSet").textContent =
+        `Set ${Number(setSelect.value) + 1}`;
+    document.getElementById("submissionTask").textContent = s.title;
+}
+
+studentName.value = localStorage.getItem("lab12AjaxStudentName") || "";
+studentName.addEventListener("input", () => {
+    localStorage.setItem("lab12AjaxStudentName", studentName.value);
+    updateSubmissionInfo();
+});
+
+function jsOnly(js) {
+    return js
+        .replace(/^<script[^>]*>\s*/i, "")
+        .replace(/\s*<\/script>\s*$/i, "")
+        .trim();
+}
+
+function renderReference() {
+    const s = current();
+    const n = Number(setSelect.value) + 1;
+
+    document.getElementById("htmlReference").textContent = s.htmlCode;
+    document.getElementById("cssReference").textContent = s.cssCode;
+    document.getElementById("jsReference").textContent =
+        s.jsCode +
+        "\n\n==================== EXTERNAL FILE CONTENT ====================\n\n" +
+        s.external;
+
+    document.getElementById("htmlStatus").textContent =
+        `HTML + CSS + JavaScript reference loaded for Set ${n}: ${s.title}`;
+}
+
+function renderInstructions() {
+    const s = current();
+    const n = Number(setSelect.value) + 1;
+
+    document.getElementById("taskBadge").textContent = `SET ${n}`;
+    document.getElementById("title").textContent = s.title;
+
+    document.getElementById("taskList").innerHTML =
+        `<li><b>Task:</b> ${escapeHTML(s.task)}</li>` +
+        `<li><b>Step-by-Step Instructions:</b>
+            <ol>${s.steps.map(step => `<li>${escapeHTML(step)}</li>`).join("")}</ol>
+        </li>`;
+
+    const requirementItems = [
+        "HTML code reference",
+        "CSS code reference",
+        "JavaScript / jQuery AJAX reference",
+        "External AJAX file content",
+        ...s.steps
+    ];
+
+    requirements.innerHTML = requirementItems.map(item =>
+        `<div class="req"><b>${escapeHTML(item)}</b><span>Provided</span></div>`
+    ).join("");
+
+    updateSubmissionInfo();
+    renderReference();
+    loadDraft();
+}
+
+function loadDraft() {
+    const key = "lab12AjaxDraft_" + setSelect.value;
+    const saved = localStorage.getItem(key);
+
+    code.value = saved || "";
+    updateGutter();
+
+    status.textContent = saved
+        ? "Previous JavaScript draft restored for this set."
+        : "Ready. Enter your JavaScript / jQuery AJAX code.";
+
+    document.getElementById("submissionValidation").textContent = "Not checked";
+    checks.innerHTML =
+        '<div class="checkrow"><span class="dot"></span>Click <b>CHECK CODE</b> to validate the selected AJAX question.</div>';
+}
+
+function starterCode() {
+    return jsOnly(current().jsCode);
+}
+
+function copyText(text, label) {
+    const done = () => {
+        status.textContent = label + " copied.";
+    };
+
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(done).catch(() => fallbackCopy(text, done));
+    } else {
+        fallbackCopy(text, done);
+    }
+}
+
+function fallbackCopy(text, done) {
+    const area = document.createElement("textarea");
+    area.value = text;
+    area.style.position = "fixed";
+    area.style.opacity = "0";
+    document.body.appendChild(area);
+    area.select();
+    document.execCommand("copy");
+    area.remove();
+    done();
+}
+
+/* ===== Reference columns ===== */
+const htmlWrap = document.querySelector(".html-panel .html-wrap");
+
+if (htmlWrap) {
+    htmlWrap.innerHTML = `
+        <div class="reference-grid">
+            <div class="reference-column">
+                <h3>HTML Code</h3>
+                <pre id="htmlReference"></pre>
+                <button class="ref-copy" id="copyHtmlRef" type="button">COPY HTML</button>
+            </div>
+
+            <div class="reference-column">
+                <h3>CSS Code</h3>
+                <pre id="cssReference"></pre>
+                <button class="ref-copy" id="copyCssRef" type="button">COPY CSS</button>
+            </div>
+
+            <div class="reference-column">
+                <h3>JavaScript Statements &amp; Code</h3>
+                <pre id="jsReference"></pre>
+                <button class="ref-copy" id="copyJsRef" type="button">COPY JAVASCRIPT</button>
+            </div>
+        </div>
+
+        <div class="status" id="htmlStatus">
+            HTML + CSS + JavaScript reference loaded for the selected set.
+        </div>
+    `;
+}
+
+document.getElementById("copyHtmlRef").onclick =
+    () => copyText(current().htmlCode, "HTML code");
+
+document.getElementById("copyCssRef").onclick =
+    () => copyText(current().cssCode, "CSS code");
+
+document.getElementById("copyJsRef").onclick =
+    () => copyText(current().jsCode, "JavaScript reference");
+
+/* ===== AJAX simulation for VIEW OUTPUT =====
+   This allows the student workspace to demonstrate the supplied
+   AJAX code even when the HTML file is opened locally.
+   Actual AJAX testing should use XAMPP/localhost.
+*/
+function parseExternalFiles(s) {
+    const result = {};
+    const lines = s.external.split(/\r?\n/);
+
+    const urls = [...s.htmlCode.matchAll(/url:\s*["']([^"']+)["']/g)]
+        .map(match => match[1]);
+
+    let currentFile = null;
+    let buffer = [];
+
+    for (const line of lines) {
+        const clean = line.trim();
+
+        if (urls.includes(clean)) {
+            if (currentFile !== null) {
+                result[currentFile] = buffer.join("\n").trim();
+            }
+            currentFile = clean;
+            buffer = [];
+        } else if (currentFile !== null) {
+            buffer.push(line);
+        }
+    }
+
+    if (currentFile !== null) {
+        result[currentFile] = buffer.join("\n").trim();
+    }
+
+    return result;
+}
+
+function mockJQueryScript(s) {
+    const files = parseExternalFiles(s);
+    const safeFiles = JSON.stringify(files).replace(/</g, "\\u003c");
+
+    return `
+<script>
+(function () {
+    const AJAX_FILES = ${safeFiles};
+
+    function jq(selector) {
+        const nodes = selector === document
+            ? [document]
+            : Array.from(document.querySelectorAll(selector));
+
+        return {
+            click: function (handler) {
+                nodes.forEach(node => node.addEventListener("click", handler));
+                return this;
+            },
+
+            html: function (value) {
+                if (value === undefined) {
+                    return nodes[0] ? nodes[0].innerHTML : "";
+                }
+                nodes.forEach(node => node.innerHTML = value);
+                return this;
+            },
+
+            text: function (value) {
+                if (value === undefined) {
+                    return nodes[0] ? nodes[0].textContent : "";
+                }
+                nodes.forEach(node => node.textContent = value);
+                return this;
+            }
+        };
+    }
+
+    window.$ = function (selector) {
+        if (selector === document) {
+            return {
+                ready: function (fn) {
+                    fn();
+                }
+            };
+        }
+        return jq(selector);
+    };
+
+    $.ajax = function (options) {
+        setTimeout(function () {
+            if (Object.prototype.hasOwnProperty.call(AJAX_FILES, options.url)) {
+                if (typeof options.success === "function") {
+                    options.success(AJAX_FILES[options.url]);
+                }
+            } else {
+                if (typeof options.error === "function") {
+                    options.error({ status: 404 });
+                }
+            }
+        }, 150);
+    };
+})();
+<\/script>`;
+}
+
+function buildPreviewHTML() {
+    const s = current();
+    let html = s.htmlCode;
+
+    html = html.replace(
+        /<link[^>]+href=["']style\.css["'][^>]*>/i,
+        `<style>${s.cssCode}</style>`
+    );
+
+    // Replace the supplied jQuery file with the local AJAX simulator.
+    const AJAX_PLACEHOLDER = "___JQUERY_AJAX_SIMULATOR___";
+    html = html.replace(
+        /<script[^>]+src=["']jquery\.js["'][^>]*><\/script>/i,
+        AJAX_PLACEHOLDER
+    );
+
+    html = html.replace(
+        /<script[^>]+src=["']style\.css["'][^>]*><\/script>/gi,
+        ""
+    );
+
+    // Remove the reference inline JavaScript so VIEW OUTPUT executes the
+    // student's code only. The reference code remains visible in the column.
+    html = html.replace(/<script>([\s\S]*?)<\/script>/gi, "");
+
+    const studentCode = jsOnly(code.value);
+    if (studentCode.trim()) {
+        const safeStudentCode = studentCode.replace(/<\/script>/gi, "<\/script>");
+        html = html.replace(
+            /<\/head>/i,
+            `<script>${safeStudentCode}<\/script></head>`
+        );
+    }
+
+    html = html.replace(AJAX_PLACEHOLDER, mockJQueryScript(s));
+    return html;
+}
+function showOutput() {
+    if (!code.value.trim()) {
+        preview.srcdoc =
+            `<div style="font-family:Arial;padding:30px;color:#555">
+                <h2>No JavaScript Code Entered</h2>
+                <p>Write your jQuery AJAX code, then click <b>VIEW OUTPUT</b>.</p>
+             </div>`;
+
+        status.textContent = "Nothing to preview.";
+        return;
+    }
+
+    const finalHTML = buildPreviewHTML();
+
+    preview.srcdoc = finalHTML;
+    fullPreview.srcdoc = finalHTML;
+
+    status.textContent =
+        "AJAX output preview updated. The preview simulates the external AJAX files from the selected PDF set.";
+}
+
+function getRequiredURLs(s) {
+    return [...s.htmlCode.matchAll(/url:\s*["']([^"']+)["']/g)]
+        .map(match => match[1]);
+}
+
+function checkCode() {
+    const s = current();
+    const src = code.value;
+
+    const tests = [
+        ["JavaScript / jQuery code entered", src.trim().length > 0],
+        ["$(document).ready() used", /\$\s*\(\s*document\s*\)\s*\.ready\s*\(/.test(src)],
+        ["Button click handler used", /\.click\s*\(/.test(src)],
+        ["$.ajax() used", /\$\.ajax\s*\(/.test(src)],
+        ["Success callback used", /success\s*:\s*function\s*\(/.test(src)],
+        ["#div1 updated with AJAX result", /\$\s*\(\s*["']#div1["']\s*\)\s*\.html\s*\(\s*result/.test(src)]
+    ];
+
+    const urls = getRequiredURLs(s);
+
+    urls.forEach(url => {
+        tests.push([
+            src.includes(url),
+            `Required AJAX URL used: ${url}`
+        ]);
+    });
+
+    if ([11, 18].includes(s.number)) {
+        tests.push([
+            /#btn1/.test(src) && /#btn2/.test(src),
+            "Both required button IDs used"
+        ]);
+    }
+
+    if (s.number === 20) {
+        tests.push([
+            /homeBtn/.test(src) && /aboutBtn/.test(src) && /helpBtn/.test(src),
+            "All three button IDs used"
+        ]);
+    }
+
+    if ([14, 15, 16, 17, 18, 19, 20].includes(s.number)) {
+        tests.push([
+            /error\s*:\s*function\s*\(/.test(src),
+            "AJAX error handler used"
+        ]);
+    }
+
+    if (s.number === 12) {
+        tests.push([
+            /\.text\s*\(\s*["']Loaded Successfully["']/.test(src),
+            "Button text changed after success"
+        ]);
+    }
+
+    if (s.number === 13) {
+        tests.push([
+            /Loading\.\.\./.test(src),
+            "Loading message implemented"
+        ]);
+    }
+
+    const passed = tests.filter(test => test[1]).length;
+    const percentage = Math.round((passed / tests.length) * 100);
+
+    checks.innerHTML = tests.map(test =>
+        `<div class="checkrow ${test[1] ? "pass" : "fail"}">
+            <span class="dot"></span>
+            ${test[1] ? "✓" : "✗"} ${escapeHTML(test[0])}
+        </div>`
+    ).join("");
+
+    status.textContent =
+        `jQuery AJAX validation complete: ${passed}/${tests.length} checks detected (${percentage}%).`;
+
+    document.getElementById("submissionValidation").textContent =
+        `${passed}/${tests.length} (${percentage}%)`;
+
+    localStorage.setItem(
+        "lab12AjaxDraft_" + setSelect.value,
+        code.value
+    );
+
+    showOutput();
+}
+
+code.addEventListener("input", () => {
+    updateGutter();
+    localStorage.setItem(
+        "lab12AjaxDraft_" + setSelect.value,
+        code.value
+    );
+});
+
+code.addEventListener("scroll", () => {
+    gutter.scrollTop = code.scrollTop;
+});
+
+code.addEventListener("keydown", event => {
+    if (event.key === "Tab") {
+        event.preventDefault();
+
+        const start = code.selectionStart;
+        const end = code.selectionEnd;
+
+        code.value =
+            code.value.slice(0, start) +
+            "  " +
+            code.value.slice(end);
+
+        code.selectionStart =
+            code.selectionEnd = start + 2;
+
+        updateGutter();
+    }
+});
+
+setSelect.addEventListener("change", renderInstructions);
+
+document.getElementById("viewBtn").onclick = showOutput;
+document.getElementById("checkBtn").onclick = checkCode;
+
+document.getElementById("templateBtn").onclick = () => {
+    if (
+        code.value.trim() &&
+        !confirm("Replace current code with the provided JavaScript starter code?")
+    ) {
+        return;
+    }
+
+    code.value = starterCode();
+    updateGutter();
+
+    status.textContent =
+        "Provided jQuery AJAX starter code inserted.";
+};
+
+document.getElementById("fullscreenBtn").onclick = () => {
+    showOutput();
+    modal.classList.add("show");
+};
+
+document.getElementById("closeModal").onclick = () => {
+    modal.classList.remove("show");
+};
+
+modal.addEventListener("click", event => {
+    if (event.target === modal) {
+        modal.classList.remove("show");
+    }
+});
+
+document.getElementById("clearBtn").onclick = () => {
+    if (confirm("Clear your current JavaScript code for this set?")) {
+        code.value = "";
+        updateGutter();
+
+        localStorage.removeItem(
+            "lab12AjaxDraft_" + setSelect.value
+        );
+
+        preview.srcdoc = "";
+
+        checks.innerHTML =
+            '<div class="checkrow"><span class="dot"></span>Code cleared.</div>';
+
+        status.textContent = "JavaScript editor cleared.";
+
+        document.getElementById("submissionValidation").textContent =
+            "Not checked";
+    }
+};
+
+document.getElementById("printBtn").onclick = () => {
+    if (!code.value.trim()) {
+        alert("Please enter your JavaScript code first.");
+        return;
+    }
+
+    showOutput();
+
+    const win = window.open("", "_blank", "width=1100,height=800");
+
+    if (!win) {
+        alert("Please allow pop-ups to print the output.");
+        return;
+    }
+
+    win.document.open();
+    win.document.write(buildPreviewHTML());
+    win.document.close();
+
+    win.onload = () => {
+        win.focus();
+        win.print();
+    };
+};
+
+document.getElementById("telegramBtn").onclick = () => {
+    const student = studentName.value.trim();
+
+    if (!student) {
+        alert("Please enter your Student Name before submitting.");
+        studentName.focus();
+        return;
+    }
+
+    if (!code.value.trim()) {
+        alert("Please complete your JavaScript / jQuery AJAX code before submitting.");
+        return;
+    }
+
+    const s = current();
+    const n = Number(setSelect.value) + 1;
+    const validation =
+        document.getElementById("submissionValidation").textContent;
+
+    const message =
+`LAB 12 JQUERY AJAX SUBMISSION
+
+Student Name: ${student}
+Question: Set ${n}
+Task: ${s.title}
+Validation: ${validation}
+
+Lecturer:
+MOHD SHUKRI BIN MUHAMAD HUSIN
+
+Programme:
+Diploma in Computer Technology (Big Data)
+TVETMARA Lumut`;
+
+    window.open(
+        "https://t.me/+60189577991?text=" +
+        encodeURIComponent(message),
+        "_blank",
+        "noopener,noreferrer"
+    );
+};
+
+renderInstructions();
+</script>
+
+</body>
+</html>
