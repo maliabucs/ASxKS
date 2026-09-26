@@ -939,3 +939,44 @@ footer {
 .hero-button:hover {
   opacity: 0.8;
 }
+/* =========================================================
+   ANIMASI TAMBAHAN (DARK EDITORIAL THEME)
+   ========================================================= */
+
+@keyframes editorialFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Animasi kemunculan lembut menggunakan class asal anda */
+.eyebrow {
+  animation: editorialFadeUp 1s ease forwards 0.2s;
+  opacity: 0;
+}
+
+.hero h1 {
+  animation: editorialFadeUp 1s ease forwards 0.4s;
+  opacity: 0;
+}
+
+.hero-description {
+  animation: editorialFadeUp 1s ease forwards 0.6s;
+  opacity: 0;
+}
+
+.hero-button {
+  animation: editorialFadeUp 1s ease forwards 0.8s;
+  opacity: 0;
+}
+
+/* Animasi nombor 24 tanpa mengusik saiz 110px asalnya */
+.hero-number {
+  animation: editorialFadeUp 1s ease forwards 1s;
+  opacity: 0;
+}
