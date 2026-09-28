@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gallery Membership</title>
+  <style>
+    *, *::before, *::after {
+        box-sizing: border-box;
+    }
+
+    html, body, header, footer, hgroup, nav, article, section, figure, figcaption, h1, h2, h3, ul, li, div, p, img, form, label, input, select {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        font-size: 100%;
+        vertical-align: baseline;
+    }
+
+    body {
+        font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", Arial, sans-serif;
+        font-size: 14px;
+        color: #2c3e50;
+        background: #f0f4f8 url('https://www.transparenttextures.com/patterns/stucco.png') repeat;
+        line-height: 1.6;
+        padding-bottom: 50px;
+    }
+
+    header {
+        width: 900px;
+        margin: 20px auto 0 auto;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        border-radius: 12px;
+        overflow: hidden;
+        background-color: #ffffff;
+    }
+
+    div.topHeaderRow {
+        background: linear-gradient(135deg, #1e293b, #0f172a);
+        font-size: 0.9em;
+        height: 3.2em;
+        text-align: center;
+        line-height: 3.2em;
+    }
+
+    div.topHeaderRow ul {
+        list-style: none;
+    }
+
+    div.topHeaderRow li {
+        display: inline-block;
+    }
+
+    div.topHeaderRow a {
+        color: #cbd5e1;
+        margin: 0 1.5em;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s ease;
+    }
+
+    div.topHeaderRow a:hover {
+        color: #38bdf8;
+    }
+
+    div.mainNavigationRow {
+        background: linear-gradient(135deg, #4f46e5, #6366f1);
+        padding: 15px 25px;
+        text-align: center;
+    }
+
+    h1 {
+        font-size: 2.2em;
+        font-weight: 700;
+        color: #ffffff;
+        letter-spacing: 0.5px;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    }
+
+    main {
+        width: 900px;
+        margin: 25px auto;
+        background-color: #ffffff;
+        padding: 35px 40px;
+        border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+        border: 1px solid #e2e8f0;
+    }
+
+    h2 {
+        font-size: 2em;
+        color: #1e293b;
+        margin-bottom: 20px;
+        text-align: center;
+        position: relative;
+        padding-bottom: 10px;
+    }
+
+    h2::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 4px;
+        background: linear-gradient(90deg, #6366f1, #38bdf8);
+        border-radius: 2px;
+    }
+
+    h3 {
+        font-size: 1.25em;
+        color: #4f46e5;
+        background-color: #f1f5f9;
+        border-left: 4px solid #6366f1;
+        margin-top: 30px;
+        margin-bottom: 20px;
+        padding: 10px 15px;
+        border-radius: 0 8px 8px 0;
+    }
+
+    label {
+        font-weight: bold;
+        display: block;
+        margin-top: 15px;
+        margin-bottom: 6px;
+        color: #334155;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="tel"],
+    input[type="date"],
+    select {
+        width: 100%;
+        padding: 10px 14px;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        font-size: 0.95em;
+        color: #1e293b;
+        background-color: #f8fafc;
+        transition: all 0.3s ease;
+        margin-bottom: 5px;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="password"]:focus,
+    input[type="tel"]:focus,
+    input[type="date"]:focus,
+    select:focus {
+        outline: none;
+        border-color: #6366f1;
+        background-color: #ffffff;
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+    }
+
+    input[type="color"] {
+        width: 60px;
+        height: 38px;
+        border: 1px solid #cbd5e1;
+        border-radius: 6px;
+        padding: 3px;
+        cursor: pointer;
+        background-color: #ffffff;
+    }
+
+    input[type="range"] {
+        width: 60%;
+        margin: 10px 12px;
+        vertical-align: middle;
+        accent-color: #6366f1;
+    }
+
+    form span {
+        font-weight: 600;
+        color: #64748b;
+    }
+
+    div > label {
+        display: inline-block;
+        margin-right: 20px;
+        font-weight: normal;
+        cursor: pointer;
+    }
+
+    input[type="radio"],
+    input[type="checkbox"] {
+        accent-color: #6366f1;
+        transform: scale(1.1);
+        margin-right: 6px;
+        cursor: pointer;
+    }
+
+    form > label input[type="checkbox"] {
+        margin-right: 8px;
+    }
+
+    form a {
+        color: #4f46e5;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    form a:hover {
+        text-decoration: underline;
+    }
+
+    .fancyBtn,
+    button.fancyBtn {
+        background-color: #bddbfa;
+        color: #1e3a8a;
+        font-size: 1.1em;
+        font-weight: 700;
+        padding: 12px 28px;
+        border: 2px solid #93c5fd;
+        border-radius: 8px;
+        cursor: pointer;
+        display: block;
+        margin-top: 25px;
+        box-shadow: 0 4px 10px rgba(189, 219, 250, 0.5);
+        transition: all 0.3s ease;
+    }
+
+    .fancyBtn:hover {
+        background-color: #93c5fd;
+        color: #0f172a;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(147, 197, 253, 0.6);
+    }
+
+    table {
+        width: 60%;
+        border-collapse: collapse;
+        margin-top: 1.5em;
+        margin-bottom: 1.5em;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    th {
+        font-weight: bold;
+        font-size: 1em;
+        text-align: left;
+        padding: 12px;
+        background-color: #e0e7ff;
+        color: #3730a3;
+        border-bottom: 2px solid #c7d2fe;
+    }
+
+    td {
+        padding: 10px 12px;
+        border-bottom: 1px solid #e2e8f0;
+        background-color: #ffffff;
+    }
+
+    tr:hover td {
+        background-color: #f8fafc;
+    }
+
+    footer {
+        clear: both;
+        width: 900px;
+        margin: 20px auto 0 auto;
+        padding: 15px;
+        background: #1e293b;
+        color: #94a3b8;
+        font-size: 0.88em;
+        text-align: center;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="topHeaderRow">
+      <ul>
+        <li><a href="Lab4.html">Home</a></li>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Art Works</a></li>
+        <li><a href="#">Artists</a></li>
+      </ul>
+    </div>
+    <div class="mainNavigationRow"><h1>Contemporary Gallery</h1></div>
+  </header>
+  <main>
+    <h2>Gallery Membership</h2>
+    <form>
+      <h3>1. User Info</h3>
+      <label>First Name</label><input type="text" name="firstName">
+      <label>Last Name</label><input type="text" name="lastName">
+      <label>Email</label><input type="email" name="email" placeholder="format for email is xxx@yyy.zzz">
+      <label>Password</label><input type="password" name="password" placeholder="at least 8 characters">
+      <label>Password Repeat</label><input type="password" name="passwordRepeat" placeholder="at least 8 characters">
+      <h3>2. Location</h3>
+      <label>Address</label><input type="text" name="address">
+      <label>City</label><input type="text" name="city">
+      <label>State</label><input type="text" name="state">
+      <label>Zip</label><input type="text" name="zip">
+      <label>Phone</label><input type="tel" name="phone" placeholder="NNN-NNN-NNNN">
+      <label>Country</label>
+      <select name="country"><option>Australia</option><option>Malaysia</option><option>United Kingdom</option><option>Australia</option></select>
+      <label>Continent</label>
+      <div>
+        <label><input type="radio" name="continent"> North America</label>
+        <label><input type="radio" name="continent"> Europe</label>
+        <label><input type="radio" name="continent"> South America</label>
+      </div>
+      <h3>3. Personal Details</h3>
+      <label>Birth Day</label><input type="date" name="birthDay">
+      <label>Favorite Color</label><input type="color" name="favoriteColor">
+      <label>Interest In Art</label>
+      <span>Minimal</span><input type="range" name="interest" min="0" max="100"><span>Love it!</span>
+      <h3>4. All Done</h3>
+      <label><input type="checkbox" name="agree"> I agree to the <a href="#">Terms of the Site</a></label>
+      <button type="button" class="fancyBtn">✓ Sign me up!</button>
+    </form>
+  </main>
+  <footer><p>All images are copyright to their owners. This is a hypothetical site.</p></footer>
+</body>
+</html>
