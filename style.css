@@ -840,3 +840,278 @@ footer {
     }
 
 }
+
+
+/* =========================================================
+   ASxKS JOBSHEET ARCHIVE ADDITIONS
+   ========================================================= */
+
+.progress-card {
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    transition:
+        background 0.3s ease,
+        border-color 0.3s ease,
+        transform 0.3s ease;
+}
+
+.progress-card::after {
+    content: "SELECT ARCHITECT";
+    position: absolute;
+    right: 25px;
+    bottom: 18px;
+    color: #444;
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    transition: color 0.3s ease;
+}
+
+.progress-card:hover {
+    background: #111;
+    border-color: rgba(255,255,255,0.2);
+    transform: translateY(-4px);
+}
+
+.progress-card:hover::after {
+    color: #aaa;
+}
+
+.progress-card.selected {
+    border-color: rgba(255,255,255,0.35);
+    background: #111;
+}
+
+.progress-card.selected::after {
+    content: "ARCHITECT SELECTED";
+    color: #fff;
+}
+
+.archive-header {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 30px;
+    margin-bottom: 25px;
+    padding-top: 10px;
+}
+
+.archive-header-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.archive-header-mark {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #fff;
+}
+
+.archive-header-label {
+    color: #555;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 3px;
+}
+
+.archive-header-name {
+    margin: 5px 0 0;
+    font-size: 20px;
+    letter-spacing: 1px;
+}
+
+.archive-header-set {
+    color: #777;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.archive-placeholder {
+    padding: 45px 30px;
+    border: 1px solid rgba(255,255,255,0.08);
+    background: #0b0b0b;
+    color: #555;
+    text-align: center;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 3px;
+}
+
+.jobsheet-grid.archive-active {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: rgba(255,255,255,0.1);
+}
+
+.archive-jobsheet-card {
+    position: relative;
+    min-height: 245px;
+    padding: 25px;
+    background: #0b0b0b;
+    transition:
+        background 0.3s ease,
+        transform 0.3s ease,
+        border-color 0.3s ease;
+}
+
+.archive-jobsheet-card::before {
+    content: "";
+    position: absolute;
+    top: 25px;
+    left: 0;
+    width: 2px;
+    height: 38px;
+    background: #777;
+    transition: height 0.3s ease, background 0.3s ease;
+}
+
+.archive-jobsheet-card:hover {
+    background: #121212;
+    transform: translateY(-5px);
+}
+
+.archive-jobsheet-card:hover::before {
+    height: 65px;
+    background: #fff;
+}
+
+.archive-jobsheet-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.archive-jobsheet-number {
+    color: #555;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.archive-jobsheet-set {
+    padding: 6px 8px;
+    border: 1px solid rgba(255,255,255,0.1);
+    color: #666;
+    font-size: 7px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+
+.archive-jobsheet-card h3 {
+    margin: 45px 0 10px;
+    font-size: 15px;
+    letter-spacing: 1px;
+}
+
+.archive-jobsheet-description {
+    min-height: 42px;
+    margin: 0;
+    color: #666;
+    font-size: 10px;
+    line-height: 1.7;
+}
+
+.archive-jobsheet-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 25px;
+}
+
+.archive-jobsheet-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 36px;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: transparent;
+    color: #777;
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    transition:
+        background 0.3s ease,
+        color 0.3s ease,
+        border-color 0.3s ease;
+}
+
+.archive-jobsheet-action:hover {
+    background: #fff;
+    border-color: #fff;
+    color: #080808;
+}
+
+.archive-jobsheet-action.live {
+    border-color: rgba(255,255,255,0.3);
+    color: #fff;
+}
+
+.archive-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 25px;
+    padding: 10px 14px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: transparent;
+    color: #666;
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.archive-back:hover {
+    background: #fff;
+    color: #080808;
+}
+
+
+/* RESPONSIVE JOBSHEET ARCHIVE */
+
+@media (max-width: 900px) {
+
+    .jobsheet-grid.archive-active {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+@media (max-width: 700px) {
+
+    .archive-header {
+        display: block;
+    }
+
+    .archive-header-set {
+        margin-top: 12px;
+    }
+
+    .jobsheet-grid.archive-active {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+@media (max-width: 450px) {
+
+    .archive-jobsheet-card {
+        min-height: 230px;
+        padding: 20px;
+    }
+
+    .archive-jobsheet-card h3 {
+        margin-top: 40px;
+    }
+
+    .archive-jobsheet-actions {
+        grid-template-columns: 1fr 1fr;
+    }
+
+}
