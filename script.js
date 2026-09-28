@@ -419,7 +419,7 @@ function createJobsheets(student = "") {
                     class="archive-jobsheet-action pdf"
                     href="${pdfPath}"
                     target="_blank"
-                    rel="noopener nore
+                    rel="noopener noreferrer"
                 >
                     VIEW PDF
                 </a>
@@ -429,7 +429,7 @@ function createJobsheets(student = "") {
                     class="archive-jobsheet-action live"
                     href="${livePath}"
                     target="_blank"
-                    rel="noopener nor
+                    rel="noopener norefferer"
                 >
                     VIEW LIVE
                 </a>
