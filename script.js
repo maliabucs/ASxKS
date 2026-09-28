@@ -393,7 +393,7 @@ function createJobsheets(student = "") {
             <div class="archive-jobsheet-top">
 
                 <span class="archive-jobsheet-number">
-                    JOBSHEET ${number}
+                    LAB COURSEWORK
                 </span>
 
                 <span class="archive-jobsheet-set">
