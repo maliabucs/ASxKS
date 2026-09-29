@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JOB SHEET 08: JavaScript Client Side Validatio</title>
+<title>JOB SHEET 08: JavaScript Client Side Validation</title>
 <style>
 :root{--bg:#0b1020;--panel:#121a2e;--panel2:#18233d;--line:#293653;--text:#eef4ff;--muted:#9eacc8;--accent:#6ea8fe;--accent2:#8b5cf6;--success:#35d07f;--danger:#ff6b7a}
 *{box-sizing:border-box}
@@ -192,8 +192,8 @@ function escapeHTML(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;
 function escapeReg(s){return String(s).replace(/[.*+?^${}()|[\]\\]/g,"\\$&")}
 function updateSubmissionInfo(){const s=current();document.getElementById("submissionStudent").textContent=studentName.value.trim()||"Not entered";document.getElementById("submissionSet").textContent=`Set ${Number(setSelect.value)+1}`;document.getElementById("submissionTask").textContent=s.title}
 
-studentName.value=localStorage.getItem("cssLab4StudentName")||"";
-studentName.addEventListener("input",()=>{localStorage.setItem("cssLab4StudentName",studentName.value);updateSubmissionInfo()});
+studentName.value=localStorage.getItem("jsValidationLabStudentName")||"";
+studentName.addEventListener("input",()=>{localStorage.setItem("jsValidationLabStudentName",studentName.value);updateSubmissionInfo()});
 
 function renderHTMLReference(){
   const s=current();
@@ -274,14 +274,14 @@ function starter(){
 /* 6. Footer */`;
 }
 function loadDraft(){
- const key="cssLab4Draft_"+setSelect.value,saved=localStorage.getItem(key);
+ const key="jsValidationLabDraft_"+setSelect.value,saved=localStorage.getItem(key);
  code.value=saved??"";updateGutter();preview.srcdoc="";
  status.textContent=saved?"Previous CSS draft restored for this set.":"Ready. Enter your CSS solution.";
  checks.innerHTML=`<div class="checkrow"><span class="dot"></span>Click <b>CHECK CODE</b> to validate your CSS.</div>`;
  document.getElementById("submissionValidation").textContent="Not checked";
 }
 function updateGutter(){const n=Math.max(1,code.value.split("\n").length);gutter.innerHTML=Array.from({length:n},(_,i)=>i+1).join("<br>")}
-code.addEventListener("input",()=>{updateGutter();localStorage.setItem("cssLab4Draft_"+setSelect.value,code.value)});
+code.addEventListener("input",()=>{updateGutter();localStorage.setItem("jsValidationLabDraft_"+setSelect.value,code.value)});
 code.addEventListener("scroll",()=>gutter.scrollTop=code.scrollTop);
 code.addEventListener("keydown",e=>{
   if(
@@ -300,7 +300,7 @@ code.addEventListener("keydown",e=>{
     code.value=code.value.slice(0,a)+"  "+code.value.slice(b);
     code.selectionStart=code.selectionEnd=a+2;
     updateGutter();
-    localStorage.setItem("cssLab4Draft_"+setSelect.value,code.value);
+    localStorage.setItem("jsValidationLabDraft_"+setSelect.value,code.value);
   }
 });
 
@@ -326,7 +326,7 @@ function showOutput(){
  const css=code.value.trim();
  if(!css){preview.srcdoc='<div style="font-family:Arial;padding:30px;color:#555"><h2>No CSS code entered</h2><p>Write your CSS code, then click <b>VIEW OUTPUT</b>.</p></div>';status.textContent="Nothing to preview.";return}
  const s=current(),student=studentName.value.trim()||"Not entered",setNumber=Number(setSelect.value)+1;
- const header=`<div id="labSubmissionHeader" style="font-family:Arial,sans-serif;background:#f1f5ff;border:2px solid #405de6;padding:16px;margin:0 0 25px 0;border-radius:10px"><h3 style="margin:0 0 10px;color:#243b80">JOB SHEET 04 – CSS3</h3><p><strong>Student Name:</strong> ${escapeHTML(student)}</p><p><strong>Question:</strong> Set ${setNumber}</p><p><strong>Task:</strong> ${escapeHTML(s.title)}</p><p><strong>Validation:</strong> ${escapeHTML(document.getElementById("submissionValidation").textContent)}</p></div>`;
+ const header=`<div id="labSubmissionHeader" style="font-family:Arial,sans-serif;background:#f1f5ff;border:2px solid #405de6;padding:16px;margin:0 0 25px 0;border-radius:10px"><h3 style="margin:0 0 10px;color:#243b80">JOB SHEET 08 – JavaScript Validation</h3><p><strong>Student Name:</strong> ${escapeHTML(student)}</p><p><strong>Question:</strong> Set ${setNumber}</p><p><strong>Task:</strong> ${escapeHTML(s.title)}</p><p><strong>Validation:</strong> ${escapeHTML(document.getElementById("submissionValidation").textContent)}</p></div>`;
  const finalHTML=`<!DOCTYPE html><html><head><meta charset="UTF-8"><style>${clean(css)}</style></head><body>${header}${s.htmlCode}</body></html>`;
  preview.srcdoc=finalHTML;fullPreview.srcdoc=finalHTML;status.textContent="CSS output updated successfully.";
 }
@@ -348,23 +348,23 @@ function checkCode(){
 setSelect.addEventListener("change",()=>{renderInstructions();renderHTMLReference();});
 document.getElementById("viewBtn").onclick=showOutput;
 document.getElementById("checkBtn").onclick=checkCode;
-document.getElementById("templateBtn").onclick=()=>{if(code.value.trim()&&!confirm("Replace current code with the starter template?"))return;code.value=starter();updateGutter();localStorage.setItem("cssLab4Draft_"+setSelect.value,code.value);status.textContent="Starter template inserted."};
+document.getElementById("templateBtn").onclick=()=>{if(code.value.trim()&&!confirm("Replace current code with the starter template?"))return;code.value=starter();updateGutter();localStorage.setItem("jsValidationLabDraft_"+setSelect.value,code.value);status.textContent="Starter template inserted."};
 document.getElementById("fullscreenBtn").onclick=()=>{showOutput();modal.classList.add("show")};
 document.getElementById("closeModal").onclick=()=>modal.classList.remove("show");
 modal.addEventListener("click",e=>{if(e.target===modal)modal.classList.remove("show")});
-document.getElementById("clearBtn").onclick=()=>{if(confirm("Clear your current CSS code for this set?")){code.value="";updateGutter();localStorage.removeItem("cssLab4Draft_"+setSelect.value);preview.srcdoc="";checks.innerHTML='<div class="checkrow"><span class="dot"></span>Code cleared.</div>';status.textContent="Editor cleared.";document.getElementById("submissionValidation").textContent="Not checked"}};
+document.getElementById("clearBtn").onclick=()=>{if(confirm("Clear your current CSS code for this set?")){code.value="";updateGutter();localStorage.removeItem("jsValidationLabDraft_"+setSelect.value);preview.srcdoc="";checks.innerHTML='<div class="checkrow"><span class="dot"></span>Code cleared.</div>';status.textContent="Editor cleared.";document.getElementById("submissionValidation").textContent="Not checked"}};
 document.getElementById("printBtn").onclick=()=>{
  if(!code.value.trim()){alert("Please enter your CSS code first.");return}
  showOutput();
  const s=current(),student=studentName.value.trim()||"Not entered",validation=document.getElementById("submissionValidation").textContent;
- const output=`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>CSS3 Job Sheet 04 Submission</title><style>${clean(code.value)}</style></head><body><div style="font-family:Arial;border:2px solid #333;padding:15px;margin-bottom:25px"><h2>JOB SHEET 04 – CSS3</h2><p><strong>Student Name:</strong> ${escapeHTML(student)}</p><p><strong>Question:</strong> Set ${Number(setSelect.value)+1}</p><p><strong>Task:</strong> ${escapeHTML(s.title)}</p><p><strong>Validation:</strong> ${escapeHTML(validation)}</p></div>${s.htmlCode}</body></html>`;
+ const output=`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>JavaScript Job Sheet 08 Submission</title><style>${clean(code.value)}</style></head><body><div style="font-family:Arial;border:2px solid #333;padding:15px;margin-bottom:25px"><h2>JOB SHEET 08 – JavaScript Validation</h2><p><strong>Student Name:</strong> ${escapeHTML(student)}</p><p><strong>Question:</strong> Set ${Number(setSelect.value)+1}</p><p><strong>Task:</strong> ${escapeHTML(s.title)}</p><p><strong>Validation:</strong> ${escapeHTML(validation)}</p></div>${s.htmlCode}</body></html>`;
  const w=window.open("","_blank","width=1000,height=800");if(!w){alert("Please allow pop-ups to print the output.");return}w.document.open();w.document.write(output);w.document.close();w.onload=()=>{w.focus();w.print()};
 };
 document.getElementById("telegramBtn").onclick=()=>{
  const student=studentName.value.trim();if(!student){alert("Please enter your Student Name before submitting.");studentName.focus();return}
  if(!code.value.trim()){alert("Please complete your CSS code before submitting.");return}
  const s=current(),setNumber=Number(setSelect.value)+1,validation=document.getElementById("submissionValidation").textContent;
- const message=`CSS3 JOB SHEET 04 SUBMISSION\n\nStudent Name: ${student}\nQuestion: Set ${setNumber}\nTask: ${s.title}\nValidation: ${validation}\n\nLecturer:\nMOHD SHUKRI BIN MUHAMAD HUSIN\n\nProgramme:\nDiploma in Computer Technology (Big Data)\nTVETMARA Lumut\n\nLecturer Telegram:\n+60189577991\n\nStudent has completed JOB SHEET 04 – CSS3.`;
+ const message=`JAVASCRIPT JOB SHEET 08 SUBMISSION\n\nStudent Name: ${student}\nQuestion: Set ${setNumber}\nTask: ${s.title}\nValidation: ${validation}\n\nLecturer:\nMOHD SHUKRI BIN MUHAMAD HUSIN\n\nProgramme:\nDiploma in Computer Technology (Big Data)\nTVETMARA Lumut\n\nLecturer Telegram:\n+60189577991\n\nStudent has completed JOB SHEET 08 – JavaScript Validation.`;
  window.open("https://t.me/+60189577991?text="+encodeURIComponent(message),"_blank","noopener,noreferrer");
 };
 
@@ -423,11 +423,65 @@ renderHTMLReference();
 
   function currentSet(){return DATA[Number(setSelect.value)]}
   function saveDraft(){localStorage.setItem("jsValidationLabDraft_"+setSelect.value,code.value)}
+
+  const SAVED_SET12_JS = `// Determine if a field is blank
+function isBlank(inputField){
+    if (inputField.value=="") {
+        return true;
+    }
+    return false;
+}
+// remove all error styles from the div passed in
+function makeClean(element){
+    element.classList.remove("error");
+}
+// Wait until the page is loaded, before doing any DOM stuff
+window.addEventListener("load", function() {
+    // add listeners for classes with hilightable ...
+    var hilightableInputs = document.querySelectorAll(".hilightable");
+    for (var i=0; i<hilightableInputs.length; i++) {
+        hilightableInputs[i].addEventListener("focus", function(e) {
+            e.target.classList.toggle("highlight");
+        });
+        hilightableInputs[i].addEventListener("blur", function(e) {
+            e.target.classList.toggle("highlight");
+        });
+    }
+    // add listeners for classes with required ...
+    var requiredInputs = document.querySelectorAll(".required");
+    for (var i=0; i<requiredInputs.length; i++) {
+        requiredInputs[i].addEventListener("change", function(e) {
+            makeClean(e.target);
+        });
+    }
+    // on submitting the form, "empty" checks are performed on required inputs
+    var mainForm = document.getElementById("mainForm");
+    mainForm.addEventListener("submit", function(e) {
+        var requiredInputs = document.querySelectorAll(".required");
+        for (var i=0; i<requiredInputs.length; i++){
+            if( isBlank(requiredInputs[i]) ){
+                e.preventDefault();
+                requiredInputs[i].classList.add("error");
+            }
+            else {
+                makeClean(requiredInputs[i]);
+            }
+        }
+    });
+});`;
+
   function loadJsDraft(){
-    const saved=localStorage.getItem("jsValidationLabDraft_"+setSelect.value);
-    code.value=saved || "";
+    const idx=Number(setSelect.value);
+    const saved=localStorage.getItem("jsValidationLabDraft_"+idx);
+    if(saved){
+      code.value=saved;
+    }else if(idx===11){
+      code.value=SAVED_SET12_JS;
+    }else{
+      code.value="";
+    }
     updateGutter();
-    status.textContent=saved ? "Previous JavaScript draft restored for this set." : "Ready. Enter your Lab9.js code.";
+    status.textContent=saved ? "Previous JavaScript draft restored for this set." : (idx===11 ? "Saved Set 12 solution loaded." : "Ready. Enter your Lab9.js code.");
     document.getElementById("submissionValidation").textContent="Not checked";
     checks.innerHTML='<div class="checkrow"><span class="dot"></span>Click <b>CHECK CODE</b> to validate your JavaScript.';
   }
@@ -503,6 +557,7 @@ renderHTMLReference();
   // Override the original CSS-oriented controls with JavaScript controls.
   document.getElementById("viewBtn").onclick=showJsOutput;
   document.getElementById("checkBtn").onclick=jsCheck;
+  document.getElementById("fullscreenBtn").onclick=()=>{showJsOutput();modal.classList.add("show")};
   document.getElementById("templateBtn").onclick=()=>{
     if(code.value.trim() && !confirm("Replace current JavaScript code with the provided starter code?")) return;
     code.value=jsStarter(); updateGutter(); saveDraft();
