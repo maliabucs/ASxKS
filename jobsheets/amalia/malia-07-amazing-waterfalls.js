@@ -7,7 +7,8 @@ window.addEventListener("load", function() {
          
             var clickedImageSource = e.target.src;
            
-            var newSrc = clickedImageSource.replace("small", "medium");
+            // Penambahbaikan: Gantikan '-small' khusus kepada '-medium'
+            var newSrc = clickedImageSource.replace("-small", "-medium");
             
             var featuredImage = document.querySelector("#featured img");
 
