@@ -1662,3 +1662,271 @@ footer {
     }
 
 }
+
+/* =========================================================
+   ASxKS — INTERACTIVE EDITORIAL EXPERIENCE
+   ========================================================= */
+
+/* -------------------------
+   SOUND CONTROL
+------------------------- */
+
+.sound-control {
+    position: fixed;
+    right: 28px;
+    bottom: 28px;
+    z-index: 9999;
+}
+
+#soundToggle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 15px;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(8,8,8,0.75);
+    color: rgba(255,255,255,0.7);
+    backdrop-filter: blur(12px);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    transition: all 0.3s ease;
+}
+
+#soundToggle:hover {
+    border-color: rgba(255,255,255,0.45);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.sound-icon {
+    font-size: 9px;
+    transition: all 0.3s ease;
+}
+
+#soundToggle.active .sound-icon {
+    animation: soundPulse 1.2s ease-in-out infinite;
+}
+
+@keyframes soundPulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.5;
+    }
+
+    50% {
+        transform: scale(1.5);
+        opacity: 1;
+    }
+}
+
+
+/* -------------------------
+   CURSOR GLOW
+------------------------- */
+
+.cursor-glow {
+    position: fixed;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+
+    background: radial-gradient(
+        circle,
+        rgba(255,255,255,0.045) 0%,
+        rgba(255,255,255,0.018) 30%,
+        transparent 70%
+    );
+
+    transform: translate(-50%, -50%);
+    mix-blend-mode: screen;
+}
+
+
+/* -------------------------
+   PARTICLE FIELD
+------------------------- */
+
+.editorial-particle {
+    position: fixed;
+    width: 2px;
+    height: 2px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.35);
+    pointer-events: none;
+    z-index: 1;
+
+    animation:
+        particleFloat var(--duration) ease-in-out infinite;
+}
+
+@keyframes particleFloat {
+
+    0%, 100% {
+        transform: translate3d(0,0,0);
+        opacity: 0.15;
+    }
+
+    50% {
+        transform:
+            translate3d(
+                var(--move-x),
+                var(--move-y),
+                0
+            );
+        opacity: 0.7;
+    }
+}
+
+
+/* -------------------------
+   PAGE SCAN
+------------------------- */
+
+.editorial-scan {
+    position: fixed;
+    top: -20%;
+    left: 0;
+    width: 100%;
+    height: 1px;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,0.2),
+        transparent
+    );
+
+    box-shadow:
+        0 0 20px rgba(255,255,255,0.08);
+
+    pointer-events: none;
+    z-index: 9997;
+
+    animation: pageScan 10s linear infinite;
+}
+
+@keyframes pageScan {
+
+    0% {
+        transform: translateY(0);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.4;
+    }
+
+    90% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(120vh);
+        opacity: 0;
+    }
+}
+
+
+/* -------------------------
+   PARALLAX ELEMENT
+------------------------- */
+
+.parallax-editorial {
+    transition:
+        transform 0.2s cubic-bezier(.2,.8,.2,1);
+}
+
+
+/* -------------------------
+   NAVBAR LIGHT LINE
+------------------------- */
+
+.navbar::after {
+    content: "";
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+
+    width: 100%;
+    height: 1px;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,0.18),
+        transparent
+    );
+
+    animation: navLine 5s ease-in-out infinite;
+}
+
+@keyframes navLine {
+
+    0%, 100% {
+        opacity: 0.2;
+    }
+
+    50% {
+        opacity: 0.8;
+    }
+}
+
+
+/* -------------------------
+   SECTION REVEAL
+------------------------- */
+
+.editorial-reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition:
+        opacity 0.9s ease,
+        transform 0.9s cubic-bezier(.16,1,.3,1);
+}
+
+.editorial-reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/* -------------------------
+   HOVER TEXT GLITCH
+------------------------- */
+
+.editorial-hover {
+    transition: letter-spacing 0.3s ease;
+}
+
+.editorial-hover:hover {
+    letter-spacing: 0.08em;
+}
+
+
+/* -------------------------
+   MOBILE
+------------------------- */
+
+@media (max-width: 700px) {
+
+    .sound-control {
+        right: 15px;
+        bottom: 15px;
+    }
+
+    .cursor-glow {
+        display: none;
+    }
+
+    .editorial-particle {
+        display: none;
+    }
+}

@@ -860,3 +860,214 @@ document.addEventListener(
 
     }
 );
+
+/* =========================================================
+   ASxKS — INTERACTIVE EDITORIAL EXPERIENCE
+   ========================================================= */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    /* -------------------------
+       CURSOR GLOW
+    ------------------------- */
+
+    const cursorGlow = document.createElement("div");
+
+    cursorGlow.className = "cursor-glow";
+
+    document.body.appendChild(cursorGlow);
+
+    document.addEventListener("mousemove", function (e) {
+
+        cursorGlow.style.left = e.clientX + "px";
+        cursorGlow.style.top = e.clientY + "px";
+
+    });
+
+
+    /* -------------------------
+       PAGE SCAN
+    ------------------------- */
+
+    const scanLine = document.createElement("div");
+
+    scanLine.className = "editorial-scan";
+
+    document.body.appendChild(scanLine);
+
+
+    /* -------------------------
+       PARTICLES
+    ------------------------- */
+
+    for (let i = 0; i < 35; i++) {
+
+        const particle =
+            document.createElement("div");
+
+        particle.className =
+            "editorial-particle";
+
+        particle.style.left =
+            Math.random() * 100 + "vw";
+
+        particle.style.top =
+            Math.random() * 100 + "vh";
+
+        particle.style.setProperty(
+            "--duration",
+            (6 + Math.random() * 10) + "s"
+        );
+
+        particle.style.setProperty(
+            "--move-x",
+            (-40 + Math.random() * 80) + "px"
+        );
+
+        particle.style.setProperty(
+            "--move-y",
+            (-50 + Math.random() * 100) + "px"
+        );
+
+        document.body.appendChild(particle);
+    }
+
+
+    /* -------------------------
+       MOUSE PARALLAX
+    ------------------------- */
+
+    const hero =
+        document.querySelector(".hero");
+
+    if (hero) {
+
+        document.addEventListener(
+            "mousemove",
+            function (e) {
+
+                const x =
+                    (e.clientX /
+                    window.innerWidth - 0.5);
+
+                const y =
+                    (e.clientY /
+                    window.innerHeight - 0.5);
+
+                hero.style.transform =
+                    `translate(
+                        ${x * 4}px,
+                        ${y * 3}px
+                    )`;
+
+            }
+        );
+
+    }
+
+
+    /* -------------------------
+       SOUND
+    ------------------------- */
+
+    const soundToggle =
+        document.getElementById("soundToggle");
+
+    const ambientSound =
+        document.getElementById("ambientSound");
+
+    if (soundToggle && ambientSound) {
+
+        soundToggle.addEventListener(
+            "click",
+            function () {
+
+                if (ambientSound.paused) {
+
+                    ambientSound.volume = 0.18;
+
+                    ambientSound.play();
+
+                    soundToggle.classList.add(
+                        "active"
+                    );
+
+                    soundToggle.querySelector(
+                        ".sound-label"
+                    ).textContent = "SOUND ON";
+
+                } else {
+
+                    ambientSound.pause();
+
+                    soundToggle.classList.remove(
+                        "active"
+                    );
+
+                    soundToggle.querySelector(
+                        ".sound-label"
+                    ).textContent = "SOUND OFF";
+                }
+
+            }
+        );
+
+    }
+
+
+    /* -------------------------
+       SCROLL REVEAL
+    ------------------------- */
+
+    const revealElements =
+        document.querySelectorAll(
+            ".section, .tech-card, .architect-option"
+        );
+
+    revealElements.forEach(function (element) {
+
+        element.classList.add(
+            "editorial-reveal"
+        );
+
+    });
+
+
+    const revealObserver =
+        new IntersectionObserver(
+            function (entries) {
+
+                entries.forEach(
+                    function (entry) {
+
+                        if (entry.isIntersecting) {
+
+                            entry.target.classList.add(
+                                "visible"
+                            );
+
+                            revealObserver.unobserve(
+                                entry.target
+                            );
+
+                        }
+
+                    }
+                );
+
+            },
+            {
+                threshold: 0.12
+            }
+        );
+
+
+    revealElements.forEach(
+        function (element) {
+
+            revealObserver.observe(element);
+
+        }
+    );
+
+});
