@@ -23,13 +23,26 @@ button {
     font-family: inherit;
 }
 
+
+/* =========================================================
+   BACKGROUND
+========================================================= */
+
 .background {
     position: fixed;
     inset: 0;
     z-index: -10;
     background:
-        radial-gradient(circle at 15% 20%, rgba(255,255,255,0.05), transparent 25%),
-        radial-gradient(circle at 85% 70%, rgba(255,255,255,0.035), transparent 30%),
+        radial-gradient(
+            circle at 15% 20%,
+            rgba(255,255,255,0.05),
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 85% 70%,
+            rgba(255,255,255,0.035),
+            transparent 30%
+        ),
         #080808;
     overflow: hidden;
 }
@@ -39,10 +52,22 @@ button {
     inset: 0;
     opacity: 0.16;
     background-image:
-        linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px);
+        linear-gradient(
+            rgba(255,255,255,0.045) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,0.045) 1px,
+            transparent 1px
+        );
     background-size: 70px 70px;
-    mask-image: linear-gradient(to bottom, black, transparent 90%);
+    mask-image:
+        linear-gradient(
+            to bottom,
+            black,
+            transparent 90%
+        );
 }
 
 .glow {
@@ -50,7 +75,8 @@ button {
     border-radius: 50%;
     filter: blur(100px);
     opacity: 0.15;
-    animation: floatingGlow 10s ease-in-out infinite alternate;
+    animation:
+        floatingGlow 10s ease-in-out infinite alternate;
 }
 
 .glow-one {
@@ -97,14 +123,121 @@ button {
 }
 
 @keyframes floatingGlow {
+
     from {
-        transform: translate(0, 0) scale(1);
+        transform:
+            translate(0, 0)
+            scale(1);
     }
 
     to {
-        transform: translate(50px, 40px) scale(1.15);
+        transform:
+            translate(50px, 40px)
+            scale(1.15);
     }
+
 }
+
+
+/* =========================================================
+   SYSTEM LOADER
+========================================================= */
+
+.system-loader {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #080808;
+    transition:
+        opacity 0.8s ease,
+        visibility 0.8s ease;
+}
+
+.system-loader.loaded {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.loader-content {
+    width: min(430px, 80%);
+}
+
+.loader-brand {
+    margin-bottom: 28px;
+    font-size: 42px;
+    font-weight: 800;
+    letter-spacing: 7px;
+}
+
+.loader-line {
+    width: 100%;
+    height: 1px;
+    background: rgba(255,255,255,0.1);
+    overflow: hidden;
+}
+
+.loader-line span {
+    display: block;
+    width: 0;
+    height: 100%;
+    background: #fff;
+    animation:
+        loaderProgress 2.2s
+        cubic-bezier(.16,1,.3,1)
+        forwards;
+}
+
+.loader-status {
+    margin-top: 15px;
+    color: #777;
+    font-size: 9px;
+    letter-spacing: 3px;
+    animation: loaderText 1s ease both;
+}
+
+.loader-details {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 12px;
+    color: #444;
+    font-size: 8px;
+    letter-spacing: 2px;
+}
+
+@keyframes loaderProgress {
+
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 100%;
+    }
+
+}
+
+@keyframes loaderText {
+
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+
+/* =========================================================
+   NAVBAR
+========================================================= */
 
 .navbar {
     position: sticky;
@@ -172,10 +305,20 @@ nav a:hover::after {
     width: 100%;
 }
 
+
+/* =========================================================
+   MAIN
+========================================================= */
+
 main {
     width: min(1180px, calc(100% - 50px));
     margin: auto;
 }
+
+
+/* =========================================================
+   HERO
+========================================================= */
 
 .hero {
     min-height: 650px;
@@ -184,6 +327,7 @@ main {
     justify-content: space-between;
     gap: 60px;
     padding: 100px 0 110px;
+    position: relative;
 }
 
 .hero-content {
@@ -273,6 +417,11 @@ main {
     letter-spacing: 2px;
 }
 
+
+/* =========================================================
+   SECTIONS
+========================================================= */
+
 .technology-section,
 .jobsheet-section,
 .about-section {
@@ -291,6 +440,11 @@ main {
     color: #fff;
 }
 
+
+/* =========================================================
+   TECHNOLOGY
+========================================================= */
+
 .technology-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -302,7 +456,9 @@ main {
     min-height: 240px;
     padding: 30px;
     background: #0b0b0b;
-    transition: background 0.3s ease, transform 0.3s ease;
+    transition:
+        background 0.3s ease,
+        transform 0.3s ease;
 }
 
 .technology-card:hover {
@@ -331,6 +487,11 @@ main {
     line-height: 1.7;
 }
 
+
+/* =========================================================
+   JOBSHEET
+========================================================= */
+
 .section-heading {
     display: flex;
     align-items: end;
@@ -354,130 +515,292 @@ main {
     line-height: 1.7;
 }
 
-.progress-container {
+
+/* =========================================================
+   ARCHITECT SELECTION
+========================================================= */
+
+.archive-architects {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    margin-bottom: 60px;
+    gap: 1px;
+    background: rgba(255,255,255,0.1);
+    margin-bottom: 40px;
 }
 
-.progress-card {
+.architect-option {
+    position: relative;
+    min-height: 180px;
     padding: 30px;
-    background: #0d0d0d;
-    border: 1px solid rgba(255,255,255,0.08);
+    border: 0;
+    background: #0b0b0b;
+    color: #fff;
+    text-align: left;
+    cursor: pointer;
+    overflow: hidden;
+    transition:
+        background 0.4s ease,
+        transform 0.4s ease;
 }
 
-.progress-top {
-    display: flex;
-    align-items: end;
-    justify-content: space-between;
-    gap: 20px;
+.architect-option::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 2px;
+    height: 0;
+    background: #fff;
+    transition: height 0.5s ease;
 }
 
-.progress-top h3 {
-    margin: 10px 0 0;
+.architect-option:hover {
+    background: #131313;
+    transform: translateY(-4px);
+}
+
+.architect-option:hover::before {
+    height: 100%;
+}
+
+.architect-code {
+    display: block;
+    color: #555;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 3px;
+}
+
+.architect-main {
+    display: block;
+    margin-top: 50px;
+}
+
+.architect-main strong {
+    display: block;
     font-size: 22px;
     letter-spacing: 1px;
 }
 
-.progress-count strong {
-    font-size: 36px;
-    letter-spacing: -2px;
-}
-
-.progress-count span {
+.architect-main small {
+    display: block;
+    margin-top: 8px;
     color: #666;
-    font-size: 16px;
-}
-
-.progress-bar {
-    width: 100%;
-    height: 2px;
-    margin-top: 30px;
-    background: #252525;
-    overflow: hidden;
-}
-
-.progress-fill {
-    width: 0;
-    height: 100%;
-    background: #fff;
-    transition: width 1s ease;
-}
-
-.progress-status {
-    margin: 14px 0 0;
-    color: #555;
     font-size: 9px;
-    font-weight: 700;
     letter-spacing: 2px;
 }
 
-.progress-status span {
-    color: #aaa;
+.architect-arrow {
+    position: absolute;
+    right: 28px;
+    bottom: 25px;
+    color: #555;
+    font-size: 22px;
+    transition:
+        transform 0.3s ease,
+        color 0.3s ease;
 }
 
-.jobsheet-grid {
+.architect-option:hover .architect-arrow {
+    color: #fff;
+    transform: translateX(7px);
+}
+
+
+/* =========================================================
+   SELECTED ARCHIVE
+========================================================= */
+
+.selected-archive {
+    display: none;
+}
+
+.selected-archive.active {
+    display: block;
+    animation:
+        archiveReveal 0.7s
+        cubic-bezier(.16,1,.3,1)
+        both;
+}
+
+@keyframes archiveReveal {
+
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+.selected-archive-header {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 25px;
+    margin-bottom: 30px;
+}
+
+.selected-archive-label {
+    color: #555;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 3px;
+}
+
+.selected-archive-header h3 {
+    margin: 10px 0 0;
+    font-size: 28px;
+    letter-spacing: 1px;
+}
+
+.change-architect {
+    padding: 10px 14px;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: transparent;
+    color: #777;
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.change-architect:hover {
+    background: #fff;
+    color: #080808;
+}
+
+
+/* =========================================================
+   JOBSHEET CARDS
+========================================================= */
+
+.archive-jobsheet-list {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 1px;
     background: rgba(255,255,255,0.1);
 }
 
-.jobsheet-card {
+.archive-jobsheet-card {
     position: relative;
-    min-height: 170px;
+    min-height: 230px;
     padding: 25px;
     background: #0b0b0b;
     border: 0;
-    color: #fff;
-    text-align: left;
-    cursor: pointer;
+    overflow: hidden;
     transition:
-        background 0.3s ease,
-        transform 0.3s ease;
+        background 0.35s ease,
+        transform 0.35s ease;
 }
 
-.jobsheet-card:hover {
+.archive-jobsheet-card::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 2px;
+    height: 45px;
+    background: rgba(255,255,255,0.7);
+    transition: height 0.4s ease;
+}
+
+.archive-jobsheet-card:hover {
     background: #141414;
     transform: translateY(-5px);
 }
 
-.jobsheet-number {
-    display: block;
-    margin-bottom: 55px;
+.archive-jobsheet-card:hover::before {
+    height: 100%;
+}
+
+.jobsheet-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.jobsheet-card-number {
     color: #555;
-    font-size: 10px;
+    font-size: 9px;
     font-weight: 700;
     letter-spacing: 2px;
 }
 
-.jobsheet-card h3 {
+.jobsheet-set-badge {
+    padding: 5px 7px;
+    border: 1px solid rgba(255,255,255,0.1);
+    color: #555;
+    font-size: 7px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+
+.jobsheet-card-title {
+    margin: 45px 0 0;
+    font-size: 16px;
+    line-height: 1.2;
+    letter-spacing: 1px;
+}
+
+.jobsheet-card-divider {
+    width: 30px;
+    height: 1px;
+    margin: 18px 0;
+    background: rgba(255,255,255,0.2);
+}
+
+.jobsheet-card-description {
+    min-height: 35px;
     margin: 0;
-    font-size: 14px;
-    letter-spacing: 1px;
-}
-
-.jobsheet-card p {
-    margin: 7px 0 0;
     color: #666;
-    font-size: 10px;
-    letter-spacing: 1px;
+    font-size: 9px;
+    line-height: 1.7;
 }
 
-.jobsheet-arrow {
-    position: absolute;
-    right: 22px;
-    bottom: 20px;
-    color: #666;
-    font-size: 18px;
-    transition: transform 0.3s ease, color 0.3s ease;
+.jobsheet-card-actions {
+    display: flex;
+    gap: 7px;
+    margin-top: 22px;
 }
 
-.jobsheet-card:hover .jobsheet-arrow {
-    color: #fff;
-    transform: translateX(5px);
+.jobsheet-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 30px;
+    padding: 0 10px;
+    border: 1px solid rgba(255,255,255,0.12);
+    font-size: 7px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    transition: all 0.3s ease;
 }
+
+.jobsheet-action.pdf {
+    color: #aaa;
+}
+
+.jobsheet-action.live {
+    color: #555;
+}
+
+.jobsheet-action:hover {
+    background: #fff;
+    border-color: #fff;
+    color: #080808;
+}
+
+
+/* =========================================================
+   ABOUT
+========================================================= */
 
 .about-content {
     display: grid;
@@ -521,7 +844,9 @@ main {
     height: 100%;
     object-fit: cover;
     filter: grayscale(100%);
-    transition: transform 0.5s ease, filter 0.5s ease;
+    transition:
+        transform 0.5s ease,
+        filter 0.5s ease;
 }
 
 .student-card:hover img {
@@ -549,6 +874,11 @@ main {
     color: #666;
     font-size: 11px;
 }
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
 
 footer {
     width: min(1180px, calc(100% - 50px));
@@ -579,1097 +909,10 @@ footer {
     letter-spacing: 2px;
 }
 
-.modal {
-    position: fixed;
-    inset: 0;
-    z-index: 500;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    padding: 25px;
-}
-
-.modal.active {
-    display: flex;
-}
-
-.modal-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(0,0,0,0.82);
-    backdrop-filter: blur(12px);
-}
-
-.modal-box {
-    position: relative;
-    z-index: 2;
-    width: min(600px, 100%);
-    padding: 45px;
-    background: #0d0d0d;
-    border: 1px solid rgba(255,255,255,0.12);
-    box-shadow: 0 30px 80px rgba(0,0,0,0.6);
-    animation: modalIn 0.35s ease forwards;
-}
-
-@keyframes modalIn {
-    from {
-        opacity: 0;
-        transform: translateY(25px) scale(0.97);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-}
-
-.modal-close {
-    position: absolute;
-    top: 18px;
-    right: 20px;
-    border: 0;
-    background: none;
-    color: #666;
-    font-size: 28px;
-    cursor: pointer;
-    transition: color 0.3s ease;
-}
-
-.modal-close:hover {
-    color: #fff;
-}
-
-.modal-box h2 {
-    margin: 15px 0 25px;
-    font-size: 38px;
-    line-height: 0.95;
-    letter-spacing: -2px;
-}
-
-.modal-jobsheet {
-    color: #555;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 3px;
-}
-
-.modal-jobsheet span {
-    color: #fff;
-}
-
-.student-selection {
-    display: grid;
-    gap: 10px;
-    margin-top: 35px;
-}
-
-.student-option {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    padding: 20px;
-    border: 1px solid rgba(255,255,255,0.1);
-    background: #111;
-    color: #fff;
-    text-align: left;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.student-option:hover {
-    background: #fff;
-    color: #080808;
-    transform: translateX(5px);
-}
-
-.option-number {
-    color: #555;
-    font-size: 10px;
-    letter-spacing: 2px;
-}
-
-.option-content {
-    flex: 1;
-}
-
-.option-content strong {
-    display: block;
-    font-size: 13px;
-    letter-spacing: 1px;
-}
-
-.option-content small {
-    display: block;
-    margin-top: 6px;
-    color: #666;
-    font-size: 8px;
-    letter-spacing: 2px;
-}
-
-.student-option:hover .option-content small {
-    color: #555;
-}
-
-.option-arrow {
-    font-size: 18px;
-}
-
-@media (max-width: 900px) {
-
-    .technology-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .jobsheet-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-
-    .about-content {
-        grid-template-columns: 1fr;
-    }
-
-    .hero-number {
-        display: none;
-    }
-
-}
-
-@media (max-width: 700px) {
-
-    .nav-container,
-    main,
-    footer {
-        width: min(100% - 30px, 1180px);
-    }
-
-    .nav-container {
-        height: 68px;
-    }
-
-    nav {
-        gap: 15px;
-    }
-
-    nav a {
-        font-size: 8px;
-        letter-spacing: 1px;
-    }
-
-    .brand span {
-        display: none;
-    }
-
-    .hero {
-        min-height: auto;
-        padding: 90px 0;
-    }
-
-    .hero h1 {
-        font-size: 55px;
-        letter-spacing: -3px;
-    }
-
-    .technology-grid,
-    .progress-container,
-    .student-cards {
-        grid-template-columns: 1fr;
-    }
-
-    .jobsheet-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .section-heading {
-        display: block;
-    }
-
-    .section-heading > p {
-        margin-top: 20px;
-    }
-
-    .student-image {
-        height: 300px;
-    }
-
-    footer {
-        display: block;
-    }
-
-    .footer-right {
-        margin-top: 15px;
-        display: block;
-    }
-
-    .footer-right span {
-        display: block;
-        margin-top: 5px;
-    }
-
-    .modal-box {
-        padding: 35px 25px;
-    }
-
-    .modal-box h2 {
-        font-size: 32px;
-    }
-
-    .code-stream {
-        display: none;
-    }
-
-}
-
-@media (max-width: 450px) {
-
-    .jobsheet-grid {
-        grid-template-columns: 1fr 1fr;
-    }
-
-    .jobsheet-card {
-        min-height: 145px;
-        padding: 18px;
-    }
-
-    .jobsheet-number {
-        margin-bottom: 40px;
-    }
-
-    .hero h1 {
-        font-size: 45px;
-    }
-
-}
-
 
 /* =========================================================
-   ASxKS JOBSHEET ARCHIVE ADDITIONS
-   ========================================================= */
-
-.progress-card {
-    position: relative;
-    cursor: pointer;
-    overflow: hidden;
-    transition:
-        background 0.3s ease,
-        border-color 0.3s ease,
-        transform 0.3s ease;
-}
-
-.progress-card::after {
-    content: "SELECT ARCHITECT";
-    position: absolute;
-    right: 25px;
-    bottom: 18px;
-    color: #444;
-    font-size: 8px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    transition: color 0.3s ease;
-}
-
-.progress-card:hover {
-    background: #111;
-    border-color: rgba(255,255,255,0.2);
-    transform: translateY(-4px);
-}
-
-.progress-card:hover::after {
-    color: #aaa;
-}
-
-.progress-card.selected {
-    border-color: rgba(255,255,255,0.35);
-    background: #111;
-}
-
-.progress-card.selected::after {
-    content: "ARCHITECT SELECTED";
-    color: #fff;
-}
-
-.archive-header {
-    display: flex;
-    align-items: end;
-    justify-content: space-between;
-    gap: 30px;
-    margin-bottom: 25px;
-    padding-top: 10px;
-}
-
-.archive-header-left {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.archive-header-mark {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #fff;
-}
-
-.archive-header-label {
-    color: #555;
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 3px;
-}
-
-.archive-header-name {
-    margin: 5px 0 0;
-    font-size: 20px;
-    letter-spacing: 1px;
-}
-
-.archive-header-set {
-    color: #777;
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 2px;
-}
-
-.archive-placeholder {
-    padding: 45px 30px;
-    border: 1px solid rgba(255,255,255,0.08);
-    background: #0b0b0b;
-    color: #555;
-    text-align: center;
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 3px;
-}
-
-.jobsheet-grid.archive-active {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: rgba(255,255,255,0.1);
-}
-
-.archive-jobsheet-card {
-    position: relative;
-    min-height: 245px;
-    padding: 25px;
-    background: #0b0b0b;
-    transition:
-        background 0.3s ease,
-        transform 0.3s ease,
-        border-color 0.3s ease;
-}
-
-.archive-jobsheet-card::before {
-    content: "";
-    position: absolute;
-    top: 25px;
-    left: 0;
-    width: 2px;
-    height: 38px;
-    background: #777;
-    transition: height 0.3s ease, background 0.3s ease;
-}
-
-.archive-jobsheet-card:hover {
-    background: #121212;
-    transform: translateY(-5px);
-}
-
-.archive-jobsheet-card:hover::before {
-    height: 65px;
-    background: #fff;
-}
-
-.archive-jobsheet-top {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 20px;
-}
-
-.archive-jobsheet-number {
-    color: #555;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 2px;
-}
-
-.archive-jobsheet-set {
-    padding: 6px 8px;
-    border: 1px solid rgba(255,255,255,0.1);
-    color: #666;
-    font-size: 7px;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-}
-
-.archive-jobsheet-card h3 {
-    margin: 45px 0 10px;
-    font-size: 15px;
-    letter-spacing: 1px;
-}
-
-.archive-jobsheet-description {
-    min-height: 42px;
-    margin: 0;
-    color: #666;
-    font-size: 10px;
-    line-height: 1.7;
-}
-
-.archive-jobsheet-actions {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-    margin-top: 25px;
-}
-
-.archive-jobsheet-action {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 36px;
-    border: 1px solid rgba(255,255,255,0.12);
-    background: transparent;
-    color: #777;
-    font-size: 8px;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    transition:
-        background 0.3s ease,
-        color 0.3s ease,
-        border-color 0.3s ease;
-}
-
-.archive-jobsheet-action:hover {
-    background: #fff;
-    border-color: #fff;
-    color: #080808;
-}
-
-.archive-jobsheet-action.live {
-    border-color: rgba(255,255,255,0.3);
-    color: #fff;
-}
-
-.archive-back {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 25px;
-    padding: 10px 14px;
-    border: 1px solid rgba(255,255,255,0.1);
-    background: transparent;
-    color: #666;
-    font-size: 8px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.archive-back:hover {
-    background: #fff;
-    color: #080808;
-}
-
-
-/* RESPONSIVE JOBSHEET ARCHIVE */
-
-@media (max-width: 900px) {
-
-    .jobsheet-grid.archive-active {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-}
-
-@media (max-width: 700px) {
-
-    .archive-header {
-        display: block;
-    }
-
-    .archive-header-set {
-        margin-top: 12px;
-    }
-
-    .jobsheet-grid.archive-active {
-        grid-template-columns: 1fr;
-    }
-
-}
-
-@media (max-width: 450px) {
-
-    .archive-jobsheet-card {
-        min-height: 230px;
-        padding: 20px;
-    }
-
-    .archive-jobsheet-card h3 {
-        margin-top: 40px;
-    }
-
-    .archive-jobsheet-actions {
-        grid-template-columns: 1fr 1fr;
-    }
-
-}
-
-/* =========================================================
-   ASxKS — DARK EDITORIAL DASHBOARD ANIMATION
-   ========================================================= */
-
-.hero {
-    position: relative;
-    overflow: hidden;
-}
-
-
-/* -----------------------------------------
-   EDITORIAL SCAN LINE
-   ----------------------------------------- */
-
-.hero::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -20%;
-    width: 140%;
-    height: 1px;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255,255,255,0.45),
-        transparent
-    );
-    box-shadow:
-        0 0 18px rgba(255,255,255,0.18);
-    animation: editorialScan 7s linear infinite;
-    pointer-events: none;
-}
-
-
-@keyframes editorialScan {
-
-    0% {
-        transform: translateY(-20px);
-        opacity: 0;
-    }
-
-    10% {
-        opacity: 1;
-    }
-
-    50% {
-        opacity: 0.7;
-    }
-
-    90% {
-        opacity: 1;
-    }
-
-    100% {
-        transform: translateY(680px);
-        opacity: 0;
-    }
-
-}
-
-
-/* -----------------------------------------
-   MOVING LIGHT SWEEP
-   ----------------------------------------- */
-
-.hero::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -120%;
-    width: 35%;
-    height: 100%;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255,255,255,0.025),
-        transparent
-    );
-    transform: skewX(-15deg);
-    animation: lightSweep 9s ease-in-out infinite;
-    pointer-events: none;
-}
-
-
-@keyframes lightSweep {
-
-    0% {
-        left: -120%;
-    }
-
-    45% {
-        left: 120%;
-    }
-
-    100% {
-        left: 120%;
-    }
-
-}
-
-
-/* -----------------------------------------
-   HERO CONTENT REVEAL
-   ----------------------------------------- */
-
-.hero-content {
-    position: relative;
-    z-index: 2;
-    animation: heroReveal 1.2s cubic-bezier(.16,1,.3,1) both;
-}
-
-
-@keyframes heroReveal {
-
-    from {
-        opacity: 0;
-        transform: translateY(35px);
-        filter: blur(8px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-        filter: blur(0);
-    }
-
-}
-
-
-/* -----------------------------------------
-   EYEBROW
-   ----------------------------------------- */
-
-.hero .eyebrow {
-    animation:
-        eyebrowReveal 1s ease both,
-        editorialBlink 4s ease-in-out infinite 1.5s;
-}
-
-
-@keyframes eyebrowReveal {
-
-    from {
-        opacity: 0;
-        letter-spacing: 8px;
-    }
-
-    to {
-        opacity: 1;
-        letter-spacing: 3px;
-    }
-
-}
-
-
-@keyframes editorialBlink {
-
-    0%,
-    100% {
-        opacity: 1;
-    }
-
-    50% {
-        opacity: 0.45;
-    }
-
-}
-
-
-/* -----------------------------------------
-   MAIN HERO TITLE
-   ----------------------------------------- */
-
-.hero h1 {
-    animation: titleReveal 1.4s cubic-bezier(.16,1,.3,1) 0.15s both;
-}
-
-
-@keyframes titleReveal {
-
-    from {
-        opacity: 0;
-        transform: translateY(45px);
-        clip-path: inset(100% 0 0 0);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-        clip-path: inset(0 0 0 0);
-    }
-
-}
-
-
-/* -----------------------------------------
-   SECOND LINE — SUBTLE FLOAT
-   ----------------------------------------- */
-
-.hero h1 span {
-    animation: titleFloat 6s ease-in-out infinite;
-}
-
-
-@keyframes titleFloat {
-
-    0%,
-    100% {
-        transform: translateX(0);
-    }
-
-    50% {
-        transform: translateX(5px);
-    }
-
-}
-
-
-/* -----------------------------------------
-   DESCRIPTION
-   ----------------------------------------- */
-
-.hero-description {
-    animation: descriptionReveal 1s ease 0.65s both;
-}
-
-
-@keyframes descriptionReveal {
-
-    from {
-        opacity: 0;
-        transform: translateY(15px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-}
-
-
-/* -----------------------------------------
-   EXPLORE BUTTON
-   ----------------------------------------- */
-
-.hero-button {
-    position: relative;
-    overflow: hidden;
-    animation: buttonReveal 1s ease 0.85s both;
-}
-
-
-@keyframes buttonReveal {
-
-    from {
-        opacity: 0;
-        transform: translateY(15px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-}
-
-
-.hero-button::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -120%;
-    width: 70%;
-    height: 100%;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255,255,255,0.15),
-        transparent
-    );
-    transform: skewX(-20deg);
-    transition: left 0.6s ease;
-}
-
-
-.hero-button:hover::before {
-    left: 140%;
-}
-
-
-/* -----------------------------------------
-   24 NUMBER
-   ----------------------------------------- */
-
-.hero-number {
-    position: relative;
-    z-index: 2;
-    animation: numberReveal 1.2s cubic-bezier(.16,1,.3,1) 0.5s both;
-}
-
-
-@keyframes numberReveal {
-
-    from {
-        opacity: 0;
-        transform: translateX(40px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-
-}
-
-
-.hero-number span {
-    animation: numberPulse 5s ease-in-out infinite;
-}
-
-
-@keyframes numberPulse {
-
-    0%,
-    100% {
-        text-shadow:
-            0 0 0 rgba(255,255,255,0);
-    }
-
-    50% {
-        text-shadow:
-            0 0 25px rgba(255,255,255,0.08);
-    }
-
-}
-
-
-/* -----------------------------------------
-   FLOATING EDITORIAL MARKERS
-   ----------------------------------------- */
-
-.hero-content::before,
-.hero-content::after {
-    content: "";
-    position: absolute;
-    pointer-events: none;
-}
-
-
-/* Small moving vertical marker */
-
-.hero-content::before {
-    width: 1px;
-    height: 70px;
-    left: -28px;
-    top: 15%;
-    background: linear-gradient(
-        to bottom,
-        transparent,
-        rgba(255,255,255,0.5),
-        transparent
-    );
-    animation: verticalMarker 5s ease-in-out infinite;
-}
-
-
-@keyframes verticalMarker {
-
-    0%,
-    100% {
-        transform: translateY(0);
-        opacity: 0.25;
-    }
-
-    50% {
-        transform: translateY(80px);
-        opacity: 1;
-    }
-
-}
-
-
-/* Floating editorial dot */
-
-.hero-content::after {
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    right: 12%;
-    top: 8%;
-    background: #fff;
-    box-shadow:
-        0 0 15px rgba(255,255,255,0.25);
-    animation: floatingDot 4s ease-in-out infinite;
-}
-
-
-@keyframes floatingDot {
-
-    0%,
-    100% {
-        transform: translate(0, 0);
-        opacity: 0.25;
-    }
-
-    50% {
-        transform: translate(-20px, 35px);
-        opacity: 0.8;
-    }
-
-}
-
-
-/* -----------------------------------------
-   EDITORIAL CORNER MARKS
-   ----------------------------------------- */
-
-.hero {
-    --corner-size: 45px;
-}
-
-
-.hero .hero-content::marker {
-    display: none;
-}
-
-
-/* -----------------------------------------
-   SUBTLE GRID MOVEMENT
-   ----------------------------------------- */
-
-.background .grid {
-    animation: gridDrift 18s linear infinite;
-}
-
-
-@keyframes gridDrift {
-
-    from {
-        transform: translate3d(0, 0, 0);
-    }
-
-    to {
-        transform: translate3d(0, 70px, 70px);
-    }
-
-}
-
-
-/* -----------------------------------------
-   BACKGROUND CODE STREAM MOVEMENT
-   ----------------------------------------- */
-
-.stream-one {
-    animation: streamMoveOne 18s linear infinite;
-}
-
-
-.stream-two {
-    animation: streamMoveTwo 22s linear infinite;
-}
-
-
-.stream-three {
-    animation: streamMoveThree 25s linear infinite;
-}
-
-
-@keyframes streamMoveOne {
-
-    from {
-        transform:
-            translateX(-5%)
-            rotate(-20deg);
-    }
-
-    to {
-        transform:
-            translateX(20%)
-            rotate(-20deg);
-    }
-
-}
-
-
-@keyframes streamMoveTwo {
-
-    from {
-        transform:
-            translateX(10%)
-            rotate(18deg);
-    }
-
-    to {
-        transform:
-            translateX(-15%)
-            rotate(18deg);
-    }
-
-}
-
-
-@keyframes streamMoveThree {
-
-    from {
-        transform:
-            translateX(-5%)
-            rotate(-10deg);
-    }
-
-    to {
-        transform:
-            translateX(15%)
-            rotate(-10deg);
-    }
-
-}
-
-
-/* -----------------------------------------
-   REDUCE MOTION FOR ACCESSIBILITY
-   ----------------------------------------- */
-
-@media (prefers-reduced-motion: reduce) {
-
-    .hero::before,
-    .hero::after,
-    .hero-content,
-    .hero .eyebrow,
-    .hero h1,
-    .hero h1 span,
-    .hero-description,
-    .hero-button,
-    .hero-number,
-    .hero-number span,
-    .hero-content::before,
-    .hero-content::after,
-    .background .grid,
-    .stream-one,
-    .stream-two,
-    .stream-three {
-        animation: none;
-    }
-
-}
-
-/* =========================================================
-   ASxKS — INTERACTIVE EDITORIAL EXPERIENCE
-   ========================================================= */
-
-/* -------------------------
    SOUND CONTROL
-------------------------- */
+========================================================= */
 
 .sound-control {
     position: fixed;
@@ -1702,15 +945,19 @@ footer {
 
 .sound-icon {
     font-size: 9px;
-    transition: all 0.3s ease;
 }
 
 #soundToggle.active .sound-icon {
-    animation: soundPulse 1.2s ease-in-out infinite;
+    animation:
+        soundPulse 1.2s
+        ease-in-out
+        infinite;
 }
 
 @keyframes soundPulse {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: scale(1);
         opacity: 0.5;
     }
@@ -1719,12 +966,13 @@ footer {
         transform: scale(1.5);
         opacity: 1;
     }
+
 }
 
 
-/* -------------------------
+/* =========================================================
    CURSOR GLOW
-------------------------- */
+========================================================= */
 
 .cursor-glow {
     position: fixed;
@@ -1734,21 +982,22 @@ footer {
     pointer-events: none;
     z-index: 9998;
 
-    background: radial-gradient(
-        circle,
-        rgba(255,255,255,0.045) 0%,
-        rgba(255,255,255,0.018) 30%,
-        transparent 70%
-    );
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,255,255,0.045) 0%,
+            rgba(255,255,255,0.018) 30%,
+            transparent 70%
+        );
 
     transform: translate(-50%, -50%);
     mix-blend-mode: screen;
 }
 
 
-/* -------------------------
-   PARTICLE FIELD
-------------------------- */
+/* =========================================================
+   PARTICLES
+========================================================= */
 
 .editorial-particle {
     position: fixed;
@@ -1760,13 +1009,18 @@ footer {
     z-index: 1;
 
     animation:
-        particleFloat var(--duration) ease-in-out infinite;
+        particleFloat
+        var(--duration)
+        ease-in-out
+        infinite;
 }
 
 @keyframes particleFloat {
 
-    0%, 100% {
-        transform: translate3d(0,0,0);
+    0%,
+    100% {
+        transform:
+            translate3d(0,0,0);
         opacity: 0.15;
     }
 
@@ -1779,12 +1033,13 @@ footer {
             );
         opacity: 0.7;
     }
+
 }
 
 
-/* -------------------------
+/* =========================================================
    PAGE SCAN
-------------------------- */
+========================================================= */
 
 .editorial-scan {
     position: fixed;
@@ -1793,20 +1048,24 @@ footer {
     width: 100%;
     height: 1px;
 
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255,255,255,0.2),
-        transparent
-    );
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,0.2),
+            transparent
+        );
 
     box-shadow:
-        0 0 20px rgba(255,255,255,0.08);
+        0 0 20px
+        rgba(255,255,255,0.08);
 
     pointer-events: none;
     z-index: 9997;
 
-    animation: pageScan 10s linear infinite;
+    animation:
+        pageScan
+        10s linear infinite;
 }
 
 @keyframes pageScan {
@@ -1829,67 +1088,427 @@ footer {
     }
 
     100% {
-        transform: translateY(120vh);
+        transform:
+            translateY(120vh);
         opacity: 0;
     }
+
 }
 
 
-/* -------------------------
-   PARALLAX ELEMENT
-------------------------- */
+/* =========================================================
+   HERO ANIMATION
+========================================================= */
 
-.parallax-editorial {
-    transition:
-        transform 0.2s cubic-bezier(.2,.8,.2,1);
-}
-
-
-/* -------------------------
-   NAVBAR LIGHT LINE
-------------------------- */
-
-.navbar::after {
+.hero::before {
     content: "";
     position: absolute;
-    bottom: -1px;
-    left: 0;
-
-    width: 100%;
+    top: 0;
+    left: -20%;
+    width: 140%;
     height: 1px;
 
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255,255,255,0.18),
-        transparent
-    );
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,0.45),
+            transparent
+        );
 
-    animation: navLine 5s ease-in-out infinite;
+    box-shadow:
+        0 0 18px
+        rgba(255,255,255,0.18);
+
+    animation:
+        editorialScan
+        7s linear infinite;
+
+    pointer-events: none;
 }
 
-@keyframes navLine {
+@keyframes editorialScan {
 
-    0%, 100% {
-        opacity: 0.2;
+    0% {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
     }
 
     50% {
-        opacity: 0.8;
+        opacity: 0.7;
     }
+
+    90% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(680px);
+        opacity: 0;
+    }
+
+}
+
+.hero::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -120%;
+    width: 35%;
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,0.025),
+            transparent
+        );
+
+    transform: skewX(-15deg);
+
+    animation:
+        lightSweep
+        9s ease-in-out infinite;
+
+    pointer-events: none;
+}
+
+@keyframes lightSweep {
+
+    0% {
+        left: -120%;
+    }
+
+    45% {
+        left: 120%;
+    }
+
+    100% {
+        left: 120%;
+    }
+
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+
+    animation:
+        heroReveal
+        1.2s
+        cubic-bezier(.16,1,.3,1)
+        both;
+}
+
+@keyframes heroReveal {
+
+    from {
+        opacity: 0;
+        transform: translateY(35px);
+        filter: blur(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+    }
+
+}
+
+.hero .eyebrow {
+    animation:
+        eyebrowReveal
+        1s ease both;
+}
+
+@keyframes eyebrowReveal {
+
+    from {
+        opacity: 0;
+        letter-spacing: 8px;
+    }
+
+    to {
+        opacity: 1;
+        letter-spacing: 3px;
+    }
+
+}
+
+.hero h1 {
+    animation:
+        titleReveal
+        1.4s
+        cubic-bezier(.16,1,.3,1)
+        0.15s
+        both;
+}
+
+@keyframes titleReveal {
+
+    from {
+        opacity: 0;
+        transform: translateY(45px);
+        clip-path:
+            inset(100% 0 0 0);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+        clip-path:
+            inset(0 0 0 0);
+    }
+
+}
+
+.hero-description {
+    animation:
+        descriptionReveal
+        1s ease
+        0.65s
+        both;
+}
+
+@keyframes descriptionReveal {
+
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+.hero-button {
+    position: relative;
+    overflow: hidden;
+
+    animation:
+        buttonReveal
+        1s ease
+        0.85s
+        both;
+}
+
+@keyframes buttonReveal {
+
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+.hero-button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -120%;
+    width: 70%;
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,0.15),
+            transparent
+        );
+
+    transform: skewX(-20deg);
+
+    transition:
+        left 0.6s ease;
+}
+
+.hero-button:hover::before {
+    left: 140%;
+}
+
+.hero-number {
+    position: relative;
+    z-index: 2;
+
+    animation:
+        numberReveal
+        1.2s
+        cubic-bezier(.16,1,.3,1)
+        0.5s
+        both;
+}
+
+@keyframes numberReveal {
+
+    from {
+        opacity: 0;
+        transform: translateX(40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+}
+
+.hero-number span {
+    animation:
+        numberPulse
+        5s
+        ease-in-out
+        infinite;
+}
+
+@keyframes numberPulse {
+
+    0%,
+    100% {
+        text-shadow:
+            0 0 0
+            rgba(255,255,255,0);
+    }
+
+    50% {
+        text-shadow:
+            0 0 25px
+            rgba(255,255,255,0.08);
+    }
+
 }
 
 
-/* -------------------------
-   SECTION REVEAL
-------------------------- */
+/* =========================================================
+   GRID MOVEMENT
+========================================================= */
+
+.grid {
+    animation:
+        gridDrift
+        18s
+        linear
+        infinite;
+}
+
+@keyframes gridDrift {
+
+    from {
+        transform:
+            translate3d(0,0,0);
+    }
+
+    to {
+        transform:
+            translate3d(0,70px,70px);
+    }
+
+}
+
+
+/* =========================================================
+   CODE STREAM MOVEMENT
+========================================================= */
+
+.stream-one {
+    animation:
+        streamMoveOne
+        18s
+        linear
+        infinite;
+}
+
+.stream-two {
+    animation:
+        streamMoveTwo
+        22s
+        linear
+        infinite;
+}
+
+.stream-three {
+    animation:
+        streamMoveThree
+        25s
+        linear
+        infinite;
+}
+
+@keyframes streamMoveOne {
+
+    from {
+        transform:
+            translateX(-5%)
+            rotate(-20deg);
+    }
+
+    to {
+        transform:
+            translateX(20%)
+            rotate(-20deg);
+    }
+
+}
+
+@keyframes streamMoveTwo {
+
+    from {
+        transform:
+            translateX(10%)
+            rotate(18deg);
+    }
+
+    to {
+        transform:
+            translateX(-15%)
+            rotate(18deg);
+    }
+
+}
+
+@keyframes streamMoveThree {
+
+    from {
+        transform:
+            translateX(-5%)
+            rotate(-10deg);
+    }
+
+    to {
+        transform:
+            translateX(15%)
+            rotate(-10deg);
+    }
+
+}
+
+
+/* =========================================================
+   SCROLL REVEAL
+========================================================= */
 
 .editorial-reveal {
     opacity: 0;
     transform: translateY(30px);
+
     transition:
         opacity 0.9s ease,
-        transform 0.9s cubic-bezier(.16,1,.3,1);
+        transform 0.9s
+        cubic-bezier(.16,1,.3,1);
 }
 
 .editorial-reveal.visible {
@@ -1898,28 +1517,112 @@ footer {
 }
 
 
-/* -------------------------
-   HOVER TEXT GLITCH
-------------------------- */
+/* =========================================================
+   RESPONSIVE
+========================================================= */
 
-.editorial-hover {
-    transition: letter-spacing 0.3s ease;
+@media (max-width: 900px) {
+
+    .technology-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .archive-jobsheet-list {
+        grid-template-columns:
+            repeat(3, 1fr);
+    }
+
+    .about-content {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-number {
+        display: none;
+    }
+
 }
-
-.editorial-hover:hover {
-    letter-spacing: 0.08em;
-}
-
-
-/* -------------------------
-   MOBILE
-------------------------- */
 
 @media (max-width: 700px) {
 
-    .sound-control {
-        right: 15px;
-        bottom: 15px;
+    .nav-container,
+    main,
+    footer {
+        width:
+            min(100% - 30px, 1180px);
+    }
+
+    .nav-container {
+        height: 68px;
+    }
+
+    nav {
+        gap: 15px;
+    }
+
+    nav a {
+        font-size: 8px;
+        letter-spacing: 1px;
+    }
+
+    .brand span {
+        display: none;
+    }
+
+    .hero {
+        min-height: auto;
+        padding: 90px 0;
+    }
+
+    .hero h1 {
+        font-size: 55px;
+        letter-spacing: -3px;
+    }
+
+    .technology-grid,
+    .student-cards,
+    .archive-architects {
+        grid-template-columns: 1fr;
+    }
+
+    .archive-jobsheet-list {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .section-heading {
+        display: block;
+    }
+
+    .section-heading > p {
+        margin-top: 20px;
+    }
+
+    .student-image {
+        height: 300px;
+    }
+
+    .selected-archive-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    footer {
+        display: block;
+    }
+
+    .footer-right {
+        margin-top: 15px;
+        display: block;
+    }
+
+    .footer-right span {
+        display: block;
+        margin-top: 5px;
+    }
+
+    .code-stream {
+        display: none;
     }
 
     .cursor-glow {
@@ -1929,4 +1632,45 @@ footer {
     .editorial-particle {
         display: none;
     }
+
+    .sound-control {
+        right: 15px;
+        bottom: 15px;
+    }
+
+}
+
+@media (max-width: 450px) {
+
+    .archive-jobsheet-list {
+        grid-template-columns:
+            1fr 1fr;
+    }
+
+    .archive-jobsheet-card {
+        min-height: 215px;
+        padding: 18px;
+    }
+
+    .hero h1 {
+        font-size: 45px;
+    }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+    }
+
 }
