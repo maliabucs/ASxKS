@@ -288,19 +288,11 @@ function createJobsheetCards(student) {
 
 
             <h3 class="jobsheet-card-title">
-                JOBSHEET ${number}
+                ${number}
             </h3>
 
 
             <div class="jobsheet-card-divider"></div>
-
-
-            <p class="jobsheet-card-description">
-                Practical work for Jobsheet ${i}.
-                Add the specific title and description
-                for this practical task when available.
-            </p>
-
 
             <div class="jobsheet-card-actions">
 
