@@ -1674,3 +1674,727 @@ footer {
     }
 
 }
+
+
+
+/* =========================================================
+   14 JOBSHEETS: grid lines without filler cells
+   (14 does not divide evenly into 4 / 3 / 2 columns)
+========================================================= */
+
+.archive-jobsheet-list {
+    gap: 0;
+    background: transparent;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    border-left: 1px solid rgba(255,255,255,0.1);
+}
+
+.archive-jobsheet-card {
+    box-shadow:
+        inset -1px 0 0 rgba(255,255,255,0.1),
+        inset 0 -1px 0 rgba(255,255,255,0.1);
+}
+
+
+/* =========================================================
+   FOCUS VISIBLE
+========================================================= */
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+    outline: 1px solid #fff;
+    outline-offset: 3px;
+}
+
+
+/* =========================================================
+   SCROLL PROGRESS
+========================================================= */
+
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 200;
+    width: 100%;
+    height: 2px;
+    background: #fff;
+    transform: scaleX(0);
+    transform-origin: left;
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   LOADER PERCENT
+========================================================= */
+
+#loaderPercent {
+    color: #fff;
+    font-variant-numeric: tabular-nums;
+}
+
+
+/* =========================================================
+   NAV ACTIVE
+========================================================= */
+
+nav a.active {
+    color: #fff;
+}
+
+nav a.active::after {
+    width: 100%;
+}
+
+
+/* =========================================================
+   PROGRESS BARS
+========================================================= */
+
+.progress-track {
+    position: relative;
+    display: block;
+    height: 3px;
+    background: rgba(255,255,255,0.1);
+    overflow: hidden;
+}
+
+.progress-fill {
+    display: block;
+    width: 0;
+    height: 100%;
+    background: #fff;
+    transition: width 1.4s cubic-bezier(.16,1,.3,1);
+}
+
+.progress-gate:not(.in-view) .progress-fill {
+    width: 0 !important;
+}
+
+.progress-track.is-complete .progress-fill {
+    background:
+        linear-gradient(
+            90deg,
+            #777,
+            #fff,
+            #777
+        );
+    background-size: 200% 100%;
+    animation: progressShine 2.2s linear infinite;
+}
+
+@keyframes progressShine {
+
+    from {
+        background-position: 200% 0;
+    }
+
+    to {
+        background-position: -200% 0;
+    }
+
+}
+
+.architect-progress {
+    display: block;
+    width: calc(100% - 60px);
+    margin-top: 26px;
+}
+
+.architect-progress-meta {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 9px;
+    color: #555;
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.architect-progress-meta b,
+.archive-overall-value b {
+    color: #fff;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+
+/* =========================================================
+   COMBINED PROGRESS STRIP
+========================================================= */
+
+.archive-overall {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 40px;
+    padding: 18px 22px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: #0b0b0b;
+}
+
+.archive-overall[hidden] {
+    display: none;
+}
+
+.archive-overall-label,
+.archive-overall-value {
+    color: #555;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   SELECTED ARCHITECT: PROGRESS PANEL
+========================================================= */
+
+.archive-progress-panel {
+    margin-bottom: 30px;
+    padding: 24px 25px 26px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: #0b0b0b;
+}
+
+.archive-progress-top {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 22px;
+}
+
+.archive-progress-percent b {
+    display: block;
+    font-size: 54px;
+    font-weight: 800;
+    line-height: 0.9;
+    letter-spacing: -3px;
+    font-variant-numeric: tabular-nums;
+}
+
+.archive-progress-percent small {
+    display: block;
+    margin-top: 12px;
+    color: #555;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 3px;
+}
+
+.archive-progress-count {
+    color: #555;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.archive-progress-count b {
+    color: #fff;
+    font-variant-numeric: tabular-nums;
+}
+
+.segment-meter {
+    display: grid;
+    grid-template-columns: repeat(var(--total, 14), 1fr);
+    gap: 4px;
+    height: 22px;
+}
+
+.segment {
+    padding: 0;
+    border: 0;
+    background: rgba(255,255,255,0.08);
+    cursor: pointer;
+    transform: scaleY(0.35);
+    transform-origin: bottom;
+    transition:
+        transform 0.5s cubic-bezier(.16,1,.3,1),
+        background 0.4s ease;
+}
+
+.segment:hover {
+    background: rgba(255,255,255,0.3);
+}
+
+.segment.on {
+    background: #fff;
+    transform: scaleY(1);
+}
+
+.archive-progress-panel.is-complete .segment.on {
+    animation: segmentGlow 1.8s ease-in-out infinite;
+}
+
+@keyframes segmentGlow {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.55;
+    }
+
+}
+
+
+/* =========================================================
+   TOOLBAR: FILTERS + SEARCH
+========================================================= */
+
+.archive-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px 22px;
+    margin-bottom: 22px;
+}
+
+.archive-filters {
+    display: flex;
+    gap: 6px;
+}
+
+.filter-chip {
+    padding: 10px 14px;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: transparent;
+    color: #777;
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.filter-chip:hover {
+    border-color: rgba(255,255,255,0.45);
+    color: #fff;
+}
+
+.filter-chip.active {
+    background: #fff;
+    border-color: #fff;
+    color: #080808;
+}
+
+.archive-search {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+    color: #555;
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    transition: border-color 0.3s ease;
+}
+
+.archive-search:focus-within {
+    border-color: #fff;
+}
+
+.archive-search input {
+    width: 70px;
+    border: 0;
+    background: transparent;
+    color: #fff;
+    font-family: inherit;
+    font-size: 11px;
+    letter-spacing: 2px;
+    outline: none;
+}
+
+.archive-search input::placeholder {
+    color: #444;
+}
+
+.archive-result-count {
+    margin-left: auto;
+    color: #555;
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.archive-empty {
+    padding: 50px 0;
+    color: #555;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-align: center;
+}
+
+.archive-empty[hidden] {
+    display: none;
+}
+
+
+/* =========================================================
+   JOBSHEET CARD: ENTRANCE, STATUS, TILT, SPOTLIGHT
+========================================================= */
+
+.archive-jobsheet-card {
+    animation:
+        cardRise 0.65s
+        cubic-bezier(.16,1,.3,1)
+        backwards;
+}
+
+@keyframes cardRise {
+
+    from {
+        opacity: 0;
+        transform: translateY(24px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+.archive-jobsheet-card.is-hidden {
+    display: none;
+}
+
+.archive-jobsheet-card:hover {
+    transform:
+        translateY(-5px)
+        perspective(800px)
+        rotateX(var(--rx, 0deg))
+        rotateY(var(--ry, 0deg));
+    transition:
+        background 0.35s ease,
+        transform 0.2s ease-out;
+}
+
+.technology-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.archive-jobsheet-card::after,
+.architect-option::after,
+.technology-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    background:
+        radial-gradient(
+            240px circle at var(--mx, 50%) var(--my, 50%),
+            rgba(255,255,255,0.07),
+            transparent 60%
+        );
+    transition: opacity 0.35s ease;
+}
+
+.archive-jobsheet-card:hover::after,
+.architect-option:hover::after,
+.technology-card:hover::after {
+    opacity: 1;
+}
+
+.jobsheet-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 14px;
+    color: #555;
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.jobsheet-status::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border: 1px solid #555;
+    border-radius: 50%;
+    transition:
+        background 0.4s ease,
+        border-color 0.4s ease,
+        box-shadow 0.4s ease;
+}
+
+.archive-jobsheet-card.is-done .jobsheet-status {
+    color: #fff;
+}
+
+.archive-jobsheet-card.is-done .jobsheet-status::before {
+    border-color: #fff;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(255,255,255,0.6);
+}
+
+.archive-jobsheet-card.is-done::before {
+    height: 100%;
+    background: #fff;
+}
+
+.archive-jobsheet-card.is-done .jobsheet-card-number {
+    color: #aaa;
+}
+
+.archive-jobsheet-card.just-done {
+    animation: doneFlash 0.9s ease;
+}
+
+.archive-jobsheet-card.flash {
+    animation: doneFlash 1.2s ease;
+}
+
+@keyframes doneFlash {
+
+    0% {
+        background: #0b0b0b;
+    }
+
+    25% {
+        background: #272727;
+    }
+
+    100% {
+        background: #0b0b0b;
+    }
+
+}
+
+.jobsheet-card-actions {
+    flex-wrap: wrap;
+}
+
+.jobsheet-mark {
+    display: none;
+    background: transparent;
+    color: #aaa;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+body.edit-mode .jobsheet-mark {
+    display: inline-flex;
+}
+
+
+/* =========================================================
+   EDIT MODE
+========================================================= */
+
+.edit-only {
+    display: none;
+}
+
+body.edit-mode .edit-only {
+    display: flex;
+}
+
+.edit-tools {
+    gap: 6px;
+    margin-bottom: 22px;
+}
+
+.edit-badge {
+    position: fixed;
+    left: 28px;
+    bottom: 28px;
+    z-index: 9999;
+    padding: 10px 15px;
+    border: 1px solid rgba(255,255,255,0.3);
+    background: rgba(8,8,8,0.85);
+    color: #fff;
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    opacity: 0;
+    transform: translateY(10px);
+    pointer-events: none;
+    transition:
+        opacity 0.3s ease,
+        transform 0.3s ease;
+}
+
+body.edit-mode .edit-badge {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/* =========================================================
+   TOASTS
+========================================================= */
+
+.toast-stack {
+    position: fixed;
+    left: 50%;
+    bottom: 28px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    transform: translateX(-50%);
+    pointer-events: none;
+}
+
+.toast {
+    padding: 11px 18px;
+    border: 1px solid rgba(255,255,255,0.18);
+    background: rgba(8,8,8,0.92);
+    backdrop-filter: blur(12px);
+    color: #fff;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    white-space: nowrap;
+    animation:
+        toastIn 0.4s
+        cubic-bezier(.16,1,.3,1)
+        both;
+}
+
+.toast.out {
+    animation: toastOut 0.35s ease forwards;
+}
+
+@keyframes toastIn {
+
+    from {
+        opacity: 0;
+        transform: translateY(14px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+@keyframes toastOut {
+
+    to {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+}
+
+
+/* =========================================================
+   BACK TO TOP
+========================================================= */
+
+.back-to-top {
+    position: fixed;
+    right: 28px;
+    bottom: 84px;
+    z-index: 9999;
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(8,8,8,0.75);
+    backdrop-filter: blur(12px);
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(12px);
+    pointer-events: none;
+    transition:
+        opacity 0.35s ease,
+        transform 0.35s ease,
+        background 0.3s ease,
+        color 0.3s ease;
+}
+
+.back-to-top.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.back-to-top:hover {
+    background: #fff;
+    color: #080808;
+}
+
+
+/* =========================================================
+   RESPONSIVE (new features)
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .archive-overall {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .archive-progress-percent b {
+        font-size: 42px;
+    }
+
+    .archive-progress-top {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .archive-result-count {
+        margin-left: 0;
+    }
+
+    .back-to-top {
+        right: 15px;
+        bottom: 70px;
+    }
+
+    .edit-badge {
+        left: 15px;
+        bottom: 70px;
+    }
+
+    .toast-stack {
+        bottom: 70px;
+    }
+
+    .toast {
+        white-space: normal;
+        text-align: center;
+    }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION (new features)
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .progress-fill,
+    .segment,
+    .back-to-top,
+    .toast {
+        transition-duration: 0.01ms !important;
+    }
+
+    .archive-jobsheet-card:hover {
+        transform: none;
+    }
+
+}

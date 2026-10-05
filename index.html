@@ -19,6 +19,10 @@
 <body>
 
 
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+
+
     <!-- =====================================================
          SYSTEM INITIALIZATION
     ====================================================== -->
@@ -44,6 +48,8 @@
                 <span>
                     ARCHITECTURE
                 </span>
+
+                <span id="loaderPercent">000%</span>
 
             </div>
 
@@ -187,9 +193,7 @@
 
             <div class="hero-number">
 
-                <span>
-                    24
-                </span>
+                <span id="heroTotal">14</span>
 
                 <small>
 
@@ -360,7 +364,7 @@
 
                 <p>
 
-                    24 executable modules compiled
+                    14 executable modules compiled
                     for each architect.
 
                 </p>
@@ -374,7 +378,7 @@
             ============================================== -->
 
             <div
-                class="archive-architects"
+                class="archive-architects progress-gate"
                 id="architectSelection">
 
 
@@ -397,6 +401,39 @@
                         <small>
                             ENGINEERING &amp; SYSTEMS
                         </small>
+
+                    </span>
+
+
+                    <span class="architect-progress">
+
+                        <span class="architect-progress-meta">
+
+                            <span>
+                                COMPLETION
+                            </span>
+
+                            <span>
+                                <b id="amaliaCount" data-count-up>0</b>/<b class="total-count">14</b>
+                                &nbsp;
+                                <b id="amaliaPercentage" data-count-up data-suffix="%">0%</b>
+                            </span>
+
+                        </span>
+
+                        <span
+                            class="progress-track"
+                            role="progressbar"
+                            aria-label="amalia completion"
+                            aria-valuemin="0"
+                            aria-valuemax="100"
+                            aria-valuenow="0">
+
+                            <span
+                                class="progress-fill"
+                                id="amaliaProgress"></span>
+
+                        </span>
 
                     </span>
 
@@ -432,6 +469,39 @@
                     </span>
 
 
+                    <span class="architect-progress">
+
+                        <span class="architect-progress-meta">
+
+                            <span>
+                                COMPLETION
+                            </span>
+
+                            <span>
+                                <b id="khairulCount" data-count-up>0</b>/<b class="total-count">14</b>
+                                &nbsp;
+                                <b id="khairulPercentage" data-count-up data-suffix="%">0%</b>
+                            </span>
+
+                        </span>
+
+                        <span
+                            class="progress-track"
+                            role="progressbar"
+                            aria-label="khairul completion"
+                            aria-valuemin="0"
+                            aria-valuemax="100"
+                            aria-valuenow="0">
+
+                            <span
+                                class="progress-fill"
+                                id="khairulProgress"></span>
+
+                        </span>
+
+                    </span>
+
+
                     <span class="architect-arrow">
                         →
                     </span>
@@ -439,6 +509,41 @@
 
                 </button>
 
+
+            </div>
+
+
+            <!-- =============================================
+                 COMBINED PROGRESS
+            ============================================== -->
+
+            <div
+                class="archive-overall progress-gate"
+                id="archiveOverall">
+
+                <span class="archive-overall-label">
+                    COMBINED PROGRESS
+                </span>
+
+                <span
+                    class="progress-track"
+                    role="progressbar"
+                    aria-label="Combined completion"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                    aria-valuenow="0">
+
+                    <span
+                        class="progress-fill"
+                        id="overallProgress"></span>
+
+                </span>
+
+                <span class="archive-overall-value">
+                    <b id="overallCount" data-count-up>0</b>/<b id="overallTotal">28</b>
+                    &nbsp;
+                    <b id="overallPercentage" data-count-up data-suffix="%">0%</b>
+                </span>
 
             </div>
 
@@ -489,9 +594,121 @@
 
 
                 <div
+                    class="archive-progress-panel"
+                    id="archiveProgressPanel">
+
+                    <div class="archive-progress-top">
+
+                        <div class="archive-progress-percent">
+
+                            <b id="selectedPercent">0%</b>
+
+                            <small>
+                                COMPLETION
+                            </small>
+
+                        </div>
+
+                        <div class="archive-progress-count">
+
+                            <b id="selectedCount">0</b>
+                            /
+                            <b class="total-count">14</b>
+                            JOBSHEETS DONE
+
+                        </div>
+
+                    </div>
+
+                    <div
+                        class="segment-meter"
+                        id="segmentMeter"></div>
+
+                </div>
+
+
+                <div class="archive-toolbar">
+
+                    <div
+                        class="archive-filters"
+                        role="group"
+                        aria-label="Filter jobsheets">
+
+                        <button
+                            type="button"
+                            class="filter-chip active"
+                            data-filter="all">
+                            ALL
+                        </button>
+
+                        <button
+                            type="button"
+                            class="filter-chip"
+                            data-filter="done">
+                            DONE
+                        </button>
+
+                        <button
+                            type="button"
+                            class="filter-chip"
+                            data-filter="pending">
+                            PENDING
+                        </button>
+
+                    </div>
+
+                    <label class="archive-search">
+
+                        <span>
+                            JUMP TO
+                        </span>
+
+                        <input
+                            type="search"
+                            id="jobsheetSearch"
+                            placeholder="01-14"
+                            inputmode="numeric"
+                            autocomplete="off">
+
+                    </label>
+
+                    <span
+                        class="archive-result-count"
+                        id="archiveResultCount">
+                        SHOWING 14 / 14
+                    </span>
+
+                </div>
+
+
+                <div class="edit-tools edit-only">
+
+                    <button
+                        type="button"
+                        class="filter-chip"
+                        id="copyDoneList">
+                        COPY DONE LIST
+                    </button>
+
+                    <button
+                        type="button"
+                        class="filter-chip"
+                        id="resetProgress">
+                        RESET LOCAL MARKS
+                    </button>
+
+                </div>
+
+
+                <div
                     class="archive-jobsheet-list"
                     id="jobsheetGrid">
                 </div>
+
+
+                <p class="archive-empty" id="archiveEmpty" hidden>
+                    NO JOBSHEET MATCHES THIS FILTER.
+                </p>
 
 
             </div>
@@ -714,6 +931,26 @@
         </audio>
 
     </div>
+
+
+    <button
+        type="button"
+        class="back-to-top"
+        id="backToTop"
+        aria-label="Back to top">
+        ↑
+    </button>
+
+    <div
+        class="edit-badge"
+        id="editBadge">
+        EDIT MODE / SHIFT+E TO EXIT
+    </div>
+
+    <div
+        class="toast-stack"
+        id="toastStack"
+        aria-live="polite"></div>
 
 
     <script src="script.js"></script>
