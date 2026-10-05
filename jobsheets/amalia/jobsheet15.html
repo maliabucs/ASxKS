@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Sheet 15 - Session Storage</title>
+  <link rel="stylesheet" href="jobsheet15.css">
+</head>
+<body>
+  <header>
+    <h1>JOB SHEET 15 - Web Storage (Session Storage)</h1>
+    <p>Name: Malia | Institut Kemahiran MARA Lumut</p>
+  </header>
+
+  <div class="card">
+    <h2>1. Save Name</h2>
+    <input type="text" id="nameInput" placeholder="Enter your name">
+    <button id="saveName">Save</button>
+    <button id="clearName">Remove</button>
+    <div class="result" id="nameResult"></div>
+  </div>
+
+  <div class="card">
+    <h2>2. Save Note</h2>
+    <textarea id="noteInput" placeholder="Write a note..."></textarea><br>
+    <button id="saveNote">Save Note</button>
+    <button id="clearNote">Remove Note</button>
+    <div class="result" id="noteResult"></div>
+  </div>
+
+  <div class="card">
+    <h2>3. Page Views (this tab only)</h2>
+    <div class="result" id="counterResult"></div>
+    <button id="resetCounter">Reset Counter</button>
+  </div>
+
+  <div class="card">
+    <h2>4. Clear All Session Storage</h2>
+    <button id="clearAll">Clear All</button>
+    <div class="output" id="msg"></div>
+  </div>
+
+  <p style="font-size:13px">Tip: refresh keeps the data, but closing the tab removes it. Check it in DevTools (F12) &gt; Application &gt; Session Storage.</p>
+
+  <footer>Job Sheet 15 - Session Storage | Malia</footer>
+  <script src="jobsheet15.js"></script>
+</body>
+</html>

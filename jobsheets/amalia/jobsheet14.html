@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Sheet 14 - Local Storage</title>
+  <link rel="stylesheet" href="jobsheet14.css">
+</head>
+<body>
+  <header>
+    <h1>JOB SHEET 14 - Web Storage (Local Storage)</h1>
+    <p>Name: Malia | Institut Kemahiran MARA Lumut</p>
+  </header>
+
+  <div class="card">
+    <h2>1. Save Name</h2>
+    <input type="text" id="nameInput" placeholder="Enter your name">
+    <button id="saveName">Save</button>
+    <button id="clearName">Remove</button>
+    <div class="result" id="nameResult"></div>
+  </div>
+
+  <div class="card">
+    <h2>2. Save Note</h2>
+    <textarea id="noteInput" placeholder="Write a note..."></textarea><br>
+    <button id="saveNote">Save Note</button>
+    <button id="clearNote">Remove Note</button>
+    <div class="result" id="noteResult"></div>
+  </div>
+
+  <div class="card">
+    <h2>3. Visit Counter</h2>
+    <div class="result" id="counterResult"></div>
+    <button id="resetCounter">Reset Counter</button>
+  </div>
+
+  <div class="card">
+    <h2>4. Clear All Local Storage</h2>
+    <button id="clearAll">Clear All</button>
+    <div class="output" id="msg"></div>
+  </div>
+
+  <p style="font-size:13px">Tip: refresh or close the browser, the data stays. Check it in DevTools (F12) &gt; Application &gt; Local Storage.</p>
+
+  <footer>Job Sheet 14 - Local Storage | Malia</footer>
+  <script src="jobsheet14.js"></script>
+</body>
+</html>
