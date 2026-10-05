@@ -24,7 +24,7 @@ const architectData = {
         folder: "amalia",
 
         // jobsheet numbers finished and published (e.g. [1, 2, 3])
-        completed: [],
+        completed: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
 
         description:
             "ENGINEERING & SYSTEMS"
