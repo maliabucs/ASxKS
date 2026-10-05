@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Job Sheet 12 - jQuery Task Manager</title>
+<link rel="stylesheet" href="malia-12-task-manager.css">
+<script src="jquery.js"></script>
+<script src="malia-12-task-manager.js"></script>
+</head>
+<body>
+
+<div class="card" id="app">
+  <header>
+    <div>
+      <h1>jQuery Task Manager</h1>
+      <p class="sub">Job Sheet 12 &middot; Nur Amalia Safia</p>
+    </div>
+    <button type="button" id="themeBtn" class="ghost">Dark Mode</button>
+  </header>
+
+  <div class="add-row">
+    <input type="text" id="taskInput" placeholder="What do you need to do?" maxlength="60" autocomplete="off">
+    <select id="prioritySelect" aria-label="Priority">
+      <option value="low">Low</option>
+      <option value="medium" selected>Medium</option>
+      <option value="high">High</option>
+    </select>
+    <button type="button" id="addBtn">Add Task</button>
+  </div>
+
+  <p id="message" class="message" style="display:none"></p>
+
+  <div class="tools">
+    <input type="text" id="searchInput" placeholder="Search tasks..." autocomplete="off">
+    <div class="filters">
+      <button type="button" class="filter active" data-filter="all">All</button>
+      <button type="button" class="filter" data-filter="active">Active</button>
+      <button type="button" class="filter" data-filter="done">Completed</button>
+    </div>
+  </div>
+
+  <ul id="taskList"></ul>
+  <p id="emptyNote">No tasks yet. Add your first task above.</p>
+
+  <footer>
+    <span id="counter">0 tasks left</span>
+    <button type="button" id="clearBtn" class="ghost">Clear Completed</button>
+  </footer>
+
+  <p class="hint">Tip: click a task to mark it as done. Click &times; to delete it.</p>
+</div>
+
+</body>
+</html>

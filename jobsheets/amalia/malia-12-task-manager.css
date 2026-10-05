@@ -1,0 +1,197 @@
+/* Job Sheet 12 - jQuery Task Manager | Nur Amalia Safia */
+
+:root {
+  --bg: #eef2f9;
+  --card: #ffffff;
+  --text: #1d2433;
+  --muted: #6b7690;
+  --line: #dbe2ef;
+  --accent: #4f6ef7;
+  --accent-dark: #3a56d4;
+  --row: #f6f8fd;
+  --row-hover: #e9eeff;
+}
+
+body.dark {
+  --bg: #0f1424;
+  --card: #182036;
+  --text: #eef2ff;
+  --muted: #9aa7c7;
+  --line: #2a3555;
+  --row: #1e2845;
+  --row-hover: #26335a;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  padding: 30px 16px;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  transition: background .3s, color .3s;
+}
+
+.card {
+  max-width: 640px;
+  margin: 0 auto;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 10px 30px rgba(20, 30, 70, .12);
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+h1 { margin: 0; font-size: 26px; }
+.sub { margin: 4px 0 0; color: var(--muted); font-size: 14px; }
+
+button, input, select {
+  font: inherit;
+  color: var(--text);
+}
+
+input[type="text"], select {
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: var(--card);
+  outline: none;
+}
+
+input[type="text"]:focus, select:focus { border-color: var(--accent); }
+
+button {
+  cursor: pointer;
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 9px;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 600;
+  transition: background .2s;
+}
+
+button:hover { background: var(--accent-dark); }
+
+button.ghost {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--line);
+}
+
+button.ghost:hover { background: var(--row-hover); }
+
+.add-row { display: flex; gap: 8px; }
+.add-row input { flex: 1; min-width: 0; }
+
+.message {
+  margin: 10px 0 0;
+  padding: 9px 12px;
+  border-radius: 8px;
+  background: #fff4d6;
+  color: #7a5200;
+  font-size: 14px;
+}
+
+.tools {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 16px 0 10px;
+}
+
+.tools input { flex: 1; min-width: 160px; }
+.filters { display: flex; gap: 6px; }
+
+.filter {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--line);
+  padding: 8px 12px;
+  font-size: 14px;
+}
+
+.filter:hover { background: var(--row-hover); }
+.filter.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+#taskList { list-style: none; margin: 0; padding: 0; }
+
+.task {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  padding: 11px 12px;
+  background: var(--row);
+  border: 1px solid var(--line);
+  border-left-width: 5px;
+  border-radius: 10px;
+  transition: background .2s, transform .15s;
+}
+
+.task.hovered { background: var(--row-hover); transform: translateX(3px); }
+
+.priority-high { border-left-color: #ff5d6c; }
+.priority-medium { border-left-color: #ffb020; }
+.priority-low { border-left-color: #35c486; }
+
+.badge {
+  min-width: 62px;
+  text-align: center;
+  padding: 3px 8px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.priority-high .badge { background: #ff5d6c; }
+.priority-medium .badge { background: #e59a00; }
+.priority-low .badge { background: #25a56e; }
+
+.task-text { flex: 1; cursor: pointer; word-break: break-word; }
+
+.task.done .task-text { text-decoration: line-through; color: var(--muted); }
+.task.done .badge { opacity: .5; }
+
+.delete-btn {
+  padding: 2px 10px;
+  font-size: 20px;
+  line-height: 1.2;
+  background: transparent;
+  color: var(--muted);
+}
+
+.delete-btn:hover { background: #ff5d6c; color: #fff; }
+
+#emptyNote { text-align: center; color: var(--muted); padding: 18px 0; }
+
+footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+}
+
+.hint { margin: 14px 0 0; font-size: 12px; color: var(--muted); text-align: center; }
+
+@media (max-width: 520px) {
+  .add-row { flex-wrap: wrap; }
+  .add-row input { flex-basis: 100%; }
+  .add-row select, .add-row button { flex: 1; }
+}
