@@ -1,52 +1,57 @@
-$(document).ready(function () {
+// Job Sheet 13 - Local Storage
+function showAll() {
+  var name = localStorage.getItem("js13_name");
+  var note = localStorage.getItem("js13_note");
+  var visits = localStorage.getItem("js13_visits");
 
-  // 1. Hide / Show / Toggle
-  $("#btnHide").click(function () { $("#box1").hide(); });
-  $("#btnShow").click(function () { $("#box1").show(); });
-  $("#btnToggle").click(function () { $("#box1").toggle(); });
+  document.getElementById("nameResult").textContent =
+    name ? "Saved name: " + name : "No name saved yet.";
+  document.getElementById("noteResult").textContent =
+    note ? "Saved note: " + note : "No note saved yet.";
+  document.getElementById("counterResult").textContent =
+    "You have opened this page " + (visits || 0) + " time(s).";
+}
 
-  // 2. Fade and Slide
-  $("#btnFadeOut").click(function () { $("#box2").fadeOut(1000); });
-  $("#btnFadeIn").click(function () { $("#box2").fadeIn(1000); });
-  $("#btnSlide").click(function () { $("#box2").slideToggle(); });
+// Count visit (once per page load)
+var visits = Number(localStorage.getItem("js13_visits")) || 0;
+localStorage.setItem("js13_visits", visits + 1);
+showAll();
 
-  // 3. Text and CSS class
-  $("#btnText").click(function () {
-    $("#para").text("The paragraph text has been changed by jQuery!");
-  });
-  $("#btnClass").click(function () { $("#para").toggleClass("highlight"); });
+document.getElementById("saveName").onclick = function () {
+  var v = document.getElementById("nameInput").value.trim();
+  if (v === "") { alert("Please enter your name."); return; }
+  localStorage.setItem("js13_name", v);
+  document.getElementById("nameInput").value = "";
+  showAll();
+};
 
-  // 4. Add / remove list item
-  $("#btnAdd").click(function () {
-    var value = $("#itemInput").val().trim();
-    if (value === "") {
-      alert("Please type something first.");
-      return;
-    }
-    $("#myList").append("<li>" + $("<div>").text(value).html() + "</li>");
-    $("#itemInput").val("");
-  });
-  $("#btnRemove").click(function () { $("#myList li:last").remove(); });
+document.getElementById("clearName").onclick = function () {
+  localStorage.removeItem("js13_name");
+  showAll();
+};
 
-  // 5. Animate
-  $("#btnAnimate").click(function () {
-    $("#animbox").animate({ left: "250px", opacity: 0.5 }, 1000);
-  });
-  $("#btnReset").click(function () {
-    $("#animbox").animate({ left: "0px", opacity: 1 }, 500);
-  });
+document.getElementById("saveNote").onclick = function () {
+  var v = document.getElementById("noteInput").value.trim();
+  if (v === "") { alert("Please write a note."); return; }
+  localStorage.setItem("js13_note", v);
+  document.getElementById("noteInput").value = "";
+  showAll();
+};
 
-  // 6. Mouse events
-  $("#hoverBox").mouseenter(function () {
-    $(this).css("background-color", "#9fc5e8");
-    $("#msg").text("Mouse entered the box");
-  });
-  $("#hoverBox").mouseleave(function () {
-    $(this).css("background-color", "#ffd966");
-    $("#msg").text("Mouse left the box");
-  });
-  $("#hoverBox").dblclick(function () {
-    $("#msg").text("You double-clicked the box!");
-  });
+document.getElementById("clearNote").onclick = function () {
+  localStorage.removeItem("js13_note");
+  showAll();
+};
 
-});
+document.getElementById("resetCounter").onclick = function () {
+  localStorage.setItem("js13_visits", 0);
+  showAll();
+};
+
+document.getElementById("clearAll").onclick = function () {
+  localStorage.removeItem("js13_name");
+  localStorage.removeItem("js13_note");
+  localStorage.removeItem("js13_visits");
+  showAll();
+  document.getElementById("msg").textContent = "Job Sheet 13 data cleared.";
+};
