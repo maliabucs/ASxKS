@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Sheet 11 - jQuery</title>
+  <link rel="stylesheet" href="jobsheet11live.css">
+</head>
+<body>
+  <header>
+    <h1>JOB SHEET 11 - jQuery</h1>
+    <p>Name: Malia | Institut Kemahiran MARA Lumut</p>
+  </header>
+
+  <div class="card">
+    <h2>1. jQuery Selectors</h2>
+    <p class="demo">Paragraph with class "demo"</p>
+    <p id="special">Paragraph with id "special"</p>
+    <p>Normal paragraph</p>
+    <button id="selClass">Select by Class</button>
+    <button id="selId">Select by ID</button>
+    <button id="selTag">Select All p</button>
+    <button id="selClear">Clear</button>
+  </div>
+
+  <div class="card">
+    <h2>2. Click Counter</h2>
+    <div class="counter" id="count">0</div>
+    <button id="plus">+1</button>
+    <button id="minus">-1</button>
+    <button id="zero">Reset</button>
+  </div>
+
+  <div class="card">
+    <h2>3. Accordion</h2>
+    <div class="accordion">
+      <h3>What is jQuery?</h3>
+      <div class="panel">jQuery is a JavaScript library that makes HTML manipulation easier.</div>
+      <h3>Why use jQuery?</h3>
+      <div class="panel">Shorter code, easy effects and works on many browsers.</div>
+      <h3>How to add jQuery?</h3>
+      <div class="panel">Use a script tag with the jQuery CDN link before your own script.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>4. Form Validation</h2>
+    <input type="text" id="fname" placeholder="Full name">
+    <div class="error" id="errName"></div>
+    <input type="text" id="femail" placeholder="Email">
+    <div class="error" id="errEmail"></div>
+    <button id="submitBtn">Submit</button>
+    <div id="formMsg"></div>
+  </div>
+
+  <div class="card">
+    <h2>5. Table Row Highlight and Delete</h2>
+    <table id="tbl">
+      <tr><th>Subject</th><th>Action</th></tr>
+      <tr><td>HTML5</td><td><button class="del">Delete</button></td></tr>
+      <tr><td>CSS3</td><td><button class="del">Delete</button></td></tr>
+      <tr><td>JavaScript</td><td><button class="del">Delete</button></td></tr>
+      <tr><td>jQuery</td><td><button class="del">Delete</button></td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>6. Show Character Count</h2>
+    <input type="text" id="typeBox" placeholder="Type here">
+    <div class="output" id="charMsg">Characters: 0</div>
+  </div>
+
+  <footer>Job Sheet 11 - jQuery | Malia</footer>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="jobsheet11live.js"></script>
+</body>
+</html>
