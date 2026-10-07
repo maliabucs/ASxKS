@@ -23,8 +23,26 @@ const architectData = {
 
         folder: "amalia",
 
+        // title shown on each card (1 to 14); empty = show the number
+        titles: [
+            "MY FAVOURITE PET",
+            "HOME ENTERTAINMENT SYSTEM",
+            "HEALTHCARE CLINIC",
+            "THE GREAT WAVE OF KANAGAWA",
+            "GALLERY MEMBERSHIP",
+            "DATA ANALYTICS CENTRE",
+            "AMAZING WATERFALLS",
+            "MEDICAL APPOINTMENT",
+            "SHOPPING CART",
+            "JQUERY AJAX EXERCISE",
+            "JQUERY",
+            "JQUERY TASK MANAGER",
+            "WEB STORAGE (LOCAL STORAGE)",
+            "WEB STORAGE (SESSION STORAGE)"
+        ],
+
         // jobsheet numbers finished and published (e.g. [1, 2, 3])
-        completed: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
+        completed: [],
 
         description:
             "ENGINEERING & SYSTEMS"
@@ -41,6 +59,9 @@ const architectData = {
         set: 11,
 
         folder: "khairul",
+
+        // title shown on each card (1 to 14); empty = show the number
+        titles: [],
 
         // jobsheet numbers finished and published (e.g. [1, 2, 3])
         completed: [],
@@ -317,7 +338,7 @@ function createJobsheetCards(student) {
 
 
             <h3 class="jobsheet-card-title">
-                ${number}
+                ${architect.titles[i - 1] || number}
             </h3>
 
             <span class="jobsheet-status">${isDone ? "COMPLETED" : "PENDING"}</span>
