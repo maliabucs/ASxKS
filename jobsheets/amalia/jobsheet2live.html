@@ -1,102 +1,49 @@
 <!DOCTYPE html>
-<html lang="ms">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Entertainment Systems</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Home Entertainment Systems</title>
+<style>
+body{font-family:Arial,sans-serif;margin:20px}
+table{width:1110px;table-layout:fixed;border-collapse:collapse}
+th,td{border:1px solid #333;padding:10px;vertical-align:top;box-sizing:border-box}
+th{background:#d9eaf7}
+video{display:block;background:#000}
+</style>
 </head>
 <body>
-
-    <h2>Home Entertainment Systems</h2>
-
-    <div>
-        <table style="width: 1110px;">
-            <colgroup>
-                <col style="width: 370px;">
-                <col style="width: 260px;">
-                <col style="width: 450px;">
-            </colgroup>
-            <tbody>
-                <tr>
-                    <th colspan="3">Sony</th>
-                </tr>
-                <tr>
-                    <th>Video</th>
-                    <th>Specification</th>
-                    <th>Information</th>
-                </tr>
-                <tr>
-                    <td rowspan="3">
-                        <iframe src="https://www.youtube.com/embed/6P2K8M4rVxQ" title="Sony Video" style="width: 370px; height: 215px;" allowfullscreen></iframe>
-                    </td>
-                    <td>Display Technology</td>
-                    <td>
-                        <div>
-                            <img src="https://picsum.photos/id/1050/200/150" alt="OLED Screen">
-                            <span>OLED / BRAVIA XR Processor with Acoustic Surface Audio</span>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Audio System</td>
-                    <td>
-                        <div>
-                            <img src="https://picsum.photos/id/1082/200/150" alt="Audio Sound">
-                            <span>Dolby Atmos & DTS:X Surround Sound Integration</span>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Smart TV Platform</td>
-                    <td>Google TV with Hands-free Voice Search & Apple AirPlay</td>
-                </tr>
-                <tr>
-                    <td colspan="3">
-                        <a href="https://www.sony.com.my">Official Sony Website (https://www.sony.com.my/)</a>
-                    </td>
-                </tr>
-
-                <tr>
-                    <th colspan="3">LG</th>
-                </tr>
-                <tr>
-                    <th>Video</th>
-                    <th>Specification</th>
-                    <th>Information</th>
-                </tr>
-                <tr>
-                    <td rowspan="3">
-                        <iframe src="https://www.youtube.com/embed/1L7Q3T9sWkM" title="LG Video" style="width: 370px; height: 215px;" allowfullscreen></iframe>
-                    </td>
-                    <td>Display Technology</td>
-                    <td>
-                        <div>
-                            <img src="https://picsum.photos/id/1060/200/150" alt="LG OLED Screen">
-                            <span>OLED evo / α9 AI Processor Gen6 with Brightness Booster</span>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Audio System</td>
-                    <td>
-                        <div>
-                            <img src="https://picsum.photos/id/145/200/150" alt="LG Sound System">
-                            <span>AI Sound Pro (Virtual 9.1.2 Up-mix) & WOW Orchestra</span>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Smart TV Platform</td>
-                    <td>webOS 23 with ThinQ AI & Quick Cards</td>
-                </tr>
-                <tr>
-                    <td colspan="3">
-                        <a href="https://www.lg.com/my">Official LG Website (https://www.lg.com/my)</a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
+<h2>Home Entertainment Systems</h2>
+<table border="1" width="1110px" style="width:1110px">
+<colgroup>
+<col style="width:400px">
+<col style="width:260px">
+<col style="width:450px">
+</colgroup>
+<tr>
+<th colspan="3">Sony and LG</th>
+</tr>
+<tr>
+<th style="width:400px">Video: 400px</th>
+<th style="width:260px">Specification: 260px</th>
+<th style="width:450px">Information: 450px</th>
+</tr>
+<tr>
+<td rowspan="2"><video src="vidsony.mp4" width="370" height="215" style="width:370px;height:215px" controls>Your browser does not support the video tag.</video></td>
+<td><b>Sony</b></td>
+<td><a href="https://www.sony.com.my/" target="_blank">Sony Website</a></td>
+</tr>
+<tr>
+<td colspan="2">Sony home entertainment systems cover televisions, soundbars and home theatre audio.</td>
+</tr>
+<tr>
+<td rowspan="2"><video src="vidlg.mp4" width="370" height="215" style="width:370px;height:215px" controls>Your browser does not support the video tag.</video></td>
+<td><b>LG</b></td>
+<td><a href="https://www.lg.com/my" target="_blank">LG Website</a></td>
+</tr>
+<tr>
+<td colspan="2">LG home entertainment systems cover OLED televisions, soundbars and home theatre audio.</td>
+</tr>
+</table>
 </body>
 </html>
