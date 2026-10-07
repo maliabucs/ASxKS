@@ -2702,3 +2702,288 @@ document.addEventListener(
 
     }
 );
+
+
+/* =========================================================
+   PDF VIEWER (view inside the page, no auto download)
+========================================================= */
+
+function closePdfViewer() {
+
+    const viewer =
+        document.getElementById(
+            "pdfViewer"
+        );
+
+
+    if (!viewer) {
+        return;
+    }
+
+
+    viewer.classList.remove(
+        "open"
+    );
+
+    document.body.classList.remove(
+        "pdf-open"
+    );
+
+
+    setTimeout(
+        function () {
+
+            viewer.remove();
+
+        },
+        250
+    );
+
+}
+
+
+function openPdfViewer(
+    path,
+    title
+) {
+
+    const old =
+        document.getElementById(
+            "pdfViewer"
+        );
+
+    if (old) {
+        old.remove();
+    }
+
+
+    const absolute =
+        new URL(
+            path,
+            window.location.href
+        ).href;
+
+
+    /* Android browsers download PDFs instead of showing them,
+       so use Google's viewer there (needs the site to be online) */
+
+    const useGoogleViewer =
+        /Android/i.test(
+            navigator.userAgent
+        ) &&
+        /^https?:$/.test(
+            window.location.protocol
+        );
+
+
+    const source =
+        useGoogleViewer
+            ? `https://docs.google.com/viewer?embedded=true&url=${encodeURIComponent(absolute)}`
+            : `${path}#view=FitH`;
+
+
+    const viewer =
+        document.createElement(
+            "div"
+        );
+
+    viewer.className = "pdf-viewer";
+
+    viewer.id = "pdfViewer";
+
+    viewer.setAttribute("role", "dialog");
+
+    viewer.setAttribute("aria-modal", "true");
+
+    viewer.setAttribute("aria-label", "PDF viewer");
+
+
+    const box =
+        document.createElement("div");
+
+    box.className = "pdf-viewer-box";
+
+
+    const bar =
+        document.createElement("div");
+
+    bar.className = "pdf-viewer-bar";
+
+
+    const heading =
+        document.createElement("span");
+
+    heading.className = "pdf-viewer-title";
+
+    heading.textContent = title;
+
+
+    const openLink =
+        document.createElement("a");
+
+    openLink.className = "pdf-viewer-open";
+
+    openLink.href = path;
+
+    openLink.target = "_blank";
+
+    openLink.rel = "noopener noreferrer";
+
+    openLink.textContent = "NEW TAB";
+
+
+    const closeButton =
+        document.createElement("button");
+
+    closeButton.type = "button";
+
+    closeButton.className = "pdf-viewer-close";
+
+    closeButton.textContent = "CLOSE";
+
+    closeButton.addEventListener(
+        "click",
+        closePdfViewer
+    );
+
+
+    const frame =
+        document.createElement("iframe");
+
+    frame.className = "pdf-viewer-frame";
+
+    frame.title = title;
+
+    frame.src = source;
+
+
+    bar.appendChild(heading);
+
+    bar.appendChild(openLink);
+
+    bar.appendChild(closeButton);
+
+    box.appendChild(bar);
+
+    box.appendChild(frame);
+
+    viewer.appendChild(box);
+
+
+    viewer.addEventListener(
+        "click",
+        function (event) {
+
+            if (event.target === viewer) {
+
+                closePdfViewer();
+
+            }
+
+        }
+    );
+
+
+    document.body.appendChild(viewer);
+
+    document.body.classList.add(
+        "pdf-open"
+    );
+
+
+    requestAnimationFrame(
+        function () {
+
+            viewer.classList.add(
+                "open"
+            );
+
+        }
+    );
+
+}
+
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        document.addEventListener(
+            "click",
+            function (event) {
+
+                const link =
+                    event.target.closest &&
+                    event.target.closest(
+                        "a.jobsheet-action.pdf"
+                    );
+
+
+                if (
+                    !link ||
+                    event.button !== 0 ||
+                    event.ctrlKey ||
+                    event.metaKey ||
+                    event.shiftKey
+                ) {
+                    return;
+                }
+
+
+                event.preventDefault();
+
+
+                const card =
+                    link.closest(
+                        ".archive-jobsheet-card"
+                    );
+
+
+                const number =
+                    card
+                        ? card.querySelector(".jobsheet-card-number")
+                        : null;
+
+                const name =
+                    card
+                        ? card.querySelector(".jobsheet-card-title")
+                        : null;
+
+
+                openPdfViewer(
+                    link.getAttribute("href"),
+                    [
+                        number ? number.textContent.trim() : "",
+                        name ? name.textContent.trim() : ""
+                    ]
+                        .filter(Boolean)
+                        .join(" / ")
+                );
+
+            }
+        );
+
+
+        /* Esc closes the viewer first (before leaving the archive) */
+
+        document.addEventListener(
+            "keydown",
+            function (event) {
+
+                if (
+                    event.key === "Escape" &&
+                    document.getElementById("pdfViewer")
+                ) {
+
+                    event.stopPropagation();
+
+                    closePdfViewer();
+
+                }
+
+            },
+            true
+        );
+
+    }
+);
